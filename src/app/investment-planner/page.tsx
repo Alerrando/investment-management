@@ -1,10 +1,12 @@
 "use client";
+import { Trash } from "lucide-react";
 import { useState } from "react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 
 import { Slider } from "@/components/ui/slider";
 import { Table, TableBody, TableHeader } from "@/components/ui/table";
 
+import AssetManagement from "./AssetManagement/AssetManagement";
 import CalcCompoundInterest from "./CalcCompoundInterest/CalcCompoundInterest";
 import PopoverAddConfig from "./PopoverAddConfig/PopoverAddConfig";
 
@@ -101,7 +103,17 @@ export default function InvestmentPlanner() {
             <div className="flex h-full w-full flex-col items-start justify-center gap-4">
               {dataInfos.map((item, index: number) => (
                 <div key={item.name} className="flex w-full flex-col">
-                  <div className="mb-1 text-[14px] font-semibold text-gray-600 dark:text-gray-300">{`${item.name.charAt(0).toUpperCase() + item.name.slice(1)} ${item.value}%`}</div>
+                  <div className="flex w-full items-center justify-between">
+                    <div className="mb-1 text-[14px] font-semibold text-gray-600 dark:text-gray-300">
+                      {`${item.name.charAt(0).toUpperCase() + item.name.slice(1)} ${item.value}%`}
+                    </div>
+
+                    <Trash
+                      size={16}
+                      className="cursor-pointer text-gray-600 dark:text-gray-300"
+                      onClick={() => handleDeleteConfig(index)}
+                    />
+                  </div>
                   <Slider
                     onValueChange={(value) => handleChangeSlider(index, value[0])}
                     style={{ height: "20px" }}
@@ -136,6 +148,8 @@ export default function InvestmentPlanner() {
       </main>
 
       <CalcCompoundInterest />
+
+      <AssetManagement />
     </div>
   );
 
@@ -147,5 +161,11 @@ export default function InvestmentPlanner() {
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
     setInvestmentValue(Number(event.target.value));
+  }
+
+  function handleDeleteConfig(index: number) {
+    const newDataInfos = [...dataInfos];
+    newDataInfos.splice(index, 1);
+    setDataInfos(newDataInfos);
   }
 }
