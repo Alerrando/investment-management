@@ -1,4 +1,18 @@
 export interface ListStockModel {
+  content: Content[];
+  pageable: Pageable;
+  totalPages: number;
+  totalElements: number;
+  last: boolean;
+  size: number;
+  number: number;
+  sort: Sort;
+  numberOfElements: number;
+  first: boolean;
+  empty: boolean;
+}
+
+export interface ListStockModelContent {
   paper: string;
   quotation: string;
   pL: string;
@@ -22,4 +36,19 @@ export interface ListStockModel {
   revenueGrowth5Years: string;
   liquityDebtEbitida: string;
   marketValue: string;
+}
+
+interface Pageable {
+  pageNumber: number;
+  pageSize: number;
+  sort: Sort;
+  offset: number;
+  unpaged: boolean;
+  paged: boolean;
+}
+
+interface Sort {
+  empty: boolean;
+  unsorted: boolean;
+  sorted: boolean;
 }

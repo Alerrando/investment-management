@@ -8,16 +8,16 @@ import { getListFiis } from "@/api/getListFiis";
 import { getListStock } from "@/api/getListStock";
 import { useQueryHook } from "@/hook/useQueryHook";
 import { ListCryptoModel } from "@/models/Lists/ListCryptoModel";
-import { ListFiisModel } from "@/models/Lists/ListsFiisModel";
-import { ListStockModel } from "@/models/Lists/ListsStockModel";
+import { ListFiisModel, ListFiisModelContent } from "@/models/Lists/ListFiisModel";
+import { ListStockModel, ListStockModelContent } from "@/models/Lists/ListStockModel";
 
 import TableCrypto from "./TableCrypto/TableCrypto";
 import TableFiis from "./TableFiis/TableFiis";
 import TableStock from "./TableStock/TableStock";
 
 interface AssetManagementProps {
-  Ações: ListStockModel[];
-  Fiis: ListFiisModel[];
+  Ações: ListStockModelContent[];
+  Fiis: ListFiisModelContent[];
   Cryptos: ListCryptoModel[];
   Bdrs: any[];
 }
@@ -39,13 +39,13 @@ export default function AssetManagement() {
   const [showBag, setShowBag] = useState(false);
   const [showBagContent, setShowBagContent] = useState(false);
   const [assetsData, setAssetsData] = useState<AssetManagementProps>({} as AssetManagementProps);
-  const { isLoading: isLoadingListFiis } = useQueryHook({
+  const { isLoading: isLoadingListFiis } = useQueryHook<ListFiisModel>({
     queryKey: ["query-list-fiis"],
     options: {
       queryFn: () => getListFiis(),
       staleTime: Infinity,
       cacheTime: Infinity,
-      onSuccess: (data: ListFiisModel) => {
+      onSuccess: (data) => {
         setAssetsData({ ...assetsData, Fiis: data.content });
       },
       onError: (error) => {
@@ -54,13 +54,13 @@ export default function AssetManagement() {
     },
   });
 
-  const { isLoading: isLoadingListStocks } = useQueryHook({
+  const { isLoading: isLoadingListStocks } = useQueryHook<ListStockModel>({
     queryKey: ["query-list-stocks"],
     options: {
       queryFn: () => getListStock(),
       staleTime: Infinity,
       cacheTime: Infinity,
-      onSuccess: (data: ListStockModel) => {
+      onSuccess: (data) => {
         setAssetsData({ ...assetsData, Ações: data.content });
       },
       onError: (error) => {
@@ -103,7 +103,7 @@ export default function AssetManagement() {
     }
   }, [showBag]);
 
-  const filteredAssets: ListCryptoModel[] | ListFiisModel[] | ListStockModel[] | any[] = assetsData[
+  const filteredAssets: ListCryptoModel[] | ListFiisModelContent[] | ListStockModelContent[] | any[] = assetsData[
     activeTab as keyof AssetManagementProps
   ]?.filter((asset) =>
     asset.name
@@ -111,30 +111,32 @@ export default function AssetManagement() {
       : asset.paper.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
-  const handleAddToBag = (asset: ListCryptoModel | ListFiisModel | ListStockModel | any) => {
-    if (!bag.some((item) => item.name === asset.name || item.paper === asset.paper)) {
+  const handleAddToBag = (asset: ListCryptoModel | ListFiisModelContent | ListStockModelContent | any) => {
+    if (!bag.some((item) => item.name === asset.name || item.name === asset.paper)) {
       const aux: BagProps = {
         image: asset.image && asset.image,
         name: asset.name || asset.paper,
-        marketValue: asset.marketValue ? asset.marketValue : asset.marketCap,
+        marketValue: asset.marketValue
+          ? asset.marketValue
+          : (asset.marketCap.replace("$", "").replace("M", "") * 1000000).toString(),
         quantity: 0,
         assets: activeTab,
         quotation: asset.quotation ? parseFloat(asset.quotation) : asset.price,
       };
       setBag([...bag, aux]);
-      setQuantity({ ...quantity, [asset.id]: 0 });
+      setQuantity({ ...quantity, [aux.name]: 0 });
       setAnimatedIcon(true);
     }
   };
 
-  const handleRemoveFromBag = (assetName) => {
+  const handleRemoveFromBag = (assetName: string) => {
     setBag(bag.filter((item) => item.name !== assetName));
     const newQuantity = { ...quantity };
     setQuantity(newQuantity);
   };
 
-  const handleQuantityChange = (assetId, value) => {
-    setQuantity({ ...quantity, [assetId]: value });
+  const handleQuantityChange = (assetName: string, value) => {
+    setQuantity({ ...quantity, [assetName]: value });
   };
 
   return (
@@ -168,9 +170,9 @@ export default function AssetManagement() {
 
       <div className="h-72 overflow-auto rounded-lg border border-gray-300 shadow-sm dark:border-gray-700">
         {!isLoadingListFiis && activeTab === "Fiis" ? (
-          <TableFiis filteredAssets={filteredAssets as ListFiisModel[]} handleAddToBag={handleAddToBag} />
+          <TableFiis filteredAssets={filteredAssets as ListFiisModelContent[]} handleAddToBag={handleAddToBag} />
         ) : !isLoadingListStocks && activeTab === "Ações" ? (
-          <TableStock filteredAssets={filteredAssets as ListStockModel[]} handleAddToBag={handleAddToBag} />
+          <TableStock filteredAssets={filteredAssets as ListStockModelContent[]} handleAddToBag={handleAddToBag} />
         ) : !isLoadingListCrypto && activeTab === "Cryptos" ? (
           <TableCrypto filteredAssets={filteredAssets as ListCryptoModel[]} handleAddToBag={handleAddToBag} />
         ) : (
@@ -238,10 +240,10 @@ export default function AssetManagement() {
             <div className="h-full overflow-y-auto">
               {bag.map((asset) => (
                 <div
-                  key={asset.id}
+                  key={asset.name}
                   className="group relative mt-6 flex items-center justify-between gap-4 rounded-xl border-2 border-gray-200 bg-white px-4 py-3 shadow-sm transition-all duration-300 hover:shadow-md dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
                 >
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-3">
                     <button
                       onClick={() => handleRemoveFromBag(asset.name)}
                       className="absolute -right-0 -top-5 hidden rounded-full bg-red-600 p-1.5 text-white transition-all duration-300 hover:bg-red-700 group-hover:block"
@@ -249,8 +251,7 @@ export default function AssetManagement() {
                       <Trash size={14} />
                     </button>
 
-                    {/* Imagem do ativo */}
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full">
                       {asset.image ? (
                         <img src={asset.image} alt={asset.name} className="h-full w-full rounded-full object-cover" />
                       ) : (
@@ -262,7 +263,12 @@ export default function AssetManagement() {
                       <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">{asset.name}</p>
                       <p className="text-[10px] text-gray-600 dark:text-gray-400">
                         M. Value:{" "}
-                        <span className="font-semibold text-gray-900 dark:text-gray-100">R$ {asset.marketValue}</span>
+                        <span className="font-semibold text-gray-900 dark:text-gray-100">
+                          {parseFloat(asset.marketValue).toLocaleString("pt-BR", {
+                            style: "currency",
+                            currency: "BRL",
+                          })}
+                        </span>
                       </p>
                     </div>
                   </div>
@@ -274,23 +280,28 @@ export default function AssetManagement() {
 
                     <div className="flex items-center gap-2">
                       <button
-                        onClick={() => handleQuantityChange(asset.id, Math.max((quantity[asset.id] || 0) - 1, 0))}
+                        onClick={() => handleQuantityChange(asset.name, Math.max((quantity[asset.name] || 0) - 1, 0))}
                         className="rounded-lg bg-gray-200 p-1.5 text-gray-700 transition-all duration-300 hover:bg-gray-300 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600"
                       >
-                        <MinusCircle size={14} />
+                        <MinusCircle size={12} />
                       </button>
                       <input
-                        type="number"
-                        value={quantity[asset.id] || 0}
-                        onChange={(e) => handleQuantityChange(asset.id, e.target.value)}
-                        className="w-10 appearance-none rounded-lg border border-gray-300 bg-transparent py-1 text-center text-sm text-gray-700 transition-all duration-300 focus:border-purple-600 focus:ring-2 focus:ring-purple-600 dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:border-purple-400 dark:focus:ring-purple-400"
-                        min="0"
+                        type="text"
+                        value={quantity[asset.name] || 0}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          if (/^\d+$/.test(value) || value === "") {
+                            handleQuantityChange(asset.name, value);
+                          }
+                        }}
+                        className="w-8 appearance-none rounded-lg border border-gray-300 bg-transparent py-1 text-center text-sm text-gray-700 transition-all duration-300 focus:border-purple-600 focus:ring-2 focus:ring-purple-600 dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:border-purple-400 dark:focus:ring-purple-400"
                       />
+
                       <button
-                        onClick={() => handleQuantityChange(asset.id, (quantity[asset.id] || 0) + 1)}
+                        onClick={() => handleQuantityChange(asset.name, (quantity[asset.name] || 0) + 1)}
                         className="rounded-lg bg-gray-200 p-1.5 text-gray-700 transition-all duration-300 hover:bg-gray-300 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600"
                       >
-                        <Plus size={14} />
+                        <Plus size={12} />
                       </button>
                     </div>
                   </div>

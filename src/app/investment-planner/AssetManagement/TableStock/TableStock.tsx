@@ -2,12 +2,12 @@ import { Building, Plus } from "lucide-react";
 
 import { TableCell } from "@/components/ui/table";
 import { ListCryptoModel } from "@/models/Lists/ListCryptoModel";
-import { ListFiisModel } from "@/models/Lists/ListsFiisModel";
-import { ListStockModel } from "@/models/Lists/ListsStockModel";
+import { ListFiisModel } from "@/models/Lists/ListFiisModel";
+import { ListStockModelContent } from "@/models/Lists/ListStockModel";
 
 interface TableStockProps {
-  filteredAssets: ListStockModel[];
-  handleAddToBag: (asset: ListCryptoModel[] | ListFiisModel[] | ListStockModel[] | any[]) => void;
+  filteredAssets: ListStockModelContent[];
+  handleAddToBag: (asset: ListCryptoModel[] | ListFiisModel[] | ListStockModelContent[] | any[]) => void;
 }
 
 export default function TableStock({ filteredAssets, handleAddToBag }: TableStockProps) {
