@@ -34,8 +34,6 @@ export default function RankingCardItemStock({ item, formatMarketCap, index }: R
     },
   });
 
-  console.log(img);
-
   return (
     <li
       key={index}
