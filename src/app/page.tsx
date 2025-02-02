@@ -22,12 +22,12 @@ export default function Home() {
     staleTime: 3000,
     options: {
       queryFn: getListCrypto,
-    },
-    onError(err) {
-      console.log(err);
-    },
-    onSuccess(data) {
-      console.log(data);
+      onError(err) {
+        console.log(err);
+      },
+      onSuccess(data) {
+        console.log(data);
+      },
     },
   });
 

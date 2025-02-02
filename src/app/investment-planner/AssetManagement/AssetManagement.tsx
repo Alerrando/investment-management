@@ -28,20 +28,34 @@ export default function AssetManagement() {
   const [animatedIcon, setAnimatedIcon] = useState(false);
   const [showBag, setShowBag] = useState(false);
   const [showBagContent, setShowBagContent] = useState(false);
-  const { data: dataListFiis, isLoading: isLoadingListFiis } = useQueryHook({
+  const { isLoading: isLoadingListFiis } = useQueryHook({
     queryKey: ["query-list-fiis"],
     options: {
       queryFn: () => getListFiis(),
       staleTime: Infinity,
       cacheTime: Infinity,
+      onSuccess: (data: ListFiisModel) => {
+        console.log(data);
+        setAssetsData({ ...assetsData, FIIs: data.content });
+      },
+      onError: (error) => {
+        console.error("Erro ao carregar dados de FIIs:", error);
+      },
     },
   });
-  const { data: dataListStocks, isLoading: isLoadingListStocks } = useQueryHook({
+
+  const { isLoading: isLoadingListStocks } = useQueryHook({
     queryKey: ["query-list-stocks"],
     options: {
       queryFn: () => getListStock(),
       staleTime: Infinity,
       cacheTime: Infinity,
+      onSuccess: (data: ListStockModel) => {
+        setAssetsData({ ...assetsData, Ações: data.content });
+      },
+      onError: (error) => {
+        console.error("Erro ao carregar dados de Ações:", error);
+      },
     },
   });
 
@@ -64,19 +78,6 @@ export default function AssetManagement() {
       setShowBagContent(false);
     }
   }, [showBag]);
-
-  useEffect(() => {
-    if (!isLoadingListFiis) {
-      setAssetsData({ ...assetsData, FIIs: dataListFiis.content });
-    }
-  }, [isLoadingListFiis]);
-
-  useEffect(() => {
-    if (!isLoadingListStocks) {
-      console.log(dataListStocks, isLoadingListStocks);
-      setAssetsData({ ...assetsData, Ações: dataListStocks.content });
-    }
-  }, [isLoadingListStocks]);
 
   const filteredAssets: ListCryptoModel[] | ListFiisModel[] | ListStockModel[] | any[] = assetsData[
     activeTab as keyof AssetManagementProps
