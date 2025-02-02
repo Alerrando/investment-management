@@ -75,8 +75,7 @@ export default function AssetManagement() {
       queryFn: () => getListCrypto(),
       staleTime: Infinity,
       cacheTime: Infinity,
-      onSuccess(data: ListCryptoModel) {
-        console.log(data);
+      onSuccess(data: ListCryptoModel[]) {
         setAssetsData({ ...assetsData, Cryptos: data });
       },
       onError(err) {
