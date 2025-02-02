@@ -1,9 +1,24 @@
 "use client";
 import { motion } from "framer-motion";
-import { BriefcaseBusiness, Plus, Search, Trash, X } from "lucide-react";
+import { BriefcaseBusiness, Search, Trash, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import { Table } from "@/components/ui/table";
+import { getListFiis } from "@/api/getListFiis";
+import { getListStock } from "@/api/getListStock";
+import { useQueryHook } from "@/hook/useQueryHook";
+import { ListCryptoModel } from "@/models/Lists/ListCryptoModel";
+import { ListFiisModel } from "@/models/Lists/ListsFiisModel";
+import { ListStockModel } from "@/models/Lists/ListsStockModel";
+
+import TableFiis from "./TableFiis/TableFiis";
+import TableStock from "./TableStock/TableStock";
+
+interface AssetManagementProps {
+  Ações: ListStockModel[];
+  Fiis: ListFiisModel[];
+  Cryptos: ListCryptoModel[];
+  Bdrs: any[];
+}
 
 export default function AssetManagement() {
   const [activeTab, setActiveTab] = useState("Ações");
@@ -13,29 +28,24 @@ export default function AssetManagement() {
   const [animatedIcon, setAnimatedIcon] = useState(false);
   const [showBag, setShowBag] = useState(false);
   const [showBagContent, setShowBagContent] = useState(false);
+  const { data: dataListFiis, isLoading: isLoadingListFiis } = useQueryHook({
+    queryKey: ["query-list-fiis"],
+    options: {
+      queryFn: () => getListFiis(),
+      staleTime: Infinity,
+      cacheTime: Infinity,
+    },
+  });
+  const { data: dataListStocks, isLoading: isLoadingListStocks } = useQueryHook({
+    queryKey: ["query-list-stocks"],
+    options: {
+      queryFn: () => getListStock(),
+      staleTime: Infinity,
+      cacheTime: Infinity,
+    },
+  });
 
-  const assetsData = {
-    Ações: [
-      { id: 1, name: "PETR4", price: 28.5 },
-      { id: 2, name: "VALE3", price: 68.9 },
-      { id: 3, name: "ITUB4", price: 22.1 },
-    ],
-    FIIs: [
-      { id: 4, name: "XPML11", price: 100.0 },
-      { id: 5, name: "HGLG11", price: 150.0 },
-      { id: 6, name: "KNRI11", price: 120.0 },
-    ],
-    Crypto: [
-      { id: 7, name: "BTC", price: 30000 },
-      { id: 8, name: "ETH", price: 2000 },
-      { id: 9, name: "ADA", price: 0.5 },
-    ],
-    BDRs: [
-      { id: 10, name: "AMZO34", price: 50.0 },
-      { id: 11, name: "TSLA34", price: 70.0 },
-      { id: 12, name: "AAPL34", price: 60.0 },
-    ],
-  };
+  const [assetsData, setAssetsData] = useState<AssetManagementProps>({});
 
   useEffect(() => {
     if (animatedIcon) {
@@ -55,11 +65,24 @@ export default function AssetManagement() {
     }
   }, [showBag]);
 
-  const filteredAssets = assetsData[activeTab as keyof typeof assetsData].filter((asset) =>
-    asset.name.toLowerCase().includes(searchQuery.toLowerCase()),
-  );
+  useEffect(() => {
+    if (!isLoadingListFiis) {
+      setAssetsData({ ...assetsData, FIIs: dataListFiis.content });
+    }
+  }, [isLoadingListFiis]);
 
-  const handleAddToBag = (asset) => {
+  useEffect(() => {
+    if (!isLoadingListStocks) {
+      console.log(dataListStocks, isLoadingListStocks);
+      setAssetsData({ ...assetsData, Ações: dataListStocks.content });
+    }
+  }, [isLoadingListStocks]);
+
+  const filteredAssets: ListCryptoModel[] | ListFiisModel[] | ListStockModel[] | any[] = assetsData[
+    activeTab as keyof AssetManagementProps
+  ]?.filter((asset) => asset.paper.toLowerCase().includes(searchQuery.toLowerCase()));
+
+  const handleAddToBag = (asset: ListCryptoModel | ListFiisModel | ListStockModel | any) => {
     if (!bag.some((item) => item.id === asset.id)) {
       setBag([...bag, asset]);
       setQuantity({ ...quantity, [asset.id]: 0 });
@@ -79,7 +102,7 @@ export default function AssetManagement() {
   };
 
   return (
-    <div className="flex w-full flex-col gap-6 p-6 dark:bg-gray-900 dark:text-white">
+    <div className="flex w-full flex-col gap-6 py-6 dark:bg-gray-900 dark:text-white">
       <div className="flex gap-4 border-b dark:border-gray-700">
         {["Ações", "FIIs", "Crypto", "BDRs"].map((tab) => (
           <button
@@ -107,36 +130,21 @@ export default function AssetManagement() {
         />
       </div>
 
-      <div className="overflow-hidden rounded-lg border border-gray-300 shadow-sm dark:border-gray-700">
-        <Table className="w-full text-left text-sm text-gray-600 dark:text-gray-300">
-          <thead className="bg-gray-100 dark:bg-gray-800">
-            <tr>
-              <th className="px-4 py-3">Nome</th>
-              <th className="px-4 py-3">Preço</th>
-              <th className="px-4 py-3">Ação</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredAssets.map((asset) => (
-              <tr
-                key={asset.id}
-                className="border-b transition-all duration-300 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
-              >
-                <td className="px-4 py-3 font-medium">{asset.name}</td>
-                <td className="px-4 py-3">R$ {asset.price.toFixed(2)}</td>
-                <td className="px-4 py-3">
-                  <button
-                    onClick={() => handleAddToBag(asset)}
-                    className="flex items-center gap-1 rounded-full bg-purple-600 px-3 py-1.5 text-sm text-white transition-all duration-300 hover:bg-purple-700"
-                  >
-                    <Plus size={14} />
-                    Adicionar
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+      <div className="flex h-72 items-center justify-center overflow-auto rounded-lg border border-gray-300 shadow-sm dark:border-gray-700">
+        {!isLoadingListFiis && activeTab === "Fiis" ? (
+          <TableFiis filteredAssets={filteredAssets as ListFiisModel[]} handleAddToBag={handleAddToBag} />
+        ) : !isLoadingListStocks && activeTab === "Ações" ? (
+          <TableStock filteredAssets={filteredAssets as ListStockModel[]} handleAddToBag={handleAddToBag} />
+        ) : (
+          <div
+            className="text-surface inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white"
+            role="status"
+          >
+            <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+              Loading...
+            </span>
+          </div>
+        )}
       </div>
 
       {!showBagContent && (

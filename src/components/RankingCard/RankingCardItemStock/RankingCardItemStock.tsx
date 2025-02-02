@@ -21,18 +21,20 @@ export default function RankingCardItemStock({ item, formatMarketCap, index }: R
       queryFn: () => getLogo({ name: logoNameMapping[item.name] || item.name.split(" ")[0] }),
       staleTime: Infinity,
       cacheTime: Infinity,
-    },
-    onSuccess(data) {
-      if (data && data[0]?.icon) {
-        setImage(data[0].icon);
-      } else {
-        setImage(data);
-      }
-    },
-    onError(err) {
-      console.error("Error fetching logo:", err);
+      onSuccess: (data) => {
+        if (data && data[0]?.icon) {
+          setImage(data[0].icon);
+        } else {
+          setImage(data);
+        }
+      },
+      onError: (err) => {
+        console.error("Error fetching logo:", err);
+      },
     },
   });
+
+  console.log(img);
 
   return (
     <li

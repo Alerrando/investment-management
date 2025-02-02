@@ -1,7 +1,7 @@
 import { twMerge } from "tailwind-merge";
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { ListCryptoModel } from "@/models/ListCryptoModel";
+import { ListCryptoModel } from "@/models/Lists/ListCryptoModel";
 
 interface RankingCardFiisProps {
   title: string;
