@@ -21,7 +21,9 @@ export default function Home() {
     queryKey: ["query-list-crypto"],
     staleTime: 3000,
     options: {
-      queryFn: getListCrypto,
+      queryFn: () => getListCrypto(),
+      staleTime: Infinity,
+      cacheTime: Infinity,
       onError(err) {
         console.log(err);
       },
@@ -34,7 +36,7 @@ export default function Home() {
   useEffect(() => {
     (async () => {
       const response = await handler();
-      setItems(response || []); // Default to an empty array if response is undefined
+      setItems(response || []);
     })();
   }, []);
 
