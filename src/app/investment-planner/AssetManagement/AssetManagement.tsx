@@ -253,7 +253,6 @@ export default function AssetManagement() {
                   key={asset.name}
                   className="group relative flex items-center justify-between gap-3 rounded-lg border border-gray-200 bg-gray-50 p-3 transition-all duration-300 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600"
                 >
-                  {/* Ícone e nome do ativo */}
                   <div className="flex items-center gap-3">
                     <div
                       className={`flex h-8 w-8 items-center justify-center rounded-full ${!asset.image && "bg-purple-100 dark:bg-purple-900"}`}
