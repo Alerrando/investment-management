@@ -22,7 +22,7 @@ def commit(change):
     if(change):
         commit_message += f"chang: changing"
         for index, file in enumerate(change):
-            commit_message += f"{file.split(' M')[1]}"
+            commit_message += f"{list(file.split(' M')[1])[len(list(file.split(' M')[1])) - 1]}"
             
             if(index < len(change) - 1):
                 commit_message += ","
