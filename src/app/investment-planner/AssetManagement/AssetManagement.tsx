@@ -155,7 +155,7 @@ export default function AssetManagement() {
         {["Ações", "Fiis", "Cryptos", "BDRs"].map((tab) => (
           <button
             key={tab}
-            onClick={() => setActiveTab(tab)}
+            onClick={() => setActiveTab(tab as keyof AssetManagementProps)}
             className={`px-4 py-2 transition-all duration-300 ${
               activeTab === tab
                 ? "border-b-2 border-purple-600 font-semibold text-purple-600 dark:border-purple-400 dark:text-purple-400"
