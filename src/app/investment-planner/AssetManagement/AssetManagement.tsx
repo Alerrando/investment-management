@@ -145,7 +145,7 @@ export default function AssetManagement() {
     setQuantity(newQuantity);
   };
 
-  const handleQuantityChange = (assetName: string, value) => {
+  const handleQuantityChange = (assetName: string, value: number) => {
     setQuantity({ ...quantity, [assetName]: value });
   };
 
@@ -235,7 +235,6 @@ export default function AssetManagement() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, ease: ["easeIn", "easeOut"] }}
         >
-          {/* Cabeçalho */}
           <header className="flex w-full items-center justify-between">
             <h3 className="text-lg font-bold text-purple-600 dark:text-purple-400">Minha Bag</h3>
             <X
