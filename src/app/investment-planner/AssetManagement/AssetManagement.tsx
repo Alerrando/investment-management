@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { BriefcaseBusiness, MinusCircle, Plus, Search, Trash, X } from "lucide-react";
+import { BriefcaseBusiness, ChartCandlestick, MinusCircle, Plus, Search, Trash, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { getListCrypto } from "@/api/getListCryptos";
@@ -46,7 +46,10 @@ export default function AssetManagement() {
       staleTime: Infinity,
       cacheTime: Infinity,
       onSuccess: (data) => {
-        setAssetsData({ ...assetsData, Fiis: data.content });
+        setAssetsData((prevData) => ({
+          ...prevData,
+          Fiis: data.content,
+        }));
       },
       onError: (error) => {
         console.error("Erro ao carregar dados de FIIs:", error);
@@ -61,7 +64,10 @@ export default function AssetManagement() {
       staleTime: Infinity,
       cacheTime: Infinity,
       onSuccess: (data) => {
-        setAssetsData({ ...assetsData, Ações: data.content });
+        setAssetsData((prevData) => ({
+          ...prevData,
+          Ações: data.content,
+        }));
       },
       onError: (error) => {
         console.error("Erro ao carregar dados de Ações:", error);
@@ -76,7 +82,10 @@ export default function AssetManagement() {
       staleTime: Infinity,
       cacheTime: Infinity,
       onSuccess(data: ListCryptoModel[]) {
-        setAssetsData({ ...assetsData, Cryptos: data });
+        setAssetsData((prevData) => ({
+          ...prevData,
+          Cryptos: data,
+        }));
       },
       onError(err) {
         console.log(err);
@@ -109,6 +118,8 @@ export default function AssetManagement() {
       ? asset.name.toLowerCase().includes(searchQuery.toLowerCase())
       : asset.paper.toLowerCase().includes(searchQuery.toLowerCase()),
   );
+
+  console.log(assetsData);
 
   const handleAddToBag = (asset: ListCryptoModel | ListFiisModelContent | ListStockModelContent | any) => {
     if (!bag.some((item) => item.name === asset.name || item.name === asset.paper)) {
@@ -253,8 +264,10 @@ export default function AssetManagement() {
                     <div className="flex h-10 w-10 items-center justify-center rounded-full">
                       {asset.image ? (
                         <img src={asset.image} alt={asset.name} className="h-full w-full rounded-full object-cover" />
-                      ) : (
+                      ) : asset.assets === "Fiis" ? (
                         <BriefcaseBusiness size={28} className="text-purple-600 dark:text-purple-400" />
+                      ) : (
+                        <ChartCandlestick size={28} className="text-purple-600 dark:text-purple-400" />
                       )}
                     </div>
 

@@ -1,4 +1,4 @@
-import { Building, Plus } from "lucide-react";
+import { ChartCandlestick, Plus } from "lucide-react";
 
 import { TableCell } from "@/components/ui/table";
 import { ListCryptoModel } from "@/models/Lists/ListCryptoModel";
@@ -11,7 +11,6 @@ interface TableStockProps {
 }
 
 export default function TableStock({ filteredAssets, handleAddToBag }: TableStockProps) {
-  console.log(filteredAssets);
   return (
     <table className="w-full table-auto border-collapse text-left text-sm text-gray-600 dark:text-gray-300">
       <thead className="sticky top-0 bg-gray-100 dark:bg-gray-800">
@@ -30,12 +29,12 @@ export default function TableStock({ filteredAssets, handleAddToBag }: TableStoc
           ?.sort((a, b) => a.paper.localeCompare(b.paper))
           ?.map((asset) => (
             <tr
-              key={asset.id}
+              key={asset.paper}
               className="border-b transition-all duration-300 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
             >
               <TableCell>
                 <div className="flex h-full items-center justify-start gap-2">
-                  <Building className="h-8 w-8" />
+                  <ChartCandlestick className="h-8 w-8" />
                   <div className="flex h-full flex-col justify-between py-2">
                     <h2 className="text-[10px]">{asset.paper}</h2>
                   </div>

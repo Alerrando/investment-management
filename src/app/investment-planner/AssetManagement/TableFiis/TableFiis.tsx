@@ -2,12 +2,12 @@ import { Building, Plus } from "lucide-react";
 
 import { TableCell } from "@/components/ui/table";
 import { ListCryptoModel } from "@/models/Lists/ListCryptoModel";
-import { ListsFiisModelContent } from "@/models/Lists/ListFiisModel";
+import { ListFiisModelContent } from "@/models/Lists/ListFiisModel";
 import { ListStockModel } from "@/models/Lists/ListStockModel";
 
 interface TableFiisProps {
-  filteredAssets: ListsFiisModelContent[];
-  handleAddToBag: (asset: ListCryptoModel[] | ListsFiisModelContent[] | ListStockModel[] | any[]) => void;
+  filteredAssets: ListFiisModelContent[];
+  handleAddToBag: (asset: ListCryptoModel[] | ListFiisModelContent[] | ListStockModel[] | any[]) => void;
 }
 
 export default function TableFiis({ filteredAssets, handleAddToBag }: TableFiisProps) {
@@ -28,7 +28,7 @@ export default function TableFiis({ filteredAssets, handleAddToBag }: TableFiisP
           ?.sort((a, b) => a.paper.localeCompare(b.paper))
           ?.map((asset) => (
             <tr
-              key={asset.id}
+              key={asset.paper}
               className="border-b transition-all duration-300 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
             >
               <TableCell>

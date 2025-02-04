@@ -10,8 +10,6 @@ interface TableCryptoProps {
 }
 
 export default function TableCrypto({ filteredAssets, handleAddToBag }: TableCryptoProps) {
-  console.log(filteredAssets);
-
   return (
     <table className="w-full table-auto border-collapse text-left text-sm text-gray-600 dark:text-gray-300">
       <thead className="sticky top-0 bg-gray-100 dark:bg-gray-800">
