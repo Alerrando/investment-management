@@ -12,7 +12,7 @@ interface ContextProps {
 }
 
 interface ListCryptoProviderProps {
-  childens: React.ReactNode;
+  children: React.ReactNode;
 }
 
 export const ListCryptoProviderContext = createContext<ContextProps>({} as ContextProps);
