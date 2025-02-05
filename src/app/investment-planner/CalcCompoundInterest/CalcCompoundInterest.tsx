@@ -21,7 +21,7 @@ const schemaData = Yup.object({
 
 type SchemaDataType = Yup.InferType<typeof schemaData>;
 
-const frameworks = [
+const valueTimes = [
   {
     value: "month",
     label: "Mês (s)",
@@ -29,6 +29,17 @@ const frameworks = [
   {
     value: "year",
     label: "Ano (s)",
+  },
+];
+
+const valueInterestRate = [
+  {
+    value: "monthly",
+    label: "Mensal",
+  },
+  {
+    value: "yearly",
+    label: "Anual",
   },
 ];
 
@@ -48,8 +59,10 @@ export default function CalcCompoundInterest() {
     },
   });
 
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("month");
+  const [openValueTimes, setOpenValueTimes] = useState(false);
+  const [valueTimesSelected, setValueTimesSelected] = useState("month");
+  const [openValueInterest, setOpenValueInterest] = useState(false);
+  const [valueInterestSelected, setValueInterestSelected] = useState("monthly");
   const [valuesInterest, setValuesInterest] = useState<number[]>([]);
   const [monthlyData, setMonthlyData] = useState<{ month: number; totalAmount: number; accumulatedInterest: number }[]>(
     [],
@@ -61,8 +74,10 @@ export default function CalcCompoundInterest() {
     let totalAmount = 0;
     let accumulatedInterest = 0;
 
-    const monthRate = interestRate / 100 / 12;
-    const monthsLoop = value === "month" ? months : months * 12;
+    const monthRate =
+      valueInterestSelected === "monthly" ? interestRate / 100 : Math.pow(1 + interestRate / 100, 1 / 12) - 1;
+
+    const monthsLoop = valueTimesSelected === "month" ? months : months * 12;
 
     let amountFromInitial = valueInitial;
     let amountFromMonthlyContributions = valueInitial;
@@ -133,6 +148,53 @@ export default function CalcCompoundInterest() {
           placeholder="0,00"
           htmlFor="taxa-juros"
           name="interestRate"
+          options={
+            <Popover open={openValueInterest} onOpenChange={setOpenValueInterest}>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  role="combobox"
+                  aria-expanded={valueInterestSelected}
+                  className="w-24 justify-between dark:bg-gray-600 dark:text-gray-100"
+                  onClick={() => {
+                    if (!valueInterestSelected) setValueInterestSelected("monthly");
+                  }}
+                >
+                  {valueInterestSelected
+                    ? (valueInterestRate.find((framework) => framework.value === valueInterestSelected)
+                        ?.label as string)
+                    : "Mês (s)"}
+                  <ChevronsUpDown className="opacity-50" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0">
+                <Command>
+                  <CommandList>
+                    <CommandGroup>
+                      {valueInterestRate.map((framework) => (
+                        <CommandItem
+                          key={framework.value}
+                          value={framework.value}
+                          onSelect={(currentValue) => {
+                            setValueInterestSelected(currentValue === valueInterestSelected ? "" : currentValue);
+                            setOpenValueInterest(false);
+                          }}
+                        >
+                          {framework.label}
+                          <Check
+                            className={cn(
+                              "ml-auto",
+                              valueInterestSelected === framework.value ? "opacity-100" : "opacity-0",
+                            )}
+                          />
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </CommandList>
+                </Command>
+              </PopoverContent>
+            </Popover>
+          }
         />
 
         <InputForm
@@ -144,18 +206,20 @@ export default function CalcCompoundInterest() {
           htmlFor="quantidade-meses"
           name="months"
           options={
-            <Popover open={open} onOpenChange={setOpen}>
+            <Popover open={openValueTimes} onOpenChange={setOpenValueTimes}>
               <PopoverTrigger asChild>
                 <Button
                   variant="outline"
                   role="combobox"
-                  aria-expanded={open}
+                  aria-expanded={valueTimesSelected}
                   className="w-24 justify-between dark:bg-gray-600 dark:text-gray-100"
                   onClick={() => {
-                    if (!value) setValue("month");
+                    if (!valueTimesSelected) setValueTimesSelected("month");
                   }}
                 >
-                  {value ? (frameworks.find((framework) => framework.value === value)?.label as string) : "Mês (s)"}
+                  {valueTimesSelected
+                    ? (valueTimes.find((framework) => framework.value === valueTimesSelected)?.label as string)
+                    : "Mês (s)"}
                   <ChevronsUpDown className="opacity-50" />
                 </Button>
               </PopoverTrigger>
@@ -163,17 +227,22 @@ export default function CalcCompoundInterest() {
                 <Command>
                   <CommandList>
                     <CommandGroup>
-                      {frameworks.map((framework) => (
+                      {valueTimes.map((framework) => (
                         <CommandItem
                           key={framework.value}
                           value={framework.value}
                           onSelect={(currentValue) => {
-                            setValue(currentValue === value ? "" : currentValue);
-                            setOpen(false);
+                            setValueTimesSelected(currentValue === valueTimesSelected ? "" : currentValue);
+                            setOpenValueTimes(false);
                           }}
                         >
                           {framework.label}
-                          <Check className={cn("ml-auto", value === framework.value ? "opacity-100" : "opacity-0")} />
+                          <Check
+                            className={cn(
+                              "ml-auto",
+                              valueTimesSelected === framework.value ? "opacity-100" : "opacity-0",
+                            )}
+                          />
                         </CommandItem>
                       ))}
                     </CommandGroup>
