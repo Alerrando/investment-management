@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { getListCrypto } from "@/api/getListCryptos";
 import { getListFiis } from "@/api/getListFiis";
 import { getListStock } from "@/api/getListStock";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useQueryHook } from "@/hook/useQueryHook";
 import { ListCryptoModel } from "@/models/Lists/ListCryptoModel";
 import { ListFiisModel, ListFiisModelContent } from "@/models/Lists/ListFiisModel";
@@ -172,9 +173,16 @@ export default function AssetManagement() {
           </button>
         ))}
 
-        <div className="flex w-full items-center justify-end">
-          <Sparkles size={24} className="cursor-pointer text-purple-600 dark:text-purple-400" />
-        </div>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger className="ml-auto flex items-center justify-end">
+              <Sparkles size={24} className="cursor-pointer text-purple-600 dark:text-purple-400" />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Adicionar Recomendações</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
 
       <div className="flex items-center gap-2 rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 shadow-sm transition-all duration-300 hover:shadow-md dark:border-gray-700 dark:bg-gray-800">
@@ -238,6 +246,7 @@ export default function AssetManagement() {
           handleQuantityChange={handleQuantityChange}
           handleRemoveFromBag={handleRemoveFromBag}
           setShowBag={setShowBag}
+          quantity={quantity}
         />
       )}
     </div>
