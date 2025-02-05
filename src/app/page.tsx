@@ -16,7 +16,7 @@ import { useListCrypto } from "@/provider/ListCryptoProvider";
 export default function Home() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [items, setItems] = useState<any[]>([]);
-  const { data: dataListCrypto, isLoading: isLoadingListCrypto } = useListCrypto();
+  const { dataListCrypto, isLoadingListCrypto } = useListCrypto();
 
   useEffect(() => {
     (async () => {
