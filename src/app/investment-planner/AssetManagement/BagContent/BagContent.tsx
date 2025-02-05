@@ -1,16 +1,23 @@
 import { motion } from "framer-motion";
 import { BriefcaseBusiness, ChartCandlestick, MinusCircle, Plus, Trash, X } from "lucide-react";
 
-import { BagProps } from "../AssetManagement";
+import { BagProps, QuantityState } from "../AssetManagement";
 
 interface BagContentProps {
   setShowBag: (showBag: boolean) => void;
   bag: BagProps[];
   handleQuantityChange: (assetName: string, value: number) => void;
   handleRemoveFromBag: (assetName: string) => void;
+  quantity: QuantityState;
 }
 
-export default function BagContent({ bag, handleQuantityChange, handleRemoveFromBag, setShowBag }: BagContentProps) {
+export default function BagContent({
+  bag,
+  handleQuantityChange,
+  handleRemoveFromBag,
+  setShowBag,
+  quantity,
+}: BagContentProps) {
   return (
     <motion.div
       className="hover:shadow-3xl fixed right-4 top-1/3 z-30 flex h-[420px] w-96 flex-col gap-4 rounded-2xl border-2 border-gray-200 bg-white p-5 shadow-2xl transition-all duration-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white"

@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { BriefcaseBusiness, Search } from "lucide-react";
+import { BriefcaseBusiness, Search, Sparkles } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { getListCrypto } from "@/api/getListCryptos";
@@ -32,7 +32,7 @@ export interface BagProps {
   assets: keyof AssetManagementProps;
 }
 
-interface QuantityState {
+export interface QuantityState {
   [key: string]: number;
 }
 
@@ -171,6 +171,10 @@ export default function AssetManagement() {
             {tab}
           </button>
         ))}
+
+        <div className="flex w-full items-center justify-end">
+          <Sparkles size={24} className="cursor-pointer text-purple-600 dark:text-purple-400" />
+        </div>
       </div>
 
       <div className="flex items-center gap-2 rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 shadow-sm transition-all duration-300 hover:shadow-md dark:border-gray-700 dark:bg-gray-800">
