@@ -154,7 +154,7 @@ export default function CalcCompoundInterest() {
                 <Button
                   variant="outline"
                   role="combobox"
-                  aria-expanded={openValueInterest as Booleanish}
+                  aria-expanded={openValueInterest ? true : false}
                   className="w-24 justify-between dark:bg-gray-600 dark:text-gray-100"
                   onClick={() => {
                     if (!valueInterestSelected) setValueInterestSelected("monthly");
@@ -211,7 +211,7 @@ export default function CalcCompoundInterest() {
                 <Button
                   variant="outline"
                   role="combobox"
-                  aria-expanded={openValueTimes as Booleanish}
+                  aria-expanded={openValueTimes ? true : false}
                   className="w-24 justify-between dark:bg-gray-600 dark:text-gray-100"
                   onClick={() => {
                     if (!valueTimesSelected) setValueTimesSelected("month");
