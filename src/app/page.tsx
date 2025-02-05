@@ -19,9 +19,9 @@ export default function Home() {
   const [items, setItems] = useState<any[]>([]);
   const { data: dataListCrypto, isLoading: isLoadingListCrypto } = useQueryHook({
     queryKey: ["query-list-crypto"],
-    staleTime: 3000,
     options: {
       queryFn: () => getListCrypto(),
+      staleTime: 3000,
       staleTime: Infinity,
       cacheTime: Infinity,
       onError(err) {
