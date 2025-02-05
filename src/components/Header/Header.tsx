@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { Button } from "../ui/button";
 import { ModeToggle } from "../ui/mode-toggle";
 
@@ -7,7 +9,12 @@ export default function Header() {
       <div className="h-6 w-6 rounded-full bg-gray-600"></div>
 
       <ul className="flex gap-11">
-        <li className="list-none font-semibold">Home</li>
+        <li className="list-none font-semibold">
+          <Link href="/">Home</Link>
+        </li>
+        <li className="list-none font-semibold">
+          <Link href="/investment-planner">Planejador de Investimentos</Link>
+        </li>
         <li className="list-none font-semibold">Ações</li>
         <li className="list-none font-semibold">FIIs</li>
         <li className="list-none font-semibold">Cripto</li>
