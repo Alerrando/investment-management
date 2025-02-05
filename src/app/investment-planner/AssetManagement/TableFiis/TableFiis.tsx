@@ -7,7 +7,7 @@ import { ListStockModel } from "@/models/Lists/ListStockModel";
 
 interface TableFiisProps {
   filteredAssets: ListFiisModelContent[];
-  handleAddToBag: (asset: ListCryptoModel[] | ListFiisModelContent[] | ListStockModel[] | any[]) => void;
+  handleAddToBag: (asset: ListCryptoModel | ListFiisModelContent | ListStockModel | any) => void;
 }
 
 export default function TableFiis({ filteredAssets, handleAddToBag }: TableFiisProps) {

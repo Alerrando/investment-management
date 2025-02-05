@@ -7,7 +7,7 @@ import { ListStockModelContent } from "@/models/Lists/ListStockModel";
 
 interface TableStockProps {
   filteredAssets: ListStockModelContent[];
-  handleAddToBag: (asset: ListCryptoModel[] | ListFiisModel[] | ListStockModelContent[] | any[]) => void;
+  handleAddToBag: (asset: ListCryptoModel | ListFiisModel | ListStockModelContent | any) => void;
 }
 
 export default function TableStock({ filteredAssets, handleAddToBag }: TableStockProps) {

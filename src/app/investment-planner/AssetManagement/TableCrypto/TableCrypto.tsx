@@ -6,7 +6,7 @@ import { ListStockModel } from "@/models/Lists/ListStockModel";
 
 interface TableCryptoProps {
   filteredAssets: ListCryptoModel[];
-  handleAddToBag: (asset: ListCryptoModel[] | ListFiisModel[] | ListStockModel[] | any[]) => void;
+  handleAddToBag: (asset: ListCryptoModel | ListFiisModel | ListStockModel | any) => void;
 }
 
 export default function TableCrypto({ filteredAssets, handleAddToBag }: TableCryptoProps) {
