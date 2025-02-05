@@ -264,7 +264,7 @@ export default function AssetManagement() {
                       <p className="text-xs text-gray-600 dark:text-gray-400">
                         Valor:{" "}
                         <span className="font-semibold text-gray-900 dark:text-gray-100">
-                          {parseFloat(asset.quotation).toLocaleString("pt-BR", {
+                          {asset.quotation.toLocaleString("pt-BR", {
                             style: "currency",
                             currency: "BRL",
                           })}
@@ -273,7 +273,6 @@ export default function AssetManagement() {
                     </div>
                   </div>
 
-                  {/* Controle de quantidade e remoção */}
                   <div className="flex items-center gap-2">
                     <div className="flex items-center gap-1">
                       <button
