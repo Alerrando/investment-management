@@ -1,5 +1,5 @@
 export interface ListFiisModel {
-  content: Content[];
+  content: ListFiisModelContent[];
   pageable: Pageable;
   totalPages: number;
   totalElements: number;

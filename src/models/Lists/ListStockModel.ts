@@ -1,5 +1,5 @@
 export interface ListStockModel {
-  content: Content[];
+  content: ListStockModelContent[];
   pageable: Pageable;
   totalPages: number;
   totalElements: number;
