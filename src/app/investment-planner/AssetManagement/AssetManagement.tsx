@@ -30,11 +30,16 @@ interface BagProps {
   quotation: number;
   assets: keyof AssetManagementProps;
 }
+
+interface QuantityState {
+  [key: string]: number;
+}
+
 export default function AssetManagement() {
   const [activeTab, setActiveTab] = useState<keyof AssetManagementProps>("Ações");
   const [searchQuery, setSearchQuery] = useState("");
   const [bag, setBag] = useState<BagProps[]>([]);
-  const [quantity, setQuantity] = useState({});
+  const [quantity, setQuantity] = useState<QuantityState>({});
   const [animatedIcon, setAnimatedIcon] = useState(false);
   const [showBag, setShowBag] = useState(false);
   const [showBagContent, setShowBagContent] = useState(false);
