@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface PopoverAddConfigProprs {
   dataInfos: {
@@ -59,45 +60,52 @@ export default function PopoverAddConfig({ dataInfos, setDataInfos }: PopoverAdd
   };
 
   return (
-    <Popover>
-      <PopoverTrigger asChild onClick={generateRandomColor}>
-        <Button variant="outline">Adicionar</Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-80">
-        <form onSubmit={handleSubmit(onSubmit)} className="grid gap-2">
-          <div className="flex items-center gap-2">
-            <Label className="w-[25%]" htmlFor="name">
-              Título:{" "}
-            </Label>
-            <Controller
-              name="name"
-              control={control}
-              render={({ field }) => <Input {...field} id="name" type="text" className="h-8 w-full" />}
-            />
-            {errors.name && <span className="text-red-500">{errors.name.message}</span>}
-          </div>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger>
+          <Popover>
+            <PopoverTrigger asChild onClick={generateRandomColor}>
+              <Button variant="outline">Adicionar</Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-80">
+              <form onSubmit={handleSubmit(onSubmit)} className="grid gap-2">
+                <div className="flex items-center gap-2">
+                  <Label className="w-[25%]" htmlFor="name">
+                    Título:{" "}
+                  </Label>
+                  <Controller
+                    name="name"
+                    control={control}
+                    render={({ field }) => <Input {...field} id="name" type="text" className="h-8 w-full" />}
+                  />
+                  {errors.name && <span className="text-red-500">{errors.name.message}</span>}
+                </div>
 
-          <div className="flex items-center gap-2">
-            <Label
-              style={{ color: color, fontWeight: color ? "bold" : "normal" }}
-              className={`w-[25%] ${color && "text-bold"}`}
-              htmlFor="color"
-            >
-              Cor:{" "}
-            </Label>
-            <Controller
-              name="color"
-              control={control}
-              render={({ field }) => <Input {...field} id="color" className="h-8 w-full" />}
-            />
-            {errors.color && <span className="text-red-500">{errors.color.message}</span>}
-          </div>
+                <div className="flex items-center gap-2">
+                  <Label
+                    style={{ color: color, fontWeight: color ? "bold" : "normal" }}
+                    className={`w-[25%] ${color && "text-bold"}`}
+                    htmlFor="color"
+                  >
+                    Cor:{" "}
+                  </Label>
+                  <Controller
+                    name="color"
+                    control={control}
+                    render={({ field }) => <Input {...field} id="color" className="h-8 w-full" />}
+                  />
+                  {errors.color && <span className="text-red-500">{errors.color.message}</span>}
+                </div>
 
-          <Button type="submit" variant="outline" className="mt-4">
-            Salvar
-          </Button>
-        </form>
-      </PopoverContent>
-    </Popover>
+                <Button type="submit" variant="outline" className="mt-4">
+                  Salvar
+                </Button>
+              </form>
+            </PopoverContent>
+          </Popover>
+        </TooltipTrigger>
+        <TooltipContent>Clique para adicionar uma nova configuração</TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }

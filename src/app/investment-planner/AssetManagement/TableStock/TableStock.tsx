@@ -55,7 +55,7 @@ export default function TableStock({ filteredAssets, handleAddToBag }: TableStoc
                 {asset.marketValue && (
                   <div className="flex w-fit flex-col items-end">
                     <span>
-                      {asset.marketValue.toLocaleString("pt-BR", {
+                      {parseFloat(asset.marketValue).toLocaleString("pt-BR", {
                         style: "currency",
                         currency: "BRL",
                       })}

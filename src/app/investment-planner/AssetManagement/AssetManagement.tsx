@@ -126,8 +126,6 @@ export default function AssetManagement() {
       : asset.paper.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
-  console.log(assetsData);
-
   const handleAddToBag = (asset: ListCryptoModel | ListFiisModelContent | ListStockModelContent | any) => {
     if (!bag.some((item) => item.name === asset.name || item.name === asset.paper)) {
       const aux: BagProps = {
