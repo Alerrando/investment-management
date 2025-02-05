@@ -21,7 +21,6 @@ export default function Home() {
     queryKey: ["query-list-crypto"],
     options: {
       queryFn: () => getListCrypto(),
-      staleTime: 3000,
       staleTime: Infinity,
       cacheTime: Infinity,
       onError(err) {
