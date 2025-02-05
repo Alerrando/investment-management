@@ -3,7 +3,6 @@ import { DollarSign, Globe, MapPinHouse, Medal, Search } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-import { getListCrypto } from "@/api/getListCryptos";
 import handler from "@/api/rss";
 import { Footer } from "@/components/Footer/Footer";
 import RankingCard from "@/components/RankingCard/RankingCard";
@@ -12,25 +11,12 @@ import RankingCardCryptoMoreVisited from "@/components/RankingCard/RankingCardIC
 import RankingCardCryptosRise from "@/components/RankingCard/RankingCardICrypto/RankingCardCryptosRise/RankingCardCryptosRise";
 import RankingCardICrypto from "@/components/RankingCard/RankingCardICrypto/RankingCardICrypto";
 import Title from "@/components/Title/Title";
-import { useQueryHook } from "@/hook/useQueryHook";
+import { useListCrypto } from "@/provider/ListCryptoProvider";
 
 export default function Home() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [items, setItems] = useState<any[]>([]);
-  const { data: dataListCrypto, isLoading: isLoadingListCrypto } = useQueryHook({
-    queryKey: ["query-list-crypto"],
-    options: {
-      queryFn: () => getListCrypto(),
-      staleTime: Infinity,
-      cacheTime: Infinity,
-      onError(err) {
-        console.log(err);
-      },
-      onSuccess(data) {
-        console.log(data);
-      },
-    },
-  });
+  const { data: dataListCrypto, isLoading: isLoadingListCrypto } = useListCrypto();
 
   useEffect(() => {
     (async () => {

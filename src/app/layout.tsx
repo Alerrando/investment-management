@@ -1,4 +1,4 @@
-"use client"; // Adicionando "use client" para garantir que o código seja executado no cliente
+"use client";
 
 import "./globals.css";
 
@@ -6,6 +6,7 @@ import { Poppins } from "next/font/google";
 
 import Header from "@/components/Header/Header";
 import { ThemeProvider } from "@/components/theme-provider";
+import { ListCryptoProvider } from "@/provider/ListCryptoProvider";
 import { TanstackProvider } from "@/provider/tanstack-provider";
 
 const poppins = Poppins({
@@ -20,7 +21,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${poppins.variable} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <Header />
-          <TanstackProvider>{children}</TanstackProvider>
+          <TanstackProvider>
+            <ListCryptoProvider>{children}</ListCryptoProvider>
+          </TanstackProvider>
         </ThemeProvider>
       </body>
     </html>

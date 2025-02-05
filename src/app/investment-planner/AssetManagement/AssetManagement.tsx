@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { BriefcaseBusiness, Search, Sparkles } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import { getListCrypto } from "@/api/getListCryptos";
 import { getListFiis } from "@/api/getListFiis";
 import { getListStock } from "@/api/getListStock";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -11,6 +10,7 @@ import { useQueryHook } from "@/hook/useQueryHook";
 import { ListCryptoModel } from "@/models/Lists/ListCryptoModel";
 import { ListFiisModel, ListFiisModelContent } from "@/models/Lists/ListFiisModel";
 import { ListStockModel, ListStockModelContent } from "@/models/Lists/ListStockModel";
+import { useListCrypto } from "@/provider/ListCryptoProvider";
 
 import BagContent from "./BagContent/BagContent";
 import TableCrypto from "./TableCrypto/TableCrypto";
@@ -82,23 +82,7 @@ export default function AssetManagement() {
     },
   });
 
-  const { isLoading: isLoadingListCrypto } = useQueryHook({
-    queryKey: ["query-list-crypto"],
-    options: {
-      queryFn: () => getListCrypto(),
-      staleTime: Infinity,
-      cacheTime: Infinity,
-      onSuccess(data: ListCryptoModel[]) {
-        setAssetsData((prevData) => ({
-          ...prevData,
-          Cryptos: data,
-        }));
-      },
-      onError(err) {
-        console.log(err);
-      },
-    },
-  });
+  const { isLoadingListCrypto, dataListCrypto } = useListCrypto();
 
   useEffect(() => {
     if (animatedIcon) {
@@ -117,6 +101,15 @@ export default function AssetManagement() {
       setShowBagContent(false);
     }
   }, [showBag]);
+
+  useEffect(() => {
+    if (!isLoadingListCrypto && dataListCrypto) {
+      setAssetsData((prevData) => ({
+        ...prevData,
+        Cryptos: dataListCrypto,
+      }));
+    }
+  }, [isLoadingListCrypto]);
 
   const filteredAssets: ListCryptoModel[] | ListFiisModelContent[] | ListStockModelContent[] | any[] = assetsData[
     activeTab as keyof AssetManagementProps
