@@ -204,17 +204,11 @@ export default function AssetManagement() {
           className={`fixed -right-2 top-1/3 z-30 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border bg-white p-2 shadow-lg hover:bg-zinc-100 dark:bg-gray-800 dark:hover:bg-gray-700`}
           onClick={() => setShowBag(!showBag)}
           animate={
-            (animatedIcon
-              ? {
-                  y: [0, -5, 0, -5, 0, -5, 0],
-                  scale: [1, 1.1, 1],
-                }
-              : { y: 0, scale: 1 },
             showBag
               ? {
                   x: [0, -75, 75, -0, 0, -0, 0],
                 }
-              : { x: 0, scale: 1 })
+              : { x: 0, scale: 1 }
           }
           transition={{
             duration: 2.8,
