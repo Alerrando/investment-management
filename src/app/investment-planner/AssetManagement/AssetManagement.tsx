@@ -4,13 +4,13 @@ import { BriefcaseBusiness, Search, Sparkles } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { getListFiis } from "@/api/getListFiis";
-import { getListStock } from "@/api/getListStock";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { useQueryHook } from "@/hook/useQueryHook";
 import { ListCryptoModel } from "@/models/Lists/ListCryptoModel";
-import { ListFiisModel, ListFiisModelContent } from "@/models/Lists/ListFiisModel";
-import { ListStockModel, ListStockModelContent } from "@/models/Lists/ListStockModel";
+import { ListFiisModelContent } from "@/models/Lists/ListFiisModel";
+import { ListStockModelContent } from "@/models/Lists/ListStockModel";
 import { useListCrypto } from "@/provider/ListCryptoProvider";
+import { useListFiis } from "@/provider/ListFiisProvider";
+import { useListStocks } from "@/provider/ListStockProvider";
 
 import BagContent from "./BagContent/BagContent";
 import TableCrypto from "./TableCrypto/TableCrypto";
@@ -46,42 +46,8 @@ export default function AssetManagement() {
   const [showBag, setShowBag] = useState(false);
   const [showBagContent, setShowBagContent] = useState(false);
   const [assetsData, setAssetsData] = useState<AssetManagementProps>({} as AssetManagementProps);
-  const { isLoading: isLoadingListFiis } = useQueryHook<ListFiisModel>({
-    queryKey: ["query-list-fiis"],
-    options: {
-      queryFn: () => getListFiis(),
-      staleTime: Infinity,
-      cacheTime: Infinity,
-      onSuccess: (data) => {
-        setAssetsData((prevData) => ({
-          ...prevData,
-          Fiis: data.content,
-        }));
-      },
-      onError: (error) => {
-        console.error("Erro ao carregar dados de FIIs:", error);
-      },
-    },
-  });
-
-  const { isLoading: isLoadingListStocks } = useQueryHook<ListStockModel>({
-    queryKey: ["query-list-stocks"],
-    options: {
-      queryFn: () => getListStock(),
-      staleTime: Infinity,
-      cacheTime: Infinity,
-      onSuccess: (data) => {
-        setAssetsData((prevData) => ({
-          ...prevData,
-          Ações: data.content,
-        }));
-      },
-      onError: (error) => {
-        console.error("Erro ao carregar dados de Ações:", error);
-      },
-    },
-  });
-
+  const { isLoadingListFiis } = useListFiis();
+  const { isLoadingListStocks } = useListStocks();
   const { isLoadingListCrypto, dataListCrypto } = useListCrypto();
 
   useEffect(() => {
@@ -110,6 +76,15 @@ export default function AssetManagement() {
       }));
     }
   }, [isLoadingListCrypto]);
+
+  useEffect(() => {
+    if (!isLoadingListFiis) {
+      setAssetsData((prevData) => ({
+        ...prevData,
+        Fiis: getListFiis(),
+      }));
+    }
+  }, [isLoadingListFiis]);
 
   const filteredAssets: ListCryptoModel[] | ListFiisModelContent[] | ListStockModelContent[] | any[] = assetsData[
     activeTab as keyof AssetManagementProps
@@ -217,7 +192,7 @@ export default function AssetManagement() {
               ? {
                   x: [0, -75, 75, -0, 0, -0, 0],
                 }
-              : { x: 0, scale: 1 }
+              : { x: [0, -0, 0, -0, 75, -75, 0] }
           }
           transition={{
             duration: 2.8,

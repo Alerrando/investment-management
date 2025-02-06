@@ -7,6 +7,8 @@ import { Poppins } from "next/font/google";
 import Header from "@/components/Header/Header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ListCryptoProvider } from "@/provider/ListCryptoProvider";
+import { ListFiisProvider } from "@/provider/ListFiisProvider";
+import { ListStocksProvider } from "@/provider/ListStockProvider";
 import { TanstackProvider } from "@/provider/tanstack-provider";
 
 const poppins = Poppins({
@@ -22,7 +24,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <Header />
           <TanstackProvider>
-            <ListCryptoProvider>{children}</ListCryptoProvider>
+            <ListCryptoProvider>
+              <ListFiisProvider>
+                <ListStocksProvider>{children}</ListStocksProvider>
+              </ListFiisProvider>
+            </ListCryptoProvider>
           </TanstackProvider>
         </ThemeProvider>
       </body>

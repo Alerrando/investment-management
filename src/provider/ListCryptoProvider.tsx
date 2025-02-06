@@ -25,11 +25,11 @@ export const ListCryptoProvider = ({ children }: ListCryptoProviderProps) => {
       queryFn: () => getListCrypto(),
       staleTime: Infinity,
       cacheTime: Infinity,
-      onError(err) {
-        console.log(err);
-      },
       onSuccess(data) {
         setDataListCrypto(data);
+      },
+      onError(err) {
+        console.log(err);
       },
     },
   });
