@@ -18,7 +18,7 @@ interface ListStocksProviderProps {
 export const ListStocksProviderContext = createContext<ContextProps>({} as ContextProps);
 
 export const ListStocksProvider = ({ children }: ListStocksProviderProps) => {
-  const [dataListStocks, setDataListStocks] = useState<ListStockModelContent[]>([]);
+  const [dataListStocks, setDataListStocks] = useState<ListStockModelContent[]>([] as ListStockModelContent[]);
   const { isLoading: isLoadingListStocks } = useQueryHook<ListStockModel>({
     queryKey: ["query-list-stocks"],
     options: {

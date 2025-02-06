@@ -4,7 +4,6 @@ import React, { createContext, useContext, useState } from "react";
 
 import { getListFiis } from "@/api/getListFiis";
 import { useQueryHook } from "@/hook/useQueryHook";
-import { ListCryptoModel } from "@/models/Lists/ListCryptoModel";
 import { ListFiisModel, ListFiisModelContent } from "@/models/Lists/ListFiisModel";
 
 interface ContextProps {
@@ -19,7 +18,7 @@ interface ListFiisProviderProps {
 export const ListFiisProviderContext = createContext<ContextProps>({} as ContextProps);
 
 export const ListFiisProvider = ({ children }: ListFiisProviderProps) => {
-  const [dataListFiis, setDataListFiis] = useState<ListCryptoModel[]>([] as ListCryptoModel[]);
+  const [dataListFiis, setDataListFiis] = useState<ListFiisModelContent[]>([] as ListFiisModelContent[]);
   const { isLoading: isLoadingListFiis } = useQueryHook<ListFiisModel>({
     queryKey: ["query-list-fiis"],
     options: {
