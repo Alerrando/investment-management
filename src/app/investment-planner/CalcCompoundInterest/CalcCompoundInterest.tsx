@@ -1,6 +1,5 @@
 "use client";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Check, ChevronsUpDown } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
@@ -8,9 +7,6 @@ import * as Yup from "yup";
 
 import InputForm from "@/components/InputForm/InputForm";
 import { Button } from "@/components/ui/button";
-import { Command, CommandGroup, CommandItem, CommandList } from "@/components/ui/command";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
 
 const schemaData = Yup.object({
   valueInitial: Yup.number().required("Campo obrigatório"),
@@ -58,56 +54,12 @@ export default function CalcCompoundInterest() {
       months: 12,
     },
   });
-
-  const [openValueTimes, setOpenValueTimes] = useState(false);
   const [valueTimesSelected, setValueTimesSelected] = useState("month");
-  const [openValueInterest, setOpenValueInterest] = useState(false);
   const [valueInterestSelected, setValueInterestSelected] = useState("monthly");
   const [valuesInterest, setValuesInterest] = useState<number[]>([]);
   const [monthlyData, setMonthlyData] = useState<{ month: number; totalAmount: number; accumulatedInterest: number }[]>(
     [],
   );
-
-  function submit(e: SchemaDataType) {
-    const { valueInitial, valueMonthly, interestRate, months } = e;
-
-    let totalAmount = 0;
-    let accumulatedInterest = 0;
-
-    const monthRate =
-      valueInterestSelected === "monthly" ? interestRate / 100 : Math.pow(1 + interestRate / 100, 1 / 12) - 1;
-
-    const monthsLoop = valueTimesSelected === "month" ? months : months * 12;
-
-    let amountFromInitial = valueInitial;
-    let amountFromMonthlyContributions = valueInitial;
-    let calcRateMonthAccumulate = 0;
-
-    const monthlyInterestData = [];
-
-    for (let i = 1; i <= monthsLoop; i++) {
-      amountFromInitial += valueMonthly;
-      const calcRateMonth = amountFromMonthlyContributions * monthRate;
-      calcRateMonthAccumulate += calcRateMonth;
-      amountFromMonthlyContributions = amountFromInitial + calcRateMonthAccumulate;
-
-      totalAmount = amountFromMonthlyContributions;
-      accumulatedInterest = calcRateMonthAccumulate;
-
-      monthlyInterestData.push({
-        month: i,
-        totalAmount: amountFromInitial,
-        accumulatedInterest: Number(accumulatedInterest),
-      });
-    }
-
-    setMonthlyData(monthlyInterestData);
-    setValuesInterest([
-      Number(totalAmount.toFixed(2)),
-      Number(accumulatedInterest.toFixed(2)),
-      Number(valueMonthly * monthsLoop + valueInitial),
-    ]);
-  }
 
   return (
     <form
@@ -149,51 +101,19 @@ export default function CalcCompoundInterest() {
           htmlFor="taxa-juros"
           name="interestRate"
           options={
-            <Popover open={openValueInterest} onOpenChange={setOpenValueInterest}>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  role="combobox"
-                  aria-expanded={openValueInterest ? true : false}
-                  className="w-24 justify-between dark:bg-gray-600 dark:text-gray-100"
-                  onClick={() => {
-                    if (!valueInterestSelected) setValueInterestSelected("monthly");
-                  }}
-                >
-                  {valueInterestSelected
-                    ? (valueInterestRate.find((framework) => framework.value === valueInterestSelected)
-                        ?.label as string)
-                    : "Mês (s)"}
-                  <ChevronsUpDown className="opacity-50" />
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0">
-                <Command>
-                  <CommandList>
-                    <CommandGroup>
-                      {valueInterestRate.map((framework) => (
-                        <CommandItem
-                          key={framework.value}
-                          value={framework.value}
-                          onSelect={(currentValue) => {
-                            setValueInterestSelected(currentValue === valueInterestSelected ? "" : currentValue);
-                            setOpenValueInterest(false);
-                          }}
-                        >
-                          {framework.label}
-                          <Check
-                            className={cn(
-                              "ml-auto",
-                              valueInterestSelected === framework.value ? "opacity-100" : "opacity-0",
-                            )}
-                          />
-                        </CommandItem>
-                      ))}
-                    </CommandGroup>
-                  </CommandList>
-                </Command>
-              </PopoverContent>
-            </Popover>
+            <div>
+              <select
+                className="w-auto cursor-pointer rounded-md border px-4 py-2 text-[14px] focus:border focus-visible:border focus-visible:outline-none dark:bg-gray-600 dark:text-white"
+                value={valueInterestSelected}
+                onChange={(e) => setValueInterestSelected(e.target.value)}
+              >
+                {valueInterestRate.map((interest) => (
+                  <option key={interest.value} value={interest.value}>
+                    {interest.label}
+                  </option>
+                ))}
+              </select>
+            </div>
           }
         />
 
@@ -206,50 +126,19 @@ export default function CalcCompoundInterest() {
           htmlFor="quantidade-meses"
           name="months"
           options={
-            <Popover open={openValueTimes} onOpenChange={setOpenValueTimes}>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  role="combobox"
-                  aria-expanded={openValueTimes ? true : false}
-                  className="w-24 justify-between dark:bg-gray-600 dark:text-gray-100"
-                  onClick={() => {
-                    if (!valueTimesSelected) setValueTimesSelected("month");
-                  }}
-                >
-                  {valueTimesSelected
-                    ? (valueTimes.find((framework) => framework.value === valueTimesSelected)?.label as string)
-                    : "Mês (s)"}
-                  <ChevronsUpDown className="opacity-50" />
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0">
-                <Command>
-                  <CommandList>
-                    <CommandGroup>
-                      {valueTimes.map((framework) => (
-                        <CommandItem
-                          key={framework.value}
-                          value={framework.value}
-                          onSelect={(currentValue) => {
-                            setValueTimesSelected(currentValue === valueTimesSelected ? "" : currentValue);
-                            setOpenValueTimes(false);
-                          }}
-                        >
-                          {framework.label}
-                          <Check
-                            className={cn(
-                              "ml-auto",
-                              valueTimesSelected === framework.value ? "opacity-100" : "opacity-0",
-                            )}
-                          />
-                        </CommandItem>
-                      ))}
-                    </CommandGroup>
-                  </CommandList>
-                </Command>
-              </PopoverContent>
-            </Popover>
+            <div>
+              <select
+                className="w-auto cursor-pointer rounded-md border px-4 py-2 text-[14px] focus:border focus-visible:border focus-visible:outline-none dark:bg-gray-600 dark:text-white"
+                value={valueTimesSelected}
+                onChange={(e) => setValueTimesSelected(e.target.value)}
+              >
+                {valueTimes.map((interest) => (
+                  <option key={interest.value} value={interest.value}>
+                    {interest.label}
+                  </option>
+                ))}
+              </select>
+            </div>
           }
         />
       </div>
@@ -375,4 +264,45 @@ export default function CalcCompoundInterest() {
       )}
     </form>
   );
+
+  function submit(e: SchemaDataType) {
+    const { valueInitial, valueMonthly, interestRate, months } = e;
+
+    let totalAmount = 0;
+    let accumulatedInterest = 0;
+
+    const monthRate =
+      valueInterestSelected === "monthly" ? interestRate / 100 : Math.pow(1 + interestRate / 100, 1 / 12) - 1;
+
+    const monthsLoop = valueTimesSelected === "month" ? months : months * 12;
+
+    let amountFromInitial = valueInitial;
+    let amountFromMonthlyContributions = valueInitial;
+    let calcRateMonthAccumulate = 0;
+
+    const monthlyInterestData = [];
+
+    for (let i = 1; i <= monthsLoop; i++) {
+      amountFromInitial += valueMonthly;
+      const calcRateMonth = amountFromMonthlyContributions * monthRate;
+      calcRateMonthAccumulate += calcRateMonth;
+      amountFromMonthlyContributions = amountFromInitial + calcRateMonthAccumulate;
+
+      totalAmount = amountFromMonthlyContributions;
+      accumulatedInterest = calcRateMonthAccumulate;
+
+      monthlyInterestData.push({
+        month: i,
+        totalAmount: amountFromInitial,
+        accumulatedInterest: Number(accumulatedInterest),
+      });
+    }
+
+    setMonthlyData(monthlyInterestData);
+    setValuesInterest([
+      Number(totalAmount.toFixed(2)),
+      Number(accumulatedInterest.toFixed(2)),
+      Number(valueMonthly * monthsLoop + valueInitial),
+    ]);
+  }
 }
