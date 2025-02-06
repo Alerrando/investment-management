@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { BriefcaseBusiness, Search, Sparkles } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import { getListFiis } from "@/api/getListFiis";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { ListCryptoModel } from "@/models/Lists/ListCryptoModel";
 import { ListFiisModelContent } from "@/models/Lists/ListFiisModel";
@@ -46,8 +45,8 @@ export default function AssetManagement() {
   const [showBag, setShowBag] = useState(false);
   const [showBagContent, setShowBagContent] = useState(false);
   const [assetsData, setAssetsData] = useState<AssetManagementProps>({} as AssetManagementProps);
-  const { isLoadingListFiis } = useListFiis();
-  const { isLoadingListStocks } = useListStocks();
+  const { isLoadingListFiis, dataListFiis } = useListFiis();
+  const { isLoadingListStocks, dataListStocks } = useListStocks();
   const { isLoadingListCrypto, dataListCrypto } = useListCrypto();
 
   useEffect(() => {
@@ -81,10 +80,19 @@ export default function AssetManagement() {
     if (!isLoadingListFiis) {
       setAssetsData((prevData) => ({
         ...prevData,
-        Fiis: getListFiis(),
+        Fiis: dataListFiis,
       }));
     }
   }, [isLoadingListFiis]);
+
+  useEffect(() => {
+    if (!isLoadingListStocks) {
+      setAssetsData((prevData) => ({
+        ...prevData,
+        Ações: dataListStocks,
+      }));
+    }
+  }, [isLoadingListStocks]);
 
   const filteredAssets: ListCryptoModel[] | ListFiisModelContent[] | ListStockModelContent[] | any[] = assetsData[
     activeTab as keyof AssetManagementProps
