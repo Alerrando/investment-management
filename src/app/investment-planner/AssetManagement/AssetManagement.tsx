@@ -10,6 +10,7 @@ import { ListStockModelContent } from "@/models/Lists/ListStockModel";
 import { useListCrypto } from "@/provider/ListCryptoProvider";
 import { useListFiis } from "@/provider/ListFiisProvider";
 import { useListStocks } from "@/provider/ListStockProvider";
+import { useRecommendationFiis } from "@/provider/Recommendation/RecommendationFiisProvider";
 import { useRecommendationStocks } from "@/provider/Recommendation/RecommendationStockProvider";
 
 import BagContent from "./BagContent/BagContent";
@@ -51,6 +52,7 @@ export default function AssetManagement() {
   const { isLoadingListCrypto, dataListCrypto } = useListCrypto();
   const { mutateRecommendationStock, dataRecommendationStock, isLoadingRecommendationStocks } =
     useRecommendationStocks();
+  const { mutateRecommendationFiis } = useRecommendationFiis();
 
   useEffect(() => {
     if (animatedIcon) {
@@ -105,8 +107,6 @@ export default function AssetManagement() {
       : asset.paper.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
-  console.log(dataRecommendationStock, isLoadingRecommendationStocks);
-
   return (
     <div className="flex w-full flex-col gap-6 py-6 dark:bg-gray-900 dark:text-white">
       <div className="flex gap-4 border-b dark:border-gray-700">
@@ -155,7 +155,12 @@ export default function AssetManagement() {
         {!isLoadingListFiis && activeTab === "Fiis" ? (
           <TableFiis filteredAssets={filteredAssets as ListFiisModelContent[]} handleAddToBag={handleAddToBag} />
         ) : !isLoadingListStocks && activeTab === "Ações" ? (
-          <TableStock filteredAssets={filteredAssets as ListStockModelContent[]} handleAddToBag={handleAddToBag} />
+          <TableStock
+            filteredAssets={filteredAssets as ListStockModelContent[]}
+            handleAddToBag={handleAddToBag}
+            dataRecommendationStock={dataRecommendationStock}
+            isLoadingRecommendationStocks={isLoadingRecommendationStocks}
+          />
         ) : !isLoadingListCrypto && activeTab === "Cryptos" ? (
           <TableCrypto filteredAssets={filteredAssets as ListCryptoModel[]} handleAddToBag={handleAddToBag} />
         ) : (
@@ -226,9 +231,13 @@ export default function AssetManagement() {
   }
 
   async function recommendationsInvestment() {
-    const aux = bag.filter((item) => item.assets === "Ações");
-    const stocks = dataListStocks.filter((stock) => aux.some((item) => item.name === stock.paper));
-    if (aux.length > 0) await mutateRecommendationStock(stocks as ListStockModelContent[]);
+    const auxStock = bag.filter((item) => item.assets === "Ações");
+    const stocks = dataListStocks.filter((stock) => auxStock.some((item) => item.name === stock.paper));
+    if (auxStock.length > 0) await mutateRecommendationStock(stocks as ListStockModelContent[]);
+
+    const auxFiis = bag.filter((item) => item.assets === "Fiis");
+    const fiis = dataListFiis.filter((fiis) => auxFiis.some((item) => item.name === fiis.name));
+    if (auxFiis.length > 0) await mutateRecommendationFiis(fiis as ListFiisModelContent[]);
   }
 
   function handleRemoveFromBag(assetName: string) {

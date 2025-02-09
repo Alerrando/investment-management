@@ -22,12 +22,14 @@ export const RecommendationStocksProvider = ({ children }: RecommendationStocksP
   const [dataRecommendationStock, setDataRecommendationStock] = useState<ListStockModelContent[]>(
     [] as ListStockModelContent[],
   );
+
   const { isLoading: isLoadingRecommendationStocks, mutateAsync: mutateRecommendationStock } = useMutationHook<
+    ListStockModelContent[],
     ListStockModelContent[]
   >({
     mutationKey: ["mutation-recommendation-stocks"],
     options: {
-      mutationFn: postRecommendationStock,
+      mutationFn: (stocks: ListStockModelContent[]) => postRecommendationStock(stocks),
       onSuccess(data) {
         setDataRecommendationStock(data);
       },

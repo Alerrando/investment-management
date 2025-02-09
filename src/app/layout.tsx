@@ -9,6 +9,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { ListCryptoProvider } from "@/provider/ListCryptoProvider";
 import { ListFiisProvider } from "@/provider/ListFiisProvider";
 import { ListStocksProvider } from "@/provider/ListStockProvider";
+import { RecommendationFiisProvider } from "@/provider/Recommendation/RecommendationFiisProvider";
 import { RecommendationStocksProvider } from "@/provider/Recommendation/RecommendationStockProvider";
 import { TanstackProvider } from "@/provider/tanstack-provider";
 
@@ -28,7 +29,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <ListCryptoProvider>
               <ListFiisProvider>
                 <ListStocksProvider>
-                  <RecommendationStocksProvider>{children}</RecommendationStocksProvider>
+                  <RecommendationStocksProvider>
+                    <RecommendationFiisProvider>{children}</RecommendationFiisProvider>
+                  </RecommendationStocksProvider>
                 </ListStocksProvider>
               </ListFiisProvider>
             </ListCryptoProvider>
