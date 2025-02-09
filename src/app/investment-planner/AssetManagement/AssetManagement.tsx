@@ -10,6 +10,7 @@ import { ListStockModelContent } from "@/models/Lists/ListStockModel";
 import { useListCrypto } from "@/provider/ListCryptoProvider";
 import { useListFiis } from "@/provider/ListFiisProvider";
 import { useListStocks } from "@/provider/ListStockProvider";
+import { useRecommendationStocks } from "@/provider/Recommendation/RecommendationStockProvider";
 
 import BagContent from "./BagContent/BagContent";
 import TableCrypto from "./TableCrypto/TableCrypto";
@@ -48,6 +49,8 @@ export default function AssetManagement() {
   const { isLoadingListFiis, dataListFiis } = useListFiis();
   const { isLoadingListStocks, dataListStocks } = useListStocks();
   const { isLoadingListCrypto, dataListCrypto } = useListCrypto();
+  const { mutateRecommendationStock, dataRecommendationStock, isLoadingRecommendationStocks } =
+    useRecommendationStocks();
 
   useEffect(() => {
     if (animatedIcon) {
@@ -102,33 +105,7 @@ export default function AssetManagement() {
       : asset.paper.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
-  const handleAddToBag = (asset: ListCryptoModel | ListFiisModelContent | ListStockModelContent | any) => {
-    if (!bag.some((item) => item.name === asset.name || item.name === asset.paper)) {
-      const aux: BagProps = {
-        image: asset.image && asset.image,
-        name: asset.name || asset.paper,
-        marketValue: asset.marketValue
-          ? asset.marketValue
-          : (asset.marketCap.replace("$", "").replace("M", "") * 1000000).toString(),
-        quantity: 1,
-        assets: activeTab,
-        quotation: asset.quotation ? parseFloat(asset.quotation) : asset.price,
-      };
-      setBag([...bag, aux]);
-      setQuantity({ ...quantity, [aux.name]: 0 });
-      setAnimatedIcon(true);
-    }
-  };
-
-  const handleRemoveFromBag = (assetName: string) => {
-    setBag(bag.filter((item) => item.name !== assetName));
-    const newQuantity = { ...quantity };
-    setQuantity(newQuantity);
-  };
-
-  const handleQuantityChange = (assetName: string, value: number) => {
-    setQuantity({ ...quantity, [assetName]: value });
-  };
+  console.log(dataRecommendationStock, isLoadingRecommendationStocks);
 
   return (
     <div className="flex w-full flex-col gap-6 py-6 dark:bg-gray-900 dark:text-white">
@@ -150,7 +127,11 @@ export default function AssetManagement() {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger className="ml-auto flex items-center justify-end">
-              <Sparkles size={24} className="cursor-pointer text-purple-600 dark:text-purple-400" />
+              <Sparkles
+                size={24}
+                className="cursor-pointer text-purple-600 dark:text-purple-400"
+                onClick={() => recommendationsInvestment()}
+              />
             </TooltipTrigger>
             <TooltipContent>
               <p>Adicionar Recomendações</p>
@@ -225,4 +206,38 @@ export default function AssetManagement() {
       )}
     </div>
   );
+
+  function handleAddToBag(asset: ListCryptoModel | ListFiisModelContent | ListStockModelContent | any) {
+    if (!bag.some((item) => item.name === asset.name || item.name === asset.paper)) {
+      const aux: BagProps = {
+        image: asset.image && asset.image,
+        name: asset.name || asset.paper,
+        marketValue: asset.marketValue
+          ? asset.marketValue
+          : (asset.marketCap.replace("$", "").replace("M", "") * 1000000).toString(),
+        quantity: 1,
+        assets: activeTab,
+        quotation: asset.quotation ? parseFloat(asset.quotation) : asset.price,
+      };
+      setBag([...bag, aux]);
+      setQuantity({ ...quantity, [aux.name]: 0 });
+      setAnimatedIcon(true);
+    }
+  }
+
+  async function recommendationsInvestment() {
+    const aux = bag.filter((item) => item.assets === "Ações");
+    const stocks = dataListStocks.filter((stock) => aux.some((item) => item.name === stock.paper));
+    if (aux.length > 0) await mutateRecommendationStock(stocks as ListStockModelContent[]);
+  }
+
+  function handleRemoveFromBag(assetName: string) {
+    setBag(bag.filter((item) => item.name !== assetName));
+    const newQuantity = { ...quantity };
+    setQuantity(newQuantity);
+  }
+
+  function handleQuantityChange(assetName: string, value: number) {
+    setQuantity({ ...quantity, [assetName]: value });
+  }
 }

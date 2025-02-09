@@ -9,6 +9,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { ListCryptoProvider } from "@/provider/ListCryptoProvider";
 import { ListFiisProvider } from "@/provider/ListFiisProvider";
 import { ListStocksProvider } from "@/provider/ListStockProvider";
+import { RecommendationStocksProvider } from "@/provider/Recommendation/RecommendationStockProvider";
 import { TanstackProvider } from "@/provider/tanstack-provider";
 
 const poppins = Poppins({
@@ -26,7 +27,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <TanstackProvider>
             <ListCryptoProvider>
               <ListFiisProvider>
-                <ListStocksProvider>{children}</ListStocksProvider>
+                <ListStocksProvider>
+                  <RecommendationStocksProvider>{children}</RecommendationStocksProvider>
+                </ListStocksProvider>
               </ListFiisProvider>
             </ListCryptoProvider>
           </TanstackProvider>
