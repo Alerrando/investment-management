@@ -10,6 +10,7 @@ import { ListStockModelContent } from "@/models/Lists/ListStockModel";
 import { useListCrypto } from "@/provider/ListCryptoProvider";
 import { useListFiis } from "@/provider/ListFiisProvider";
 import { useListStocks } from "@/provider/ListStockProvider";
+import { useRecommendationCrypto } from "@/provider/Recommendation/RecommendationCryptoProvider";
 import { useRecommendationFiis } from "@/provider/Recommendation/RecommendationFiisProvider";
 import { useRecommendationStocks } from "@/provider/Recommendation/RecommendationStockProvider";
 
@@ -50,9 +51,9 @@ export default function AssetManagement() {
   const { isLoadingListFiis, dataListFiis } = useListFiis();
   const { isLoadingListStocks, dataListStocks } = useListStocks();
   const { isLoadingListCrypto, dataListCrypto } = useListCrypto();
-  const { mutateRecommendationStock, dataRecommendationStock, isLoadingRecommendationStocks } =
-    useRecommendationStocks();
-  const { mutateRecommendationFiis } = useRecommendationFiis();
+  const { mutateRecommendationStock, dataRecommendationStock } = useRecommendationStocks();
+  const { mutateRecommendationFiis, dataRecommendationFiis } = useRecommendationFiis();
+  const { mutateRecommendationCrypto, dataRecommendationCrypto } = useRecommendationCrypto();
 
   useEffect(() => {
     if (animatedIcon) {
@@ -153,16 +154,23 @@ export default function AssetManagement() {
 
       <div className="h-72 overflow-auto rounded-lg border border-gray-300 shadow-sm dark:border-gray-700">
         {!isLoadingListFiis && activeTab === "Fiis" ? (
-          <TableFiis filteredAssets={filteredAssets as ListFiisModelContent[]} handleAddToBag={handleAddToBag} />
+          <TableFiis
+            filteredAssets={filteredAssets as ListFiisModelContent[]}
+            handleAddToBag={handleAddToBag}
+            dataRecommendationFiis={dataRecommendationFiis}
+          />
         ) : !isLoadingListStocks && activeTab === "Ações" ? (
           <TableStock
             filteredAssets={filteredAssets as ListStockModelContent[]}
             handleAddToBag={handleAddToBag}
             dataRecommendationStock={dataRecommendationStock}
-            isLoadingRecommendationStocks={isLoadingRecommendationStocks}
           />
         ) : !isLoadingListCrypto && activeTab === "Cryptos" ? (
-          <TableCrypto filteredAssets={filteredAssets as ListCryptoModel[]} handleAddToBag={handleAddToBag} />
+          <TableCrypto
+            filteredAssets={filteredAssets as ListCryptoModel[]}
+            handleAddToBag={handleAddToBag}
+            dataRecommendationCrypto={dataRecommendationCrypto}
+          />
         ) : (
           <div className="flex h-full w-full items-center justify-center">
             <div
@@ -236,8 +244,12 @@ export default function AssetManagement() {
     if (auxStock.length > 0) await mutateRecommendationStock(stocks as ListStockModelContent[]);
 
     const auxFiis = bag.filter((item) => item.assets === "Fiis");
-    const fiis = dataListFiis.filter((fiis) => auxFiis.some((item) => item.name === fiis.name));
+    const fiis = dataListFiis.filter((fiis) => auxFiis.some((item) => item.name === fiis.paper));
     if (auxFiis.length > 0) await mutateRecommendationFiis(fiis as ListFiisModelContent[]);
+
+    const auxCrypto = bag.filter((item) => item.assets === "Cryptos");
+    const crypto = dataListCrypto.filter((crypto) => auxCrypto.some((item) => item.name === crypto.name));
+    if (auxCrypto.length > 0) await mutateRecommendationCrypto(crypto as ListCryptoModel[]);
   }
 
   function handleRemoveFromBag(assetName: string) {

@@ -9,15 +9,9 @@ interface TableStockProps {
   filteredAssets: ListStockModelContent[];
   handleAddToBag: (asset: ListCryptoModel | ListFiisModel | ListStockModelContent | any) => void;
   dataRecommendationStock: ListStockModelContent[];
-  isLoadingRecommendationStocks: boolean;
 }
 
-export default function TableStock({
-  filteredAssets,
-  handleAddToBag,
-  isLoadingRecommendationStocks,
-  dataRecommendationStock,
-}: TableStockProps) {
+export default function TableStock({ filteredAssets, handleAddToBag, dataRecommendationStock }: TableStockProps) {
   const top5RecommendationStocks = dataRecommendationStock?.slice(0, 5);
 
   const filteredAssetsWithoutTop5Recommendations = filteredAssets?.filter(
@@ -37,7 +31,7 @@ export default function TableStock({
       </thead>
 
       <tbody>
-        {!isLoadingRecommendationStocks && dataRecommendationStock?.length > 0 && (
+        {dataRecommendationStock?.length > 0 && (
           <>
             {dataRecommendationStock
               .filter((_, index) => index <= 5)
@@ -88,7 +82,7 @@ export default function TableStock({
                     </button>
                   </td>
 
-                  <TableCell className="absolute right-[1%] top-[15%]">
+                  <TableCell className="absolute right-[1%] top-[15%] text-purple-600">
                     <Sparkles size={24} />
                   </TableCell>
                 </tr>
