@@ -68,8 +68,6 @@ export default function AssetManagement() {
     if (showBag) {
       const timer = setTimeout(() => setShowBagContent(true), 1200);
       return () => clearTimeout(timer);
-    } else {
-      setShowBagContent(false);
     }
   }, [showBag]);
 
@@ -213,7 +211,7 @@ export default function AssetManagement() {
           bag={bag}
           handleQuantityChange={handleQuantityChange}
           handleRemoveFromBag={handleRemoveFromBag}
-          setShowBag={setShowBag}
+          setShowBag={setShowBagContent}
           quantity={quantity}
         />
       )}

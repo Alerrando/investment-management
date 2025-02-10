@@ -22,6 +22,7 @@ export const RecommendationCryptoProvider = ({ children }: RecommendationCryptoP
   const [dataRecommendationCrypto, setDataRecommendationCrypto] = useState<ListCryptoModel[]>([]);
 
   const { isLoading: isLoadingRecommendationCrypto, mutateAsync: mutateRecommendationCrypto } = useMutationHook<
+    ListCryptoModel[],
     ListCryptoModel[]
   >({
     mutationKey: ["mutation-recommendation-crypto"],

@@ -24,6 +24,7 @@ export const RecommendationFiisProvider = ({ children }: RecommendationFiisProvi
   );
 
   const { isLoading: isLoadingRecommendationFiis, mutateAsync: mutateRecommendationFiis } = useMutationHook<
+    ListFiisModelContent[],
     ListFiisModelContent[]
   >({
     mutationKey: ["mutation-recommendation-fiis"],
