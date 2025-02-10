@@ -47,7 +47,11 @@ export default function Home() {
           </div>
 
           <div className="ronuded-full flex w-1/3 items-center rounded-full border border-zinc-700 px-4 py-1.5">
-            <input type="text" placeholder="Buscar Ativo" className="w-full border-none text-base outline-none" />
+            <input
+              type="text"
+              placeholder="Buscar Ativo"
+              className="w-full border-none bg-transparent text-base outline-none"
+            />
 
             <Search size={16} />
           </div>

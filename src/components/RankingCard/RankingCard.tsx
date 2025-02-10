@@ -23,11 +23,16 @@ export default function RankingCard({ title, data, onViewAll, styleRankingCard }
   }
 
   return (
-    <div className={twMerge("w-full rounded-lg border p-4 shadow-sm", styleRankingCard)}>
+    <div
+      className={twMerge(
+        "z-30 w-full rounded-lg border p-4 shadow-sm dark:border-[#444444] dark:bg-[#2C2C2C]",
+        styleRankingCard,
+      )}
+    >
       <header className="mb-4 flex items-center justify-between">
         <h2 className="text-lg font-semibold">{title}</h2>
         <button
-          className="rounded-md border px-3 py-1 text-sm font-medium text-gray-600 hover:bg-gray-100"
+          className="rounded-md border px-3 py-1 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:bg-[#222] dark:text-gray-300 dark:hover:bg-[#444444]"
           onClick={onViewAll}
         >
           View All

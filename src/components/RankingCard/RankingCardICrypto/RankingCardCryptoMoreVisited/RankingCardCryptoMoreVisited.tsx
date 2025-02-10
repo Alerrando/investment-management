@@ -17,11 +17,16 @@ export default function RankingCardCryptoMoreVisited({
   styleRankingCard,
 }: RankingCardCryptoMoreVisitedProps) {
   return (
-    <div className={twMerge("h-60 w-full overflow-y-auto rounded-lg border p-4 shadow-sm", styleRankingCard)}>
+    <div
+      className={twMerge(
+        "h-60 w-full overflow-y-auto rounded-lg border p-4 shadow-sm dark:border-[#444444] dark:bg-[#2C2C2C]",
+        styleRankingCard,
+      )}
+    >
       <header className="mb-4 flex items-center justify-between">
-        <h2 className="text-lg font-semibold">{title}</h2>
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{title}</h2>
         <button
-          className="rounded-md border px-3 py-1 text-sm font-medium text-gray-600 hover:bg-gray-100"
+          className="rounded-md border px-3 py-1 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:bg-[#222] dark:text-gray-300 dark:hover:bg-[#444444]"
           onClick={onViewAll}
         >
           View All
@@ -30,13 +35,13 @@ export default function RankingCardCryptoMoreVisited({
 
       <Table className="w-full overflow-auto">
         <TableHeader>
-          <TableRow className="border-b-[#F2F2F2]">
-            <TableHead>Nome</TableHead>
-            <TableHead>Cap. de Mercado</TableHead>
-            <TableHead>Volume</TableHead>
-            <TableHead>Fornecimento total</TableHead>
-            <TableHead>FDV</TableHead>
-            <TableHead>Preço</TableHead>
+          <TableRow className="border-b-[#F2F2F2] dark:border-b-[#444444]">
+            <TableHead className="text-gray-900 dark:text-white">Nome</TableHead>
+            <TableHead className="text-gray-900 dark:text-white">Cap. de Mercado</TableHead>
+            <TableHead className="text-gray-900 dark:text-white">Volume</TableHead>
+            <TableHead className="text-gray-900 dark:text-white">Fornecimento total</TableHead>
+            <TableHead className="text-gray-900 dark:text-white">FDV</TableHead>
+            <TableHead className="text-gray-900 dark:text-white">Preço</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -46,18 +51,18 @@ export default function RankingCardCryptoMoreVisited({
               .sort((item1, item2) => item2.price - item1.price)
               .filter((_, index) => index < 3)
               .map((item: ListCryptoModel, index) => (
-                <TableRow className="border-b-[#F2F2F2]" key={index}>
-                  <TableCell>
+                <TableRow className="border-b-[#F2F2F2] dark:border-b-[#444444]" key={index}>
+                  <TableCell className="text-gray-900 dark:text-white">
                     <div className="flex h-full items-center justify-start gap-2">
                       <img src={item.image} alt="" className="h-8 w-8" />
                       <div className="flex h-full flex-col justify-between py-2">
-                        <span className="text-[9px] text-black/60">Proof of Stake</span>
+                        <span className="text-[9px] text-black/60 dark:text-gray-400">Proof of Stake</span>
                         <h2 className="text-[10px]">{item.name}</h2>
                       </div>
                     </div>
                   </TableCell>
 
-                  <TableCell>
+                  <TableCell className="text-gray-900 dark:text-white">
                     <div className="flex flex-col justify-center">
                       <span>{item.marketCap}</span>
                       <span
@@ -68,7 +73,7 @@ export default function RankingCardCryptoMoreVisited({
                     </div>
                   </TableCell>
 
-                  <TableCell>
+                  <TableCell className="text-gray-900 dark:text-white">
                     <div className="flex w-fit flex-col items-end">
                       <span>{item.volume}</span>
                       <span
@@ -79,12 +84,12 @@ export default function RankingCardCryptoMoreVisited({
                     </div>
                   </TableCell>
 
-                  <TableCell>
+                  <TableCell className="text-gray-900 dark:text-white">
                     <span className="text-center">{item.circulatingSupply || "---"}</span>
                   </TableCell>
 
-                  <TableCell>{item.fdv || "---"}</TableCell>
-                  <TableCell>${item.price.toFixed(2)}</TableCell>
+                  <TableCell className="text-gray-900 dark:text-white">{item.fdv || "---"}</TableCell>
+                  <TableCell className="text-gray-900 dark:text-white">${item.price.toFixed(2)}</TableCell>
                 </TableRow>
               ))}
         </TableBody>
