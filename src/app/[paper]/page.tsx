@@ -141,12 +141,12 @@ export default function StockDetail() {
           />
           {stockData.financialData ? (
             <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {Object.entries(stockData.financialData).map(([key, value]: string) => (
+              {Object.entries(stockData.financialData).map(([key, value]: [string, unknown]) => (
                 <div key={key} className="rounded-lg bg-white p-4 shadow-lg dark:bg-gray-800">
                   <h3 className="text-lg font-semibold capitalize text-indigo-600 dark:text-indigo-400">
                     {key.replace(/([A-Z])/g, " $1")}
                   </h3>
-                  <p className="text-xl font-bold text-gray-700 dark:text-gray-300">{value}</p>
+                  <p className="text-xl font-bold text-gray-700 dark:text-gray-300">{String(value)}</p>
                 </div>
               ))}
             </div>
