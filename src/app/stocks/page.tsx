@@ -110,7 +110,7 @@ export default function AllStocksPage() {
 
                     <td className="px-6 py-4">{stock.revenueGrowth5Years}</td>
 
-                    <td className="px-6 py-4">{parseFloat(stock.liquityDebtEbitida || 0.0).toFixed(2)}</td>
+                    <td className="px-6 py-4">{parseFloat(stock.liquityDebtEbitida || "0").toFixed(2)}</td>
 
                     <TableCell className="pl-4">
                       <div className="flex flex-col items-end">
