@@ -46,7 +46,7 @@ export default function TableFiis({ filteredAssets, handleAddToBag, dataRecommen
                 </div>
               </TableCell>
 
-              <td className="px-4 py-3">R$ {parseFloat(asset.quotation).toFixed(2)}</td>
+              <td className="px-4 py-3">R$ {asset.quotation.toFixed(2)}</td>
 
               <TableCell className="pl-4">
                 {asset.dividend && (
