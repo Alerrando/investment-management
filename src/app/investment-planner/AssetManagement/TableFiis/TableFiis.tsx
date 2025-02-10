@@ -60,7 +60,7 @@ export default function TableFiis({ filteredAssets, handleAddToBag, dataRecommen
                 {asset.marketValue && (
                   <div className="flex w-fit flex-col items-end">
                     <span>
-                      {parseFloat(asset.marketValue).toLocaleString("pt-BR", {
+                      {asset.marketValue.toLocaleString("pt-BR", {
                         style: "currency",
                         currency: "BRL",
                       })}
