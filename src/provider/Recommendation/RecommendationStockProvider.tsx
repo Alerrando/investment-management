@@ -25,6 +25,7 @@ export const RecommendationStocksProvider = ({ children }: RecommendationStocksP
 
   const { isLoading: isLoadingRecommendationStocks, mutateAsync: mutateRecommendationStock } = useMutationHook<
     ListStockModelContent[],
+    unknown,
     ListStockModelContent[]
   >({
     mutationKey: ["mutation-recommendation-stocks"],

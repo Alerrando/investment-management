@@ -23,6 +23,7 @@ export const RecommendationCryptoProvider = ({ children }: RecommendationCryptoP
 
   const { isLoading: isLoadingRecommendationCrypto, mutateAsync: mutateRecommendationCrypto } = useMutationHook<
     ListCryptoModel[],
+    unknown,
     ListCryptoModel[]
   >({
     mutationKey: ["mutation-recommendation-crypto"],

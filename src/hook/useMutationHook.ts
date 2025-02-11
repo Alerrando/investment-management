@@ -6,5 +6,5 @@ export const useMutationHook = <TData = unknown, TError = unknown, TVariables = 
   mutationKey,
   options,
 }: MutationModel<TData, TError, TVariables>): UseMutationResult<TData, TError, TVariables> => {
-  return useMutation<TData, TError, TVariables>(mutationKey, options);
+  return useMutation<TData, TError, TVariables>({ mutationKey, ...options });
 };
