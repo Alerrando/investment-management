@@ -10,7 +10,7 @@ import { signUp, SignUpProps } from "@/api/sign-up";
 import { ReturnResponseUser, UserModel } from "@/models/UserModel";
 
 interface ContextProps {
-  dataUser: UserModel[];
+  dataUser: UserModel;
   isLoadingUserSignIn: boolean;
   mutateSignIn: (data: SignInProps) => Promise<void>;
   isLoadingUserSignUp: boolean;
