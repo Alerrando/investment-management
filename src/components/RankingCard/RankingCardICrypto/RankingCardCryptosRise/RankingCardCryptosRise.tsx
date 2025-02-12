@@ -34,10 +34,10 @@ export default function RankingCardCryptosRise({
       <ul className="flex w-full items-center justify-between gap-10 overflow-auto">
         {data &&
           data
-            .filter((item: any, index, self) => index === self.findIndex((t: any) => t.name === item.name))
-            .sort((item1, item2) => item2.price - item1.price)
-            .filter((_, index) => index < 3)
-            .map((item, index) => (
+            ?.filter((item: any, index, self) => index === self.findIndex((t: any) => t.name === item.name))
+            ?.sort((item1, item2) => item2.price - item1.price)
+            ?.filter((_, index) => index < 3)
+            ?.map((item, index) => (
               <div
                 className="flex w-full flex-col gap-8 rounded-lg border px-2 py-3 dark:border-[#444444] dark:bg-[#444444]"
                 key={index}

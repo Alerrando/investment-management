@@ -13,6 +13,7 @@ import { RecommendationCryptoProvider } from "@/provider/Recommendation/Recommen
 import { RecommendationFiisProvider } from "@/provider/Recommendation/RecommendationFiisProvider";
 import { RecommendationStocksProvider } from "@/provider/Recommendation/RecommendationStockProvider";
 import { TanstackProvider } from "@/provider/tanstack-provider";
+import { UserProvider } from "@/provider/UserProvider";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -25,19 +26,24 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="pt-br">
       <body className={`${poppins.variable} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <Header />
           <TanstackProvider>
-            <ListCryptoProvider>
-              <ListFiisProvider>
-                <ListStocksProvider>
-                  <RecommendationStocksProvider>
-                    <RecommendationFiisProvider>
-                      <RecommendationCryptoProvider>{children}</RecommendationCryptoProvider>
-                    </RecommendationFiisProvider>
-                  </RecommendationStocksProvider>
-                </ListStocksProvider>
-              </ListFiisProvider>
-            </ListCryptoProvider>
+            <UserProvider>
+              <ListCryptoProvider>
+                <ListFiisProvider>
+                  <ListStocksProvider>
+                    <RecommendationStocksProvider>
+                      <RecommendationFiisProvider>
+                        <RecommendationCryptoProvider>
+                          <Header />
+
+                          {children}
+                        </RecommendationCryptoProvider>
+                      </RecommendationFiisProvider>
+                    </RecommendationStocksProvider>
+                  </ListStocksProvider>
+                </ListFiisProvider>
+              </ListCryptoProvider>
+            </UserProvider>
           </TanstackProvider>
         </ThemeProvider>
       </body>

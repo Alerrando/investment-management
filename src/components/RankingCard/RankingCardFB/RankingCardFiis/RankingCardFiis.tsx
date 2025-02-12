@@ -39,10 +39,10 @@ export default function RankingCardFiis({ title, data, onViewAll, styleRankingCa
         <TableBody>
           {data &&
             data
-              .filter((item, index, self) => index === self.findIndex((t) => t.name === item.name))
-              .sort((item1, item2) => item2.price - item1.price)
-              .filter((_, index) => index < 3)
-              .map((item: ListCryptoModel, index) => (
+              ?.filter((item, index, self) => index === self.findIndex((t) => t.name === item.name))
+              ?.sort((item1, item2) => item2.price - item1.price)
+              ?.filter((_, index) => index < 3)
+              ?.map((item: ListCryptoModel, index) => (
                 <TableRow className="border-b-[#F2F2F2] dark:border-b-[#444444]" key={index}>
                   <TableCell className="text-gray-900 dark:text-white">
                     <div className="flex h-full items-center justify-start gap-2">
