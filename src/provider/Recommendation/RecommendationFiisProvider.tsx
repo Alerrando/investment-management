@@ -1,9 +1,9 @@
 "use client";
 
+import { useMutation } from "@tanstack/react-query";
 import React, { createContext, useContext, useState } from "react";
 
 import { postRecommendationFiis } from "@/api/postRecommendationFiis";
-import { useMutationHook } from "@/hook/useMutationHook";
 import { ListFiisModelContent } from "@/models/Lists/ListFiisModel";
 
 interface ContextProps {
@@ -23,17 +23,11 @@ export const RecommendationFiisProvider = ({ children }: RecommendationFiisProvi
     [] as ListFiisModelContent[],
   );
 
-  const { isLoading: isLoadingRecommendationFiis, mutateAsync: mutateRecommendationFiis } = useMutationHook<
-    ListFiisModelContent[],
-    unknown,
-    ListFiisModelContent[]
-  >({
+  const { isLoading: isLoadingRecommendationFiis, mutateAsync: mutateRecommendationFiis } = useMutation({
     mutationKey: ["mutation-recommendation-fiis"],
-    options: {
-      mutationFn: (fiis: ListFiisModelContent[]) => postRecommendationFiis(fiis),
-      onSuccess(data) {
-        setDataRecommendationFiis(data);
-      },
+    mutationFn: (fiis: ListFiisModelContent[]) => postRecommendationFiis(fiis),
+    onSuccess(data) {
+      setDataRecommendationFiis(data);
     },
   });
 

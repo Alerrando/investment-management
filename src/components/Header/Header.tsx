@@ -49,7 +49,7 @@ export default function Header() {
 
       {open && (
         <Dialog open={open} onOpenChange={setOpen}>
-          <DialogContent className="transform bg-white backdrop-blur-sm transition-all duration-300 ease-in-out dark:bg-gray-900 sm:w-full sm:max-w-[425px] sm:rounded-lg sm:shadow-xl">
+          <DialogContent className="transform bg-white backdrop-blur-sm transition-all duration-300 ease-in-out dark:bg-gray-900 sm:w-full sm:max-w-[380px] sm:rounded-lg sm:shadow-xl">
             <DialogHeader className="pb-4 text-center">
               <DialogTitle className="text-xl font-semibold text-gray-800 dark:text-white">
                 Login / Register
@@ -86,7 +86,7 @@ export default function Header() {
               <TabsContent value="register" className="space-y-4">
                 <Input
                   type="text"
-                  placeholder="Name"
+                  placeholder="Nome"
                   className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#735ca5] dark:border-gray-700"
                 />
                 <Input

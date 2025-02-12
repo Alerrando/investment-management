@@ -1,9 +1,9 @@
 "use client";
 
+import { useMutation } from "@tanstack/react-query";
 import React, { createContext, useContext, useState } from "react";
 
 import { postRecommendationCrypto } from "@/api/postRecommendationCrypto";
-import { useMutationHook } from "@/hook/useMutationHook";
 import { ListCryptoModel } from "@/models/Lists/ListCryptoModel";
 
 interface ContextProps {
@@ -21,17 +21,11 @@ export const RecommendationCryptoProviderContext = createContext<ContextProps>({
 export const RecommendationCryptoProvider = ({ children }: RecommendationCryptoProviderProps) => {
   const [dataRecommendationCrypto, setDataRecommendationCrypto] = useState<ListCryptoModel[]>([]);
 
-  const { isLoading: isLoadingRecommendationCrypto, mutateAsync: mutateRecommendationCrypto } = useMutationHook<
-    ListCryptoModel[],
-    unknown,
-    ListCryptoModel[]
-  >({
+  const { isLoading: isLoadingRecommendationCrypto, mutateAsync: mutateRecommendationCrypto } = useMutation({
     mutationKey: ["mutation-recommendation-crypto"],
-    options: {
-      mutationFn: (cryptos: ListCryptoModel[]) => postRecommendationCrypto(cryptos),
-      onSuccess(data) {
-        setDataRecommendationCrypto(data);
-      },
+    mutationFn: (cryptos: ListCryptoModel[]) => postRecommendationCrypto(cryptos),
+    onSuccess(data) {
+      setDataRecommendationCrypto(data);
     },
   });
 

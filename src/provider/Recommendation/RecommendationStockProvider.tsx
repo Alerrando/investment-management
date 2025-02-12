@@ -1,9 +1,9 @@
 "use client";
 
+import { useMutation } from "@tanstack/react-query";
 import React, { createContext, useContext, useState } from "react";
 
 import { postRecommendationStock } from "@/api/postRecommendationStock";
-import { useMutationHook } from "@/hook/useMutationHook";
 import { ListStockModelContent } from "@/models/Lists/ListStockModel";
 
 interface ContextProps {
@@ -23,17 +23,11 @@ export const RecommendationStocksProvider = ({ children }: RecommendationStocksP
     [] as ListStockModelContent[],
   );
 
-  const { isLoading: isLoadingRecommendationStocks, mutateAsync: mutateRecommendationStock } = useMutationHook<
-    ListStockModelContent[],
-    unknown,
-    ListStockModelContent[]
-  >({
+  const { isLoading: isLoadingRecommendationStocks, mutateAsync: mutateRecommendationStock } = useMutation({
     mutationKey: ["mutation-recommendation-stocks"],
-    options: {
-      mutationFn: (stocks: ListStockModelContent[]) => postRecommendationStock(stocks),
-      onSuccess(data) {
-        setDataRecommendationStock(data);
-      },
+    mutationFn: (stocks: ListStockModelContent[]) => postRecommendationStock(stocks),
+    onSuccess(data) {
+      setDataRecommendationStock(data);
     },
   });
 
