@@ -8,7 +8,7 @@ import { ListFiisModelContent } from "@/models/Lists/ListFiisModel";
 
 interface ContextProps {
   dataRecommendationFiis: ListFiisModelContent[];
-  isLoadingRecommendationStocks: boolean;
+  isLoadingRecommendationFiis: boolean;
   mutateRecommendationFiis: (stocks: ListFiisModelContent[]) => Promise<void>;
 }
 
