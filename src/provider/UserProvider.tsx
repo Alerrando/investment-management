@@ -56,8 +56,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       );
     },
 
-    onError(error: any) {
-      toast.error(`${error.response.data.message}`, {
+    onError() {
+      toast.error(`Erro ao fazer login!`, {
         closeOnClick: true,
       });
     },

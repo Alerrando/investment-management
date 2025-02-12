@@ -63,7 +63,7 @@ export default function CalcCompoundInterest() {
 
   return (
     <form
-      className="flex w-full flex-col items-start justify-start gap-8 rounded-lg p-6 dark:bg-gray-700 dark:text-white"
+      className="flex w-full flex-col items-start justify-start gap-8 rounded-lg border border-gray-200 bg-[#f7f7f7] p-6 shadow-lg dark:border-gray-600 dark:bg-gray-700 dark:text-white"
       onSubmit={handleSubmit(submit)}
     >
       <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-200">Calculadora de Juros Compostos</h2>
