@@ -2,7 +2,10 @@
 
 import "./globals.css";
 
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Poppins } from "next/font/google";
+import { ToastContainer } from "react-toastify";
 
 import Header from "@/components/Header/Header";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -35,8 +38,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                       <RecommendationFiisProvider>
                         <RecommendationCryptoProvider>
                           <Header />
-
                           {children}
+                          <SpeedInsights />
+                          <Analytics />
+
+                          <ToastContainer position="bottom-right" />
                         </RecommendationCryptoProvider>
                       </RecommendationFiisProvider>
                     </RecommendationStocksProvider>
