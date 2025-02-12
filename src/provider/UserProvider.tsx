@@ -56,8 +56,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       );
     },
 
-    onError(error: ReturnResponseUser) {
-      toast.error(`${error.message}`, {
+    onError(error) {
+      toast.error(`${error.response.data.message}`, {
         closeOnClick: true,
       });
     },

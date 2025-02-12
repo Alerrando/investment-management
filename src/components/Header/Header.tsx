@@ -7,10 +7,14 @@ import { ModeToggle } from "../ui/mode-toggle";
 import ModalSign from "./ModalSign/ModalSign";
 
 export default function Header() {
-  const [open, setOpen] = useState({
-    modal: false,
-    sign: "",
-  });
+  const [sign, setSign] = useState<string>("login");
+
+  function openModal(type: string) {
+    const url = new URL(window.location.href);
+    url.searchParams.set("modal", type);
+    window.history.pushState({}, "", url.toString());
+    setSign(type);
+  }
 
   return (
     <header className="sticky top-0 z-10 flex w-full items-center justify-between border-b border-b-[#9265E2] bg-white px-8 py-2 dark:border-b-[#9265E2]/70 dark:bg-gray-900">
@@ -37,7 +41,7 @@ export default function Header() {
           <Button
             variant="default"
             className="h-auto bg-white px-6 py-1 font-semibold text-black shadow-md hover:bg-white hover:opacity-90"
-            onClick={() => setOpen({ ...open, modal: true, sign: "login" })}
+            onClick={() => openModal("login")}
           >
             Login
           </Button>
@@ -45,14 +49,14 @@ export default function Header() {
           <Button
             variant="default"
             className="h-auto rounded-lg border border-transparent bg-[#735ca5] px-6 py-1 font-semibold text-white shadow-lg hover:bg-[#735ca5] hover:opacity-90"
-            onClick={() => setOpen({ ...open, modal: true, sign: "register" })}
+            onClick={() => openModal("register")}
           >
             Register
           </Button>
         </div>
       </div>
 
-      {open.modal && <ModalSign open={open} setOpen={setOpen} />}
+      <ModalSign sign={sign} />
     </header>
   );
 }

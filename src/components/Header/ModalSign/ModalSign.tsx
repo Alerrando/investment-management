@@ -1,5 +1,6 @@
 "use client";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useSearchParams } from "next/navigation"; // Importando o hook para acessar searchParams
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 
@@ -10,11 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useUser } from "@/provider/UserProvider";
 
 interface ModalSignProps {
-  open: {
-    sign: string;
-    modal: boolean;
-  };
-  setOpen: ({ modal, sign }: { modal: boolean; sign: string }) => void;
+  sign: string;
 }
 
 const loginSchema = yup.object().shape({
@@ -29,8 +26,10 @@ const registerSchema = yup.object().shape({
 type SignInSchemaProps = yup.InferType<typeof loginSchema>;
 type SignUpSchemaProps = yup.InferType<typeof registerSchema>;
 
-export default function ModalSign({ open, setOpen }: ModalSignProps) {
-  const { mutateSignUp, isLoadingUserSignUp } = useUser();
+export default function ModalSign({ sign }: ModalSignProps) {
+  const { mutateSignUp, isLoadingUserSignUp, isLoadingUserSignIn, mutateSignIn } = useUser();
+  const searchParams = useSearchParams();
+  const isOpen = searchParams.has("modal") || false;
 
   const {
     control: controlLogin,
@@ -56,13 +55,13 @@ export default function ModalSign({ open, setOpen }: ModalSignProps) {
   });
 
   return (
-    <Dialog open={open.modal} onOpenChange={(isOpen) => setOpen((prevState) => ({ ...prevState, modal: isOpen }))}>
+    <Dialog open={isOpen} onOpenChange={handleModalClose}>
       <DialogContent className="transform bg-white backdrop-blur-sm transition-all duration-300 ease-in-out dark:bg-gray-900 sm:w-full sm:max-w-[380px] sm:rounded-lg sm:shadow-xl">
         <DialogHeader className="pb-4 text-center">
           <DialogTitle className="text-xl font-semibold text-gray-800 dark:text-white">Login / Register</DialogTitle>
         </DialogHeader>
 
-        <Tabs defaultValue={open.sign} className="w-full">
+        <Tabs defaultValue={sign} className="w-full">
           <TabsList className="mb-4 grid w-full grid-cols-2 gap-4">
             <TabsTrigger
               value="login"
@@ -94,7 +93,22 @@ export default function ModalSign({ open, setOpen }: ModalSignProps) {
               />
               {errorsLogin.email && <p className="text-xs text-red-500">{errorsLogin.email.message}</p>}
               <Button className="w-full rounded-lg bg-[#735ca5] py-3 text-white shadow-md hover:bg-[#735ca5]/90">
-                Login
+                {isLoadingUserSignIn ? (
+                  <div className="flex h-full w-full items-center justify-center gap-2">
+                    <div
+                      className="text-surface inline-block h-4 w-4 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white"
+                      role="status"
+                    >
+                      <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+                        Loading...
+                      </span>
+                    </div>
+
+                    <span>Carregando</span>
+                  </div>
+                ) : (
+                  "Login"
+                )}
               </Button>
             </form>
           </TabsContent>
@@ -154,11 +168,17 @@ export default function ModalSign({ open, setOpen }: ModalSignProps) {
     </Dialog>
   );
 
-  function onSubmitLogin(data: SignInSchemaProps) {
-    console.log("Login Data:", data);
+  async function onSubmitLogin(data: SignInSchemaProps) {
+    await mutateSignIn(data);
   }
 
   async function onSubmitRegister(data: SignUpSchemaProps) {
     await mutateSignUp(data);
+  }
+
+  function handleModalClose() {
+    const url = new URL(window.location.href);
+    url.searchParams.delete("modal");
+    window.history.pushState({}, "", url.toString());
   }
 }
