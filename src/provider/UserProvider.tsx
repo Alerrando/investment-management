@@ -12,9 +12,9 @@ import { ReturnResponseUser, UserModel } from "@/models/UserModel";
 interface ContextProps {
   dataUser: UserModel;
   isLoadingUserSignIn: boolean;
-  mutateSignIn: (data: SignInProps) => Promise<void>;
+  mutateSignIn: (data: SignInProps) => Promise<ReturnResponseUser>;
   isLoadingUserSignUp: boolean;
-  mutateSignUp: (data: SignUpProps) => Promise<void>;
+  mutateSignUp: (data: SignUpProps) => Promise<ReturnResponseUser>;
 }
 
 interface UserProviderProps {
