@@ -1,6 +1,6 @@
 "use client";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useSearchParams } from "next/navigation"; // Importando o hook para acessar searchParams
+import { useSearchParams } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 
