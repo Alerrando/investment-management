@@ -39,7 +39,7 @@ const useUserStore = create<UserState>()(
     }),
     {
       name: "user-storage",
-      getStorage: () => localStorage,
+      storage: () => localStorage,
     },
   ),
 );

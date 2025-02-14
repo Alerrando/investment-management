@@ -24,7 +24,7 @@ const useListFiisStore = create<ListFiisState>()(
     }),
     {
       name: "listFiis-storage",
-      getStorage: () => localStorage,
+      storage: () => localStorage,
     },
   ),
 );

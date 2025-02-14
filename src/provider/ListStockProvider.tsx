@@ -24,7 +24,7 @@ const useListStocksStore = create<ListStocksState>()(
     }),
     {
       name: "listStocks-storage",
-      getStorage: () => localStorage,
+      storage: () => localStorage,
     },
   ),
 );

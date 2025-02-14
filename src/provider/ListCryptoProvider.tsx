@@ -24,7 +24,7 @@ const useListCryptoStore = create<ListCryptoState>()(
     }),
     {
       name: "listCrypto-storage",
-      getStorage: () => localStorage,
+      storage: () => localStorage,
     },
   ),
 );
