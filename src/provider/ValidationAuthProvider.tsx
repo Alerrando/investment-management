@@ -1,13 +1,14 @@
 "use client";
 
-import React, { createContext, useContext, useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import React, { createContext, useContext } from "react";
 
 import { authValidation } from "@/api/authValidation";
-import { useQueryHook } from "@/hook/useQueryHook";
 
 interface ContextProps {
   isLoadingAuthValidation: boolean;
-  setToken: (token: string | null) => void;
+  mutateValidationAuth: (data: string) => Promise<void>;
 }
 
 interface ValidationAuthProviderProps {
@@ -17,23 +18,17 @@ interface ValidationAuthProviderProps {
 export const ValidationAuthProviderContext = createContext<ContextProps>({} as ContextProps);
 
 export const ValidationAuthProvider = ({ children }: ValidationAuthProviderProps) => {
-  const [token, setToken] = useState<string | null>(null);
-  const { isLoading: isLoadingAuthValidation } = useQueryHook({
-    queryKey: ["validation-auth"],
-    options: {
-      queryFn: () => {
-        if (!token) {
-          return Promise.reject("Token não disponível");
-        }
-        return authValidation(token);
-      },
-      staleTime: Infinity,
-      cacheTime: Infinity,
+  const router = useRouter();
+  const { isLoading: isLoadingAuthValidation, mutateAsync: mutateValidationAuth } = useMutation({
+    mutationKey: ["validation-auth"],
+    mutationFn: () => authValidation(),
+    onSuccess() {
+      router.push("/");
     },
   });
 
   return (
-    <ValidationAuthProviderContext.Provider value={{ isLoadingAuthValidation, setToken }}>
+    <ValidationAuthProviderContext.Provider value={{ isLoadingAuthValidation, mutateValidationAuth }}>
       {children}
     </ValidationAuthProviderContext.Provider>
   );

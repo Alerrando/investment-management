@@ -12,17 +12,25 @@ import RankingCardCryptosRise from "@/components/RankingCard/RankingCardICrypto/
 import RankingCardICrypto from "@/components/RankingCard/RankingCardICrypto/RankingCardICrypto";
 import Title from "@/components/Title/Title";
 import { useListCrypto } from "@/provider/ListCryptoProvider";
+import { useUser } from "@/provider/UserProvider";
+import { useValidationAuth } from "@/provider/ValidationAuthProvider";
 
 export default function Home() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [items, setItems] = useState<any[]>([]);
   const { dataListCrypto, isLoadingListCrypto } = useListCrypto();
+  const { mutateValidationAuth } = useValidationAuth();
+  const { waitingAuth } = useUser();
 
   useEffect(() => {
     (async () => {
       const response = await handler();
       setItems(response || []);
     })();
+
+    if (waitingAuth) {
+      mutateValidationAuth();
+    }
   }, []);
 
   return (

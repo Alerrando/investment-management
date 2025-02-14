@@ -169,11 +169,15 @@ export default function ModalSign({ sign }: ModalSignProps) {
   );
 
   async function onSubmitLogin(data: SignInSchemaProps) {
-    await mutateSignIn(data);
+    await mutateSignIn(data.email);
   }
 
   async function onSubmitRegister(data: SignUpSchemaProps) {
-    await mutateSignUp(data);
+    const aux = {
+      ...data,
+      roles: [] as Role[],
+    };
+    await mutateSignUp(aux);
   }
 
   function handleModalClose() {

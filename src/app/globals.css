@@ -74,3 +74,7 @@ body {
 .relative{
   position: relative !important;
 }
+
+.z-100{
+  z-index: 100 !important;
+}

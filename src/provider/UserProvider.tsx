@@ -1,20 +1,21 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
-import Link from "next/link";
 import React, { createContext, useContext, useState } from "react";
 import { toast } from "react-toastify";
 
-import { signIn, SignInProps } from "@/api/sign-in";
+import { signIn } from "@/api/sign-in";
 import { signUp, SignUpProps } from "@/api/sign-up";
 import { ReturnResponseUser, UserModel } from "@/models/UserModel";
 
 interface ContextProps {
   dataUser: UserModel;
   isLoadingUserSignIn: boolean;
-  mutateSignIn: (data: SignInProps) => Promise<ReturnResponseUser>;
+  mutateSignIn: (data: string) => Promise<ReturnResponseUser>;
   isLoadingUserSignUp: boolean;
-  mutateSignUp: (data: SignUpProps) => Promise<ReturnResponseUser>;
+  mutateSignUp: (data: UserModel) => Promise<ReturnResponseUser>;
+  waitingAuth: boolean;
+  setWaitingAuth: (waitingAuth: boolean) => void;
 }
 
 interface UserProviderProps {
@@ -30,28 +31,23 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     name: "",
     roles: [] as UserModel[],
   });
+  const [waitingAuth, setWaitingAuth] = useState(false);
 
   const { isLoading: isLoadingUserSignIn, mutateAsync: mutateSignIn } = useMutation({
     mutationKey: ["query-sign-in"],
-    mutationFn: (data: SignInProps) => signIn(data),
+    mutationFn: (data: string) => signIn(data),
     onSuccess(data: ReturnResponseUser) {
       setDataUser(data.user);
+      setWaitingAuth(true);
 
       toast.success(
-        <div className="align-items flex justify-between">
-          <div className="flex flex-col"></div>
-          <h2 className="font-semibold">Usuário logado com sucesso!</h2>
-          <span className="text-sm text-gray-400">Já pode usar o site.</span>
-
-          <div className="flex flex-col">
-            <h2 className="font-semibold">Para acessar a sua conta, clique no link que foi enviado para seu email!</h2>
-            <Link href={data.message} className="rounded-lg bg-green-600 px-2 py-1 text-white">
-              Ou clique aqui
-            </Link>
-          </div>
+        <div className="flex flex-col">
+          <h2 className="text-sm font-semibold">Enviamos um link de autenticação para seu e-mail</h2>
+          <span className="text-sm text-gray-400">Verifique seu e-mail para acessar sua conta!</span>
         </div>,
         {
           closeOnClick: true,
+          autoClose: 2000,
         },
       );
     },
@@ -88,7 +84,15 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   return (
     <UserProviderContext.Provider
-      value={{ dataUser, isLoadingUserSignIn, mutateSignIn, isLoadingUserSignUp, mutateSignUp }}
+      value={{
+        dataUser,
+        isLoadingUserSignIn,
+        mutateSignIn,
+        isLoadingUserSignUp,
+        mutateSignUp,
+        waitingAuth,
+        setWaitingAuth,
+      }}
     >
       {children}
     </UserProviderContext.Provider>
