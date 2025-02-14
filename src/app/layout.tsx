@@ -9,7 +9,6 @@ import { ToastContainer } from "react-toastify";
 
 import Header from "@/components/Header/Header";
 import { ThemeProvider } from "@/components/theme-provider";
-import { ListCryptoProvider } from "@/provider/ListCryptoProvider";
 import { RecommendationCryptoProvider } from "@/provider/Recommendation/RecommendationCryptoProvider";
 import { RecommendationFiisProvider } from "@/provider/Recommendation/RecommendationFiisProvider";
 import { RecommendationStocksProvider } from "@/provider/Recommendation/RecommendationStockProvider";
@@ -30,22 +29,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <TanstackProvider>
             <UserProvider>
-              <ListCryptoProvider>
-                <RecommendationStocksProvider>
-                  <RecommendationFiisProvider>
-                    <RecommendationCryptoProvider>
-                      <ValidationAuthProvider>
-                        <Header />
-                        {children}
-                        <SpeedInsights />
-                        <Analytics />
+              <RecommendationStocksProvider>
+                <RecommendationFiisProvider>
+                  <RecommendationCryptoProvider>
+                    <ValidationAuthProvider>
+                      <Header />
+                      {children}
+                      <SpeedInsights />
+                      <Analytics />
 
-                        <ToastContainer position="bottom-right" />
-                      </ValidationAuthProvider>
-                    </RecommendationCryptoProvider>
-                  </RecommendationFiisProvider>
-                </RecommendationStocksProvider>
-              </ListCryptoProvider>
+                      <ToastContainer position="bottom-right" />
+                    </ValidationAuthProvider>
+                  </RecommendationCryptoProvider>
+                </RecommendationFiisProvider>
+              </RecommendationStocksProvider>
             </UserProvider>
           </TanstackProvider>
         </ThemeProvider>

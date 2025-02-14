@@ -1,29 +1,20 @@
 "use client";
 
 import { Lightbulb, Loader2, Rocket, ShieldAlert } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 import { useUser } from "@/provider/UserProvider";
 import { useValidationAuth } from "@/provider/ValidationAuthProvider";
 
 export default function Magic() {
-  const router = useRouter();
-  const { waitingAuth, isAuthenticated } = useUser();
+  const { waitingAuth } = useUser();
   const { mutateValidationAuth } = useValidationAuth();
 
   useEffect(() => {
     if (waitingAuth) {
       mutateValidationAuth();
-      simulateProgress();
     }
   }, []);
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      router.push("/");
-    }
-  }, [isAuthenticated, router]);
 
   return (
     <div className="flex h-screen w-full flex-col items-center justify-center bg-gradient-to-b from-gray-900 to-gray-800 p-8">

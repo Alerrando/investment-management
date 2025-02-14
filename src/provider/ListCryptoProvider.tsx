@@ -1,44 +1,63 @@
 "use client";
 
-import React, { createContext, useContext, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 import { getListCrypto } from "@/api/getListCryptos";
-import { useQueryHook } from "@/hook/useQueryHook";
 import { ListCryptoModel } from "@/models/Lists/ListCryptoModel";
 
-interface ContextProps {
+interface ListCryptoState {
   dataListCrypto: ListCryptoModel[];
   isLoadingListCrypto: boolean;
+  setDataListCrypto: (data: ListCryptoModel[]) => void;
+  setIsLoadingListCrypto: (loading: boolean) => void;
 }
 
-interface ListCryptoProviderProps {
-  children: React.ReactNode;
-}
+const useListCryptoStore = create<ListCryptoState>()(
+  persist(
+    (set) => ({
+      dataListCrypto: [],
+      isLoadingListCrypto: false,
+      setDataListCrypto: (data) => set({ dataListCrypto: data }),
+      setIsLoadingListCrypto: (loading) => set({ isLoadingListCrypto: loading }),
+    }),
+    {
+      name: "listCrypto-storage",
+      getStorage: () => localStorage,
+    },
+  ),
+);
 
-export const ListCryptoProviderContext = createContext<ContextProps>({} as ContextProps);
+const getCachedDataCrypto = (): ListCryptoModel[] | null => {
+  const cachedData = localStorage.getItem("listCrypto-storage");
+  return cachedData ? (JSON.parse(cachedData)?.state?.dataListCrypto ?? null) : null;
+};
 
-export const ListCryptoProvider = ({ children }: ListCryptoProviderProps) => {
-  const [dataListCrypto, setDataListCrypto] = useState<ListCryptoModel[]>([] as ListCryptoModel[]);
-  const { isLoading: isLoadingListCrypto } = useQueryHook<ListCryptoModel[]>({
-    queryKey: ["query-list-crypto"],
-    options: {
-      queryFn: () => getListCrypto(),
-      staleTime: Infinity,
-      cacheTime: Infinity,
-      onSuccess(data) {
-        setDataListCrypto(data);
-      },
-      onError(err) {
-        console.log(err);
-      },
+export function useListCrypto() {
+  const { setIsLoadingListCrypto, setDataListCrypto, dataListCrypto, isLoadingListCrypto } = useListCryptoStore();
+
+  const { isLoading, error } = useQuery({
+    queryKey: ["list-crypto"],
+    queryFn: async () => {
+      const cachedData = getCachedDataCrypto();
+      if (cachedData?.length) return { content: cachedData };
+      const data = await getListCrypto();
+      setDataListCrypto(data);
+      return data;
+    },
+    staleTime: Infinity,
+    cacheTime: 1000 * 60 * 60 * 24,
+    onError: (err) => {
+      console.error(err);
+      setIsLoadingListCrypto(false);
+    },
+    onSettled: () => {
+      const cachedData = getCachedDataCrypto();
+      setDataListCrypto(cachedData ?? []);
+      setIsLoadingListCrypto(cachedData ? false : isLoading);
     },
   });
 
-  return (
-    <ListCryptoProviderContext.Provider value={{ dataListCrypto, isLoadingListCrypto }}>
-      {children}
-    </ListCryptoProviderContext.Provider>
-  );
-};
-
-export const useListCrypto = () => useContext(ListCryptoProviderContext);
+  return { dataListCrypto, isLoadingListCrypto, error };
+}
