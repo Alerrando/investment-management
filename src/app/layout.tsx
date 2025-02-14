@@ -13,7 +13,6 @@ import { RecommendationCryptoProvider } from "@/provider/Recommendation/Recommen
 import { RecommendationFiisProvider } from "@/provider/Recommendation/RecommendationFiisProvider";
 import { RecommendationStocksProvider } from "@/provider/Recommendation/RecommendationStockProvider";
 import { TanstackProvider } from "@/provider/tanstack-provider";
-import { UserProvider } from "@/provider/UserProvider";
 import { ValidationAuthProvider } from "@/provider/ValidationAuthProvider";
 
 const poppins = Poppins({
@@ -28,22 +27,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${poppins.variable} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <TanstackProvider>
-            <UserProvider>
-              <RecommendationStocksProvider>
-                <RecommendationFiisProvider>
-                  <RecommendationCryptoProvider>
-                    <ValidationAuthProvider>
-                      <Header />
-                      {children}
-                      <SpeedInsights />
-                      <Analytics />
+            <RecommendationStocksProvider>
+              <RecommendationFiisProvider>
+                <RecommendationCryptoProvider>
+                  <ValidationAuthProvider>
+                    <Header />
+                    {children}
+                    <SpeedInsights />
+                    <Analytics />
 
-                      <ToastContainer position="bottom-right" />
-                    </ValidationAuthProvider>
-                  </RecommendationCryptoProvider>
-                </RecommendationFiisProvider>
-              </RecommendationStocksProvider>
-            </UserProvider>
+                    <ToastContainer position="bottom-right" />
+                  </ValidationAuthProvider>
+                </RecommendationCryptoProvider>
+              </RecommendationFiisProvider>
+            </RecommendationStocksProvider>
           </TanstackProvider>
         </ThemeProvider>
       </body>
