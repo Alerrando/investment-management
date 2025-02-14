@@ -47,7 +47,6 @@ export default function AssetManagement() {
   const [animatedIcon, setAnimatedIcon] = useState(false);
   const [showBag, setShowBag] = useState(false);
   const [showBagContent, setShowBagContent] = useState(false);
-  const [assetsData, setAssetsData] = useState<AssetManagementProps>({} as AssetManagementProps);
   const { isLoadingListFiis, dataListFiis } = useListFiis();
   const { isLoadingListStocks, dataListStocks } = useListStocks();
   const { isLoadingListCrypto, dataListCrypto } = useListCrypto();
@@ -70,41 +69,6 @@ export default function AssetManagement() {
       return () => clearTimeout(timer);
     }
   }, [showBag]);
-
-  useEffect(() => {
-    if (!isLoadingListCrypto && dataListCrypto) {
-      setAssetsData((prevData) => ({
-        ...prevData,
-        Cryptos: dataListCrypto,
-      }));
-    }
-  }, [isLoadingListCrypto]);
-
-  useEffect(() => {
-    if (!isLoadingListFiis) {
-      setAssetsData((prevData) => ({
-        ...prevData,
-        Fiis: dataListFiis,
-      }));
-    }
-  }, [isLoadingListFiis]);
-
-  useEffect(() => {
-    if (!isLoadingListStocks) {
-      setAssetsData((prevData) => ({
-        ...prevData,
-        Ações: dataListStocks,
-      }));
-    }
-  }, [isLoadingListStocks]);
-
-  const filteredAssets: ListCryptoModel[] | ListFiisModelContent[] | ListStockModelContent[] | any[] = assetsData[
-    activeTab as keyof AssetManagementProps
-  ]?.filter((asset) =>
-    asset.name
-      ? asset.name.toLowerCase().includes(searchQuery.toLowerCase())
-      : asset.paper.toLowerCase().includes(searchQuery.toLowerCase()),
-  );
 
   return (
     <div className="flex w-full flex-col gap-6 py-6 dark:bg-gray-900 dark:text-white">
@@ -153,19 +117,25 @@ export default function AssetManagement() {
       <div className="h-72 overflow-auto rounded-lg border border-gray-300 shadow-sm dark:border-gray-700">
         {!isLoadingListFiis && activeTab === "Fiis" ? (
           <TableFiis
-            filteredAssets={filteredAssets as ListFiisModelContent[]}
+            filteredAssets={dataListFiis.filter((asset) =>
+              asset.paper.toLowerCase().includes(searchQuery.toLowerCase()),
+            )}
             handleAddToBag={handleAddToBag}
             dataRecommendationFiis={dataRecommendationFiis}
           />
         ) : !isLoadingListStocks && activeTab === "Ações" ? (
           <TableStock
-            filteredAssets={filteredAssets as ListStockModelContent[]}
+            filteredAssets={dataListStocks.filter((asset) =>
+              asset.paper.toLowerCase().includes(searchQuery.toLowerCase()),
+            )}
             handleAddToBag={handleAddToBag}
             dataRecommendationStock={dataRecommendationStock}
           />
         ) : !isLoadingListCrypto && activeTab === "Cryptos" ? (
           <TableCrypto
-            filteredAssets={filteredAssets as ListCryptoModel[]}
+            filteredAssets={dataListCrypto.filter((asset) =>
+              asset.name.toLowerCase().includes(searchQuery.toLowerCase()),
+            )}
             handleAddToBag={handleAddToBag}
             dataRecommendationCrypto={dataRecommendationCrypto}
           />

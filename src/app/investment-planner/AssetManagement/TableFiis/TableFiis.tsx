@@ -41,6 +41,8 @@ export default function TableFiis({ filteredAssets, handleAddToBag, dataRecommen
                 <div className="flex h-full items-center justify-start gap-2">
                   <Building className="h-8 w-8" />
                   <div className="flex h-full flex-col justify-between py-2">
+                    <span className="text-[9px] text-black/60">{asset.segment ?? ""}</span>
+
                     <h2 className="text-[10px]">{asset.paper}</h2>
                   </div>
                 </div>
@@ -95,7 +97,7 @@ export default function TableFiis({ filteredAssets, handleAddToBag, dataRecommen
               <div className="flex h-full items-center justify-start gap-2">
                 <Building className="h-8 w-8" />
                 <div className="flex h-full flex-col justify-between py-2">
-                  <span className="text-[9px] text-black/60">{asset.segment ?? ""}</span>
+                  <span className="text-[9px] text-gray-500">{asset.segment ?? ""}</span>
                   <h2 className="text-[10px]">{asset.paper}</h2>
                 </div>
               </div>

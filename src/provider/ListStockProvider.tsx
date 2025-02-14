@@ -1,44 +1,63 @@
 "use client";
 
-import React, { createContext, useContext, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 import { getListStock } from "@/api/getListStock";
-import { useQueryHook } from "@/hook/useQueryHook";
-import { ListStockModel, ListStockModelContent } from "@/models/Lists/ListStockModel";
+import { ListStockModelContent } from "@/models/Lists/ListStockModel";
 
-interface ContextProps {
+interface ListStocksState {
   dataListStocks: ListStockModelContent[];
   isLoadingListStocks: boolean;
+  setDataListStocks: (data: ListStockModelContent[]) => void;
+  setIsLoadingListStocks: (loading: boolean) => void;
 }
 
-interface ListStocksProviderProps {
-  children: React.ReactNode;
-}
+const useListStocksStore = create<ListStocksState>()(
+  persist(
+    (set) => ({
+      dataListStocks: [],
+      isLoadingListStocks: false,
+      setDataListStocks: (data) => set({ dataListStocks: data }),
+      setIsLoadingListStocks: (loading) => set({ isLoadingListStocks: loading }),
+    }),
+    {
+      name: "listStocks-storage",
+      getStorage: () => localStorage,
+    },
+  ),
+);
 
-export const ListStocksProviderContext = createContext<ContextProps>({} as ContextProps);
+const getCachedDataStocks = (): ListStockModelContent[] | null => {
+  const cachedData = localStorage.getItem("listStocks-storage");
+  return cachedData ? (JSON.parse(cachedData)?.state?.dataListStocks ?? null) : null;
+};
 
-export const ListStocksProvider = ({ children }: ListStocksProviderProps) => {
-  const [dataListStocks, setDataListStocks] = useState<ListStockModelContent[]>([] as ListStockModelContent[]);
-  const { isLoading: isLoadingListStocks } = useQueryHook<ListStockModel>({
-    queryKey: ["query-list-stocks"],
-    options: {
-      queryFn: () => getListStock(),
-      staleTime: Infinity,
-      cacheTime: Infinity,
-      onSuccess(data) {
-        setDataListStocks(data.content);
-      },
-      onError(err) {
-        console.log(err);
-      },
+export function useListStocks() {
+  const { setIsLoadingListStocks, setDataListStocks, dataListStocks, isLoadingListStocks } = useListStocksStore();
+
+  const { isLoading, error } = useQuery({
+    queryKey: ["list-stocks"],
+    queryFn: async () => {
+      const cachedData = getCachedDataStocks();
+      if (cachedData?.length) return { content: cachedData };
+      const data = await getListStock();
+      setDataListStocks(data.content);
+      return data;
+    },
+    staleTime: Infinity,
+    cacheTime: 1000 * 60 * 60 * 24,
+    onError: (err) => {
+      console.error(err);
+      setIsLoadingListStocks(false);
+    },
+    onSettled: () => {
+      const cachedData = getCachedDataStocks();
+      setDataListStocks(cachedData ?? []);
+      setIsLoadingListStocks(cachedData ? false : isLoading);
     },
   });
 
-  return (
-    <ListStocksProviderContext.Provider value={{ dataListStocks, isLoadingListStocks }}>
-      {children}
-    </ListStocksProviderContext.Provider>
-  );
-};
-
-export const useListStocks = () => useContext(ListStocksProviderContext);
+  return { dataListStocks, isLoadingListStocks, error };
+}

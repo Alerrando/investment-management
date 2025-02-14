@@ -1,44 +1,63 @@
 "use client";
 
-import React, { createContext, useContext, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 import { getListFiis } from "@/api/getListFiis";
-import { useQueryHook } from "@/hook/useQueryHook";
-import { ListFiisModel, ListFiisModelContent } from "@/models/Lists/ListFiisModel";
+import { ListFiisModelContent } from "@/models/Lists/ListFiisModel";
 
-interface ContextProps {
+interface ListFiisState {
   dataListFiis: ListFiisModelContent[];
   isLoadingListFiis: boolean;
+  setDataListFiis: (data: ListFiisModelContent[]) => void;
+  setIsLoadingListFiis: (loading: boolean) => void;
 }
 
-interface ListFiisProviderProps {
-  children: React.ReactNode;
-}
+const useListFiisStore = create<ListFiisState>()(
+  persist(
+    (set) => ({
+      dataListFiis: [],
+      isLoadingListFiis: false,
+      setDataListFiis: (data) => set({ dataListFiis: data }),
+      setIsLoadingListFiis: (loading) => set({ isLoadingListFiis: loading }),
+    }),
+    {
+      name: "listFiis-storage",
+      getStorage: () => localStorage,
+    },
+  ),
+);
 
-export const ListFiisProviderContext = createContext<ContextProps>({} as ContextProps);
+const getCachedData = (): ListFiisModelContent[] | null => {
+  const cachedData = localStorage.getItem("listFiis-storage");
+  return cachedData ? (JSON.parse(cachedData)?.state?.dataListFiis ?? null) : null;
+};
 
-export const ListFiisProvider = ({ children }: ListFiisProviderProps) => {
-  const [dataListFiis, setDataListFiis] = useState<ListFiisModelContent[]>([] as ListFiisModelContent[]);
-  const { isLoading: isLoadingListFiis } = useQueryHook<ListFiisModel>({
-    queryKey: ["query-list-fiis"],
-    options: {
-      queryFn: () => getListFiis(),
-      staleTime: Infinity,
-      cacheTime: Infinity,
-      onSuccess(data) {
-        setDataListFiis(data.content);
-      },
-      onError(err) {
-        console.log(err);
-      },
+export function useListFiis() {
+  const { setIsLoadingListFiis, setDataListFiis, dataListFiis, isLoadingListFiis } = useListFiisStore();
+
+  const { isLoading, error } = useQuery({
+    queryKey: ["list-fiis"],
+    queryFn: async () => {
+      const cachedData = getCachedData();
+      if (cachedData?.length) return { content: cachedData };
+      const data = await getListFiis();
+      setDataListFiis(data.content);
+      return data;
+    },
+    staleTime: Infinity,
+    cacheTime: 1000 * 60 * 60 * 24,
+    onError: (err) => {
+      console.error(err);
+      setIsLoadingListFiis(false);
+    },
+    onSettled: () => {
+      const cachedData = getCachedData();
+      setDataListFiis(cachedData ?? []);
+      setIsLoadingListFiis(cachedData ? false : isLoading);
     },
   });
 
-  return (
-    <ListFiisProviderContext.Provider value={{ dataListFiis, isLoadingListFiis }}>
-      {children}
-    </ListFiisProviderContext.Provider>
-  );
-};
-
-export const useListFiis = () => useContext(ListFiisProviderContext);
+  return { dataListFiis, isLoadingListFiis, error };
+}
