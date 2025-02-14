@@ -1,6 +1,10 @@
 import { twMerge } from "tailwind-merge";
 
-export default function Spinner(className?: string) {
+interface SpinnerProps {
+  className?: string;
+}
+
+export default function Spinner({ className }: SpinnerProps) {
   return (
     <div className="flex h-full w-full items-center justify-center gap-2">
       <div
