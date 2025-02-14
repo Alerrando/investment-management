@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { BriefcaseBusiness, Search, Sparkles } from "lucide-react";
 import { useEffect, useState } from "react";
 
+import Spinner from "@/components/Spinner/Spinner";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { ListCryptoModel } from "@/models/Lists/ListCryptoModel";
 import { ListFiisModelContent } from "@/models/Lists/ListFiisModel";
@@ -140,16 +141,7 @@ export default function AssetManagement() {
             dataRecommendationCrypto={dataRecommendationCrypto}
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center">
-            <div
-              className="text-surface inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white"
-              role="status"
-            >
-              <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-                Loading...
-              </span>
-            </div>
-          </div>
+          <Spinner />
         )}
       </div>
 

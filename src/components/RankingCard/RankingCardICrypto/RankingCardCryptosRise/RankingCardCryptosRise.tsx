@@ -1,6 +1,8 @@
 import { ArrowDownLeft, ArrowUpRight } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 
+import Spinner from "@/components/Spinner/Spinner";
+
 interface RankingCardCryptosRiseProps {
   title: string;
   data: any[];
@@ -32,7 +34,7 @@ export default function RankingCardCryptosRise({
       </header>
 
       <ul className="flex w-full items-center justify-between gap-10 overflow-auto">
-        {data &&
+        {data && data.length > 0 ? (
           data
             ?.filter((item: any, index, self) => index === self.findIndex((t: any) => t.name === item.name))
             ?.sort((item1, item2) => item2.price - item1.price)
@@ -70,7 +72,10 @@ export default function RankingCardCryptosRise({
                   </div>
                 </div>
               </div>
-            ))}
+            ))
+        ) : (
+          <Spinner />
+        )}
       </ul>
     </div>
   );

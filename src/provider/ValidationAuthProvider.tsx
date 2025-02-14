@@ -8,7 +8,7 @@ import { authValidation } from "@/api/authValidation";
 
 interface ContextProps {
   isLoadingAuthValidation: boolean;
-  mutateValidationAuth: (data: string) => Promise<void>;
+  mutateValidationAuth: () => Promise<void>;
 }
 
 interface ValidationAuthProviderProps {

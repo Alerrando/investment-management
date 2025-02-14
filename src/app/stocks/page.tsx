@@ -1,6 +1,7 @@
 "use client";
 import { ChartCandlestick, Medal } from "lucide-react";
 
+import Spinner from "@/components/Spinner/Spinner";
 import Title from "@/components/Title/Title";
 import { TableCell } from "@/components/ui/table";
 import { useListStocks } from "@/provider/ListStockProvider";
@@ -129,18 +130,7 @@ export default function AllStocksPage() {
           </tbody>
         </table>
 
-        {isLoadingListStocks && (
-          <div className="flex h-full w-full items-center justify-center">
-            <div
-              className="text-surface inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white"
-              role="status"
-            >
-              <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-                Loading...
-              </span>
-            </div>
-          </div>
-        )}
+        {isLoadingListStocks && <Spinner />}
       </div>
     </div>
   );

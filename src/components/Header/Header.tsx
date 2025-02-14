@@ -18,7 +18,7 @@ export default function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-10 flex w-full items-center justify-between border-b border-b-[#9265E2] bg-white px-8 py-2 dark:border-b-[#9265E2]/70 dark:bg-gray-900">
+    <header className="sticky top-0 z-40 flex w-full items-center justify-between border-b border-b-[#9265E2] bg-white px-8 py-2 dark:border-b-[#9265E2]/70 dark:bg-gray-900">
       <div className="relative h-8 w-8 rounded-full">
         <Image src="/logo.jpg" alt="logo" className="rounded-full" fill />
       </div>

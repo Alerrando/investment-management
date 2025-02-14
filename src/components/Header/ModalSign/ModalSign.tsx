@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 
+import Spinner from "@/components/Spinner/Spinner";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -93,22 +94,7 @@ export default function ModalSign({ sign }: ModalSignProps) {
               />
               {errorsLogin.email && <p className="text-xs text-red-500">{errorsLogin.email.message}</p>}
               <Button className="w-full rounded-lg bg-[#735ca5] py-3 text-white shadow-md hover:bg-[#735ca5]/90">
-                {isLoadingUserSignIn ? (
-                  <div className="flex h-full w-full items-center justify-center gap-2">
-                    <div
-                      className="text-surface inline-block h-4 w-4 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white"
-                      role="status"
-                    >
-                      <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-                        Loading...
-                      </span>
-                    </div>
-
-                    <span>Carregando</span>
-                  </div>
-                ) : (
-                  "Login"
-                )}
+                {isLoadingUserSignIn ? <Spinner className="h-4 w-4" /> : "Login"}
               </Button>
             </form>
           </TabsContent>
@@ -144,22 +130,7 @@ export default function ModalSign({ sign }: ModalSignProps) {
               {errorsRegister.email && <p className="text-xs text-red-500">{errorsRegister.email.message}</p>}
 
               <Button className="w-full rounded-lg bg-[#735ca5] py-3 text-white shadow-md hover:bg-[#735ca5]/90">
-                {isLoadingUserSignUp ? (
-                  <div className="flex h-full w-full items-center justify-center gap-2">
-                    <div
-                      className="text-surface inline-block h-4 w-4 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white"
-                      role="status"
-                    >
-                      <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-                        Loading...
-                      </span>
-                    </div>
-
-                    <span>Carregando</span>
-                  </div>
-                ) : (
-                  "Registrar"
-                )}
+                {isLoadingUserSignUp ? <Spinner className="h-4 w-4" /> : "Registrar"}
               </Button>
             </form>
           </TabsContent>

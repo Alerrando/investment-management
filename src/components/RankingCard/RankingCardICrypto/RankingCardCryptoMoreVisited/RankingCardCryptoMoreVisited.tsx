@@ -1,5 +1,6 @@
 import { twMerge } from "tailwind-merge";
 
+import Spinner from "@/components/Spinner/Spinner";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ListCryptoModel } from "@/models/Lists/ListCryptoModel";
 
@@ -45,7 +46,7 @@ export default function RankingCardCryptoMoreVisited({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data &&
+          {data && data.length > 0 ? (
             data
               ?.filter((item, index, self) => index === self.findIndex((t) => t.name === item.name))
               ?.sort((item1, item2) => item2.price - item1.price)
@@ -91,7 +92,10 @@ export default function RankingCardCryptoMoreVisited({
                   <TableCell className="text-gray-900 dark:text-white">{item.fdv || "---"}</TableCell>
                   <TableCell className="text-gray-900 dark:text-white">${item.price.toFixed(2)}</TableCell>
                 </TableRow>
-              ))}
+              ))
+          ) : (
+            <Spinner />
+          )}
         </TableBody>
       </Table>
     </div>

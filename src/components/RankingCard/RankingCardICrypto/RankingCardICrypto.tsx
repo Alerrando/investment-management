@@ -1,5 +1,7 @@
 import { twMerge } from "tailwind-merge";
 
+import Spinner from "@/components/Spinner/Spinner";
+
 import RankingCardItemCrypto from "./RankingCardItemCrypto/RankingCardItemCrypto";
 
 interface RankingCardICryptoProps {
@@ -28,9 +30,15 @@ export default function RankingCardICrypto({ title, data, onViewAll, styleRankin
       </header>
 
       <ul className="space-y-4 overflow-y-auto">
-        {data?.map((item, index) => (
-          <RankingCardItemCrypto item={item} index={index} key={`ranking-cark-crypto-${index}`} />
-        ))}
+        {data && data.length > 0 ? (
+          <>
+            {data?.map((item, index) => (
+              <RankingCardItemCrypto item={item} index={index} key={`ranking-cark-crypto-${index}`} />
+            ))}
+          </>
+        ) : (
+          <Spinner />
+        )}
       </ul>
     </div>
   );
