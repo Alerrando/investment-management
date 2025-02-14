@@ -1,45 +1,71 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
-import React, { createContext, useContext, useState } from "react";
 import { toast } from "react-toastify";
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 import { signIn } from "@/api/sign-in";
 import { signUp, SignUpProps } from "@/api/sign-up";
 import { ReturnResponseUser, UserModel } from "@/models/UserModel";
 
-interface ContextProps {
+interface UserState {
   dataUser: UserModel;
   isLoadingUserSignIn: boolean;
-  mutateSignIn: (data: string) => Promise<ReturnResponseUser>;
   isLoadingUserSignUp: boolean;
-  mutateSignUp: (data: UserModel) => Promise<ReturnResponseUser>;
   waitingAuth: boolean;
+  setDataUser: (data: UserModel) => void;
+  setIsLoadingUserSignIn: (loading: boolean) => void;
+  setIsLoadingUserSignUp: (loading: boolean) => void;
   setWaitingAuth: (waitingAuth: boolean) => void;
 }
 
-interface UserProviderProps {
-  children: React.ReactNode;
-}
+const useUserStore = create<UserState>()(
+  persist(
+    (set) => ({
+      dataUser: {
+        id: 0,
+        email: "",
+        name: "",
+        roles: [] as UserModel[],
+      },
+      isLoadingUserSignIn: false,
+      isLoadingUserSignUp: false,
+      waitingAuth: false,
+      setDataUser: (data) => set({ dataUser: data }),
+      setIsLoadingUserSignIn: (loading) => set({ isLoadingUserSignIn: loading }),
+      setIsLoadingUserSignUp: (loading) => set({ isLoadingUserSignUp: loading }),
+      setWaitingAuth: (waitingAuth) => set({ waitingAuth }),
+    }),
+    {
+      name: "user-storage",
+      getStorage: () => localStorage,
+    },
+  ),
+);
 
-export const UserProviderContext = createContext<ContextProps>({} as ContextProps);
+export function useUser() {
+  const {
+    dataUser,
+    isLoadingUserSignIn,
+    isLoadingUserSignUp,
+    waitingAuth,
+    setDataUser,
+    setIsLoadingUserSignIn,
+    setIsLoadingUserSignUp,
+    setWaitingAuth,
+  } = useUserStore();
 
-export const UserProvider = ({ children }: UserProviderProps) => {
-  const [dataUser, setDataUser] = useState<UserModel>({
-    id: 0,
-    email: "",
-    name: "",
-    roles: [] as UserModel[],
-  });
-  const [waitingAuth, setWaitingAuth] = useState(false);
-
-  const { isLoading: isLoadingUserSignIn, mutateAsync: mutateSignIn } = useMutation({
+  const { mutateAsync: mutateSignIn } = useMutation({
     mutationKey: ["query-sign-in"],
     mutationFn: (data: string) => signIn(data),
+    onMutate() {
+      setIsLoadingUserSignIn(true);
+    },
     onSuccess(data: ReturnResponseUser) {
       setDataUser(data.user);
       setWaitingAuth(true);
-
+      setIsLoadingUserSignIn(false);
       toast.success(
         <div className="flex flex-col">
           <h2 className="text-sm font-semibold">Enviamos um link de autenticação para seu e-mail</h2>
@@ -51,19 +77,23 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         },
       );
     },
-
     onError() {
+      setIsLoadingUserSignIn(false);
       toast.error(`Erro ao fazer login!`, {
         closeOnClick: true,
       });
     },
   });
 
-  const { isLoading: isLoadingUserSignUp, mutateAsync: mutateSignUp } = useMutation({
+  const { mutateAsync: mutateSignUp } = useMutation({
     mutationKey: ["query-sign-up"],
     mutationFn: (data: SignUpProps) => signUp(data),
+    onMutate() {
+      setIsLoadingUserSignUp(true);
+    },
     onSuccess(data: ReturnResponseUser) {
       setDataUser(data.user);
+      setIsLoadingUserSignUp(false);
       toast.success(
         <div className="flex flex-col">
           <h2 className="font-semibold">Usuário criado com sucesso!</h2>
@@ -74,29 +104,21 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         },
       );
     },
-
     onError(error: ReturnResponseUser) {
+      setIsLoadingUserSignUp(false);
       toast.error(`${error.message}`, {
         closeOnClick: true,
       });
     },
   });
 
-  return (
-    <UserProviderContext.Provider
-      value={{
-        dataUser,
-        isLoadingUserSignIn,
-        mutateSignIn,
-        isLoadingUserSignUp,
-        mutateSignUp,
-        waitingAuth,
-        setWaitingAuth,
-      }}
-    >
-      {children}
-    </UserProviderContext.Provider>
-  );
-};
-
-export const useUser = () => useContext(UserProviderContext);
+  return {
+    dataUser,
+    isLoadingUserSignIn,
+    isLoadingUserSignUp,
+    waitingAuth,
+    setWaitingAuth,
+    mutateSignIn,
+    mutateSignUp,
+  };
+}
