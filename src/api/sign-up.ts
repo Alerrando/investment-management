@@ -1,6 +1,6 @@
 import { api } from "@/lib/utils";
 
-type SignUpProps = {
+export type SignUpProps = {
   name: string;
   email: string;
 };
