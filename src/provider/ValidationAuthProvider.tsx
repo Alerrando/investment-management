@@ -1,37 +1,52 @@
-"use client";
-
-import { useMutation } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import React, { createContext, useContext } from "react";
+import { toast } from "react-toastify";
+import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 import { authValidation } from "@/api/authValidation";
 
-interface ContextProps {
+interface ValidationAuthState {
   isLoadingAuthValidation: boolean;
-  mutateValidationAuth: () => Promise<void>;
+  setIsLoadingAuthValidation: (loading: boolean) => void;
 }
 
-interface ValidationAuthProviderProps {
-  children: React.ReactNode;
-}
+const useValidationAuthStore = create<ValidationAuthState>()(
+  persist(
+    (set) => ({
+      isLoadingAuthValidation: false,
+      setIsLoadingAuthValidation: (loading) => set({ isLoadingAuthValidation: loading }),
+    }),
+    {
+      name: "validationAuth-storage",
+      storage: createJSONStorage(() => localStorage),
+    },
+  ),
+);
 
-export const ValidationAuthProviderContext = createContext<ContextProps>({} as ContextProps);
-
-export const ValidationAuthProvider = ({ children }: ValidationAuthProviderProps) => {
+export function useValidationAuth() {
+  const { setIsLoadingAuthValidation } = useValidationAuthStore();
   const router = useRouter();
-  const { isLoading: isLoadingAuthValidation, mutateAsync: mutateValidationAuth } = useMutation({
-    mutationKey: ["validation-auth"],
-    mutationFn: () => authValidation(),
-    onSuccess() {
-      router.push("/");
+
+  const { isLoading, error } = useQuery({
+    queryKey: ["validation-auth"],
+    queryFn: () => authValidation(),
+    onSuccess: () => {
+      toast.success("Autenticação validada com sucesso! Redirecionando...", {
+        closeOnClick: true,
+        autoClose: 2000,
+      });
+
+      setTimeout(() => router.push("/"), 1000);
+    },
+    onError: (err) => {
+      console.error(err);
+      setIsLoadingAuthValidation(false);
+    },
+    onSettled: () => {
+      setIsLoadingAuthValidation(isLoading);
     },
   });
 
-  return (
-    <ValidationAuthProviderContext.Provider value={{ isLoadingAuthValidation, mutateValidationAuth }}>
-      {children}
-    </ValidationAuthProviderContext.Provider>
-  );
-};
-
-export const useValidationAuth = () => useContext(ValidationAuthProviderContext);
+  return { isLoading, error };
+}

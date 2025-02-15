@@ -13,7 +13,6 @@ import { RecommendationCryptoProvider } from "@/provider/Recommendation/Recommen
 import { RecommendationFiisProvider } from "@/provider/Recommendation/RecommendationFiisProvider";
 import { RecommendationStocksProvider } from "@/provider/Recommendation/RecommendationStockProvider";
 import { TanstackProvider } from "@/provider/tanstack-provider";
-import { ValidationAuthProvider } from "@/provider/ValidationAuthProvider";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -30,14 +29,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <RecommendationStocksProvider>
               <RecommendationFiisProvider>
                 <RecommendationCryptoProvider>
-                  <ValidationAuthProvider>
-                    <Header />
-                    {children}
-                    <SpeedInsights />
-                    <Analytics />
+                  <Header />
+                  {children}
+                  <SpeedInsights />
+                  <Analytics />
 
-                    <ToastContainer position="bottom-right" />
-                  </ValidationAuthProvider>
+                  <ToastContainer position="bottom-right" />
                 </RecommendationCryptoProvider>
               </RecommendationFiisProvider>
             </RecommendationStocksProvider>

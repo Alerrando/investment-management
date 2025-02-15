@@ -1,21 +1,21 @@
 "use client";
 
+import { QueryClient } from "@tanstack/react-query";
 import { Lightbulb, Loader2, Rocket, ShieldAlert } from "lucide-react";
 import { useEffect } from "react";
 
 import Spinner from "@/components/Spinner/Spinner";
 import { useUser } from "@/provider/UserProvider";
-import { useValidationAuth } from "@/provider/ValidationAuthProvider";
 
 export default function Magic() {
+  const queryClient = new QueryClient();
   const { waitingAuth } = useUser();
-  const { mutateValidationAuth } = useValidationAuth();
 
   useEffect(() => {
     if (waitingAuth) {
-      mutateValidationAuth();
+      queryClient.refetchQueries(["validation-auth"]);
     }
-  }, []);
+  }, [waitingAuth]);
 
   return (
     <div className="flex h-screen w-full flex-col items-center justify-center bg-gradient-to-b from-gray-900 to-gray-800 p-8">

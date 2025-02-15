@@ -15,7 +15,7 @@ export default function RankingCardICrypto({ title, data, onViewAll, styleRankin
   return (
     <div
       className={twMerge(
-        "w-full rounded-lg border p-4 shadow-sm dark:border-[#444444] dark:bg-[#2C2C2C]",
+        "relative w-full rounded-lg border p-4 shadow-sm dark:border-[#444444] dark:bg-[#2C2C2C]",
         styleRankingCard,
       )}
     >
@@ -37,7 +37,9 @@ export default function RankingCardICrypto({ title, data, onViewAll, styleRankin
             ))}
           </>
         ) : (
-          <Spinner />
+          <li className="absolute left-1/3 flex items-center justify-center">
+            <Spinner className="h-8 w-8" />
+          </li>
         )}
       </ul>
     </div>

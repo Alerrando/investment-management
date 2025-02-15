@@ -7,7 +7,7 @@ export interface SignInProps {
 export async function signIn(email: SignInProps) {
   console.log(email);
   const response = await api.post("http://localhost:8080/auth/login", email, {
-    withCredentials: false,
+    withCredentials: true,
   });
 
   return response.data;

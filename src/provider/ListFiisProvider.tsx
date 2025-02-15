@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 import { getListFiis } from "@/api/getListFiis";
 import { ListFiisModelContent } from "@/models/Lists/ListFiisModel";
@@ -24,7 +24,7 @@ const useListFiisStore = create<ListFiisState>()(
     }),
     {
       name: "listFiis-storage",
-      storage: () => localStorage,
+      storage: createJSONStorage(() => localStorage),
     },
   ),
 );

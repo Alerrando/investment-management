@@ -3,7 +3,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 import { signIn } from "@/api/sign-in";
 import { signUp, SignUpProps } from "@/api/sign-up";
@@ -39,7 +39,7 @@ const useUserStore = create<UserState>()(
     }),
     {
       name: "user-storage",
-      storage: () => localStorage,
+      storage: createJSONStorage(() => localStorage),
     },
   ),
 );

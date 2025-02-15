@@ -19,7 +19,7 @@ export default function RankingCardCryptosRise({
   return (
     <div
       className={twMerge(
-        "h-60 w-full rounded-lg border p-4 shadow-sm dark:border-[#2C2C2C] dark:bg-[#333333]",
+        "relative h-60 w-full rounded-lg border p-4 shadow-sm dark:border-[#2C2C2C] dark:bg-[#333333]",
         styleRankingCard,
       )}
     >
@@ -74,7 +74,9 @@ export default function RankingCardCryptosRise({
               </div>
             ))
         ) : (
-          <Spinner />
+          <li className="absolute flex h-full w-full items-center justify-center">
+            <Spinner className="h-8 w-8" />
+          </li>
         )}
       </ul>
     </div>

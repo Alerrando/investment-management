@@ -20,7 +20,7 @@ export default function RankingCardCryptoMoreVisited({
   return (
     <div
       className={twMerge(
-        "h-60 w-full overflow-y-auto rounded-lg border p-4 shadow-sm dark:border-[#444444] dark:bg-[#2C2C2C]",
+        "relative h-60 w-full overflow-y-auto rounded-lg border p-4 shadow-sm dark:border-[#444444] dark:bg-[#2C2C2C]",
         styleRankingCard,
       )}
     >
@@ -94,7 +94,11 @@ export default function RankingCardCryptoMoreVisited({
                 </TableRow>
               ))
           ) : (
-            <Spinner />
+            <TableRow className="absolute left-1/3 flex items-center justify-center">
+              <TableCell colSpan={6} className="text-center text-gray-900 dark:text-white">
+                <Spinner className="h-8 w-8" />
+              </TableCell>
+            </TableRow>
           )}
         </TableBody>
       </Table>

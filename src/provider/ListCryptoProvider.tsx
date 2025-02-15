@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 import { getListCrypto } from "@/api/getListCryptos";
 import { ListCryptoModel } from "@/models/Lists/ListCryptoModel";
@@ -24,7 +24,7 @@ const useListCryptoStore = create<ListCryptoState>()(
     }),
     {
       name: "listCrypto-storage",
-      storage: () => localStorage,
+      storage: createJSONStorage(() => localStorage),
     },
   ),
 );
