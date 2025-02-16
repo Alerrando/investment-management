@@ -7,7 +7,7 @@ import { createJSONStorage, persist } from "zustand/middleware";
 
 import { signIn } from "@/api/sign-in";
 import { signUp, SignUpProps } from "@/api/sign-up";
-import { ReturnResponseUser, UserModel } from "@/models/UserModel";
+import { ReturnResponseUser, Role, UserModel } from "@/models/UserModel";
 
 interface UserState {
   dataUser: UserModel;
@@ -27,7 +27,7 @@ const useUserStore = create<UserState>()(
         id: 0,
         email: "",
         name: "",
-        roles: [] as UserModel[],
+        roles: [] as Role[],
       },
       isLoadingUserSignIn: false,
       isLoadingUserSignUp: false,
@@ -114,6 +114,7 @@ export function useUser() {
 
   return {
     dataUser,
+    setDataUser,
     isLoadingUserSignIn,
     isLoadingUserSignUp,
     waitingAuth,
