@@ -5,6 +5,7 @@ import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Poppins } from "next/font/google";
+import { Suspense } from "react";
 import { ToastContainer } from "react-toastify";
 
 import Header from "@/components/Header/Header";
@@ -29,12 +30,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <RecommendationStocksProvider>
               <RecommendationFiisProvider>
                 <RecommendationCryptoProvider>
-                  <Header />
-                  {children}
-                  <SpeedInsights />
-                  <Analytics />
+                  <Suspense>
+                    <Header />
+                    {children}
+                    <SpeedInsights />
+                    <Analytics />
 
-                  <ToastContainer position="bottom-right" />
+                    <ToastContainer position="bottom-right" />
+                  </Suspense>
                 </RecommendationCryptoProvider>
               </RecommendationFiisProvider>
             </RecommendationStocksProvider>
