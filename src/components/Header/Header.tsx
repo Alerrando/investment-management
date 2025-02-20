@@ -34,7 +34,9 @@ export default function Header() {
         <li className="list-none font-semibold">
           <Link href="/investment-planner">Planejador de Investimentos</Link>
         </li>
-        <li className="list-none font-semibold">Ações</li>
+        <li className="list-none font-semibold">
+          <Link href="/stocks">Ações</Link>
+        </li>
         <li className="list-none font-semibold">FIIs</li>
         <li className="list-none font-semibold">Cripto</li>
       </ul>
