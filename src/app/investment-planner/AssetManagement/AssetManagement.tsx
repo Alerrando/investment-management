@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { BriefcaseBusiness, Search, Sparkles } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import Spinner from "@/components/Spinner/Spinner";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { ListCryptoModel } from "@/models/Lists/ListCryptoModel";
 import { ListFiisModelContent } from "@/models/Lists/ListFiisModel";
@@ -48,9 +48,9 @@ export default function AssetManagement() {
   const [animatedIcon, setAnimatedIcon] = useState(false);
   const [showBag, setShowBag] = useState(false);
   const [showBagContent, setShowBagContent] = useState(false);
-  const { isLoadingListFiis, dataListFiis } = useListFiis();
-  const { isLoadingListStocks, dataListStocks } = useListStocks();
-  const { isLoadingListCrypto, dataListCrypto } = useListCrypto();
+  const { dataListFiis } = useListFiis();
+  const { dataListStocks } = useListStocks();
+  const { dataListCrypto } = useListCrypto();
   const { mutateRecommendationStock, dataRecommendationStock } = useRecommendationStocks();
   const { mutateRecommendationFiis, dataRecommendationFiis } = useRecommendationFiis();
   const { mutateRecommendationCrypto, dataRecommendationCrypto } = useRecommendationCrypto();
@@ -116,7 +116,7 @@ export default function AssetManagement() {
       </div>
 
       <div className="h-72 overflow-auto rounded-lg border border-gray-300 shadow-sm dark:border-gray-700">
-        {!isLoadingListFiis && activeTab === "Fiis" ? (
+        {dataListFiis.length > 0 && activeTab === "Fiis" ? (
           <TableFiis
             filteredAssets={dataListFiis.filter((asset) =>
               asset.paper.toLowerCase().includes(searchQuery.toLowerCase()),
@@ -124,7 +124,7 @@ export default function AssetManagement() {
             handleAddToBag={handleAddToBag}
             dataRecommendationFiis={dataRecommendationFiis}
           />
-        ) : !isLoadingListStocks && activeTab === "Ações" ? (
+        ) : dataListStocks.length > 0 && activeTab === "Ações" ? (
           <TableStock
             filteredAssets={dataListStocks.filter((asset) =>
               asset.paper.toLowerCase().includes(searchQuery.toLowerCase()),
@@ -132,7 +132,7 @@ export default function AssetManagement() {
             handleAddToBag={handleAddToBag}
             dataRecommendationStock={dataRecommendationStock}
           />
-        ) : !isLoadingListCrypto && activeTab === "Cryptos" ? (
+        ) : dataListCrypto.length > 0 && activeTab === "Cryptos" ? (
           <TableCrypto
             filteredAssets={dataListCrypto.filter((asset) =>
               asset.name.toLowerCase().includes(searchQuery.toLowerCase()),
@@ -141,7 +141,52 @@ export default function AssetManagement() {
             dataRecommendationCrypto={dataRecommendationCrypto}
           />
         ) : (
-          <Spinner />
+          <table className="w-full table-auto border-collapse text-left text-sm text-gray-600 dark:text-gray-300">
+            <thead className="sticky top-0 z-10 bg-gray-100 dark:bg-gray-800">
+              <tr>
+                <th className="px-4 py-3">
+                  <Skeleton className="h-4 w-16" />
+                </th>
+                <th className="px-4 py-3">
+                  <Skeleton className="h-4 w-16" />
+                </th>
+                <th className="px-4 py-3">
+                  <Skeleton className="h-4 w-16" />
+                </th>
+                <th className="px-4 py-3">
+                  <Skeleton className="h-4 w-16" />
+                </th>
+                <th className="px-4 py-3">
+                  <Skeleton className="h-4 w-16" />
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {Array.from({ length: 5 }).map((_, index) => (
+                <tr
+                  key={index}
+                  className="border-b transition-all duration-300 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
+                >
+                  <td className="px-4 py-3">
+                    <Skeleton className="h-6 w-full" />
+                  </td>
+                  <td className="px-4 py-3">
+                    <Skeleton className="h-6 w-full" />
+                  </td>
+                  <td className="px-4 py-3">
+                    <Skeleton className="h-6 w-full" />
+                  </td>
+                  <td className="px-4 py-3">
+                    <Skeleton className="h-6 w-full" />
+                  </td>
+                  <td className="px-4 py-3">
+                    <Skeleton className="h-6 w-full" />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         )}
       </div>
 

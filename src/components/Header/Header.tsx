@@ -45,9 +45,10 @@ export default function Header() {
         {dataUser.email.length > 0 ? (
           <div className="flex items-center gap-4">
             <span className="font-semibold text-black dark:text-white">Bem-vindo, {dataUser.name}</span>
+
             <Button
               variant="destructive"
-              className="h-auto bg-white px-6 py-1 font-semibold text-black shadow-md hover:bg-white hover:opacity-90"
+              className="h-auto bg-red-600 px-6 py-1 font-semibold text-white shadow-md hover:bg-red-700 hover:opacity-90"
               onClick={() => handleLogout()}
             >
               Logout

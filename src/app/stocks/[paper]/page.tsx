@@ -6,9 +6,11 @@ import { useEffect, useState } from "react";
 import { Footer } from "@/components/Footer/Footer";
 import RankingCard from "@/components/RankingCard/RankingCard";
 import Title from "@/components/Title/Title";
+import { useListStocks } from "@/provider/ListStockProvider";
 
 export default function StockDetail() {
-  const { stockId } = useParams();
+  const { paper } = useParams();
+  const { dataListStocks } = useListStocks();
   const [stockData, setStockData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -64,7 +66,12 @@ export default function StockDetail() {
     };
 
     fetchStockData();
-  }, [stockId]);
+  }, [paper]);
+
+  console.log(
+    dataListStocks.filter((item) => item.paper.toLowerCase() === (paper as string)?.toLowerCase()),
+    paper,
+  );
 
   if (isLoading) {
     return <div>Carregando...</div>;

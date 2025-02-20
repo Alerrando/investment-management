@@ -1,6 +1,6 @@
 import { twMerge } from "tailwind-merge";
 
-import Spinner from "@/components/Spinner/Spinner";
+import { Skeleton } from "@/components/ui/skeleton";
 
 import RankingCardItemCrypto from "./RankingCardItemCrypto/RankingCardItemCrypto";
 
@@ -37,9 +37,23 @@ export default function RankingCardICrypto({ title, data, onViewAll, styleRankin
             ))}
           </>
         ) : (
-          <li className="absolute left-1/3 flex items-center justify-center">
-            <Spinner className="h-8 w-8" />
-          </li>
+          <table className="w-full table-auto border-collapse text-left text-sm text-gray-600 dark:text-gray-300">
+            <tbody>
+              {Array.from({ length: 5 }).map((_, index) => (
+                <tr
+                  key={index}
+                  className="border-b transition-all duration-300 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
+                >
+                  <td className="px-4 py-3">
+                    <Skeleton className="h-6 w-full" />
+                  </td>
+                  <td className="px-4 py-3">
+                    <Skeleton className="h-6 w-full" />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         )}
       </ul>
     </div>

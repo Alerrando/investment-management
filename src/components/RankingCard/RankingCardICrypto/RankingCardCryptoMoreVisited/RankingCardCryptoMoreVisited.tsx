@@ -1,6 +1,6 @@
 import { twMerge } from "tailwind-merge";
 
-import Spinner from "@/components/Spinner/Spinner";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ListCryptoModel } from "@/models/Lists/ListCryptoModel";
 
@@ -94,11 +94,33 @@ export default function RankingCardCryptoMoreVisited({
                 </TableRow>
               ))
           ) : (
-            <TableRow className="absolute left-1/3 flex items-center justify-center">
-              <TableCell colSpan={6} className="text-center text-gray-900 dark:text-white">
-                <Spinner className="h-8 w-8" />
-              </TableCell>
-            </TableRow>
+            <>
+              {Array.from({ length: 5 }).map((_, index) => (
+                <TableRow
+                  key={index}
+                  className="border-b transition-all duration-300 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
+                >
+                  <TableCell className="px-4 py-3">
+                    <Skeleton className="h-6 w-full" />
+                  </TableCell>
+                  <TableCell className="px-4 py-3">
+                    <Skeleton className="h-6 w-full" />
+                  </TableCell>
+                  <TableCell className="px-4 py-3">
+                    <Skeleton className="h-6 w-full" />
+                  </TableCell>
+                  <TableCell className="px-4 py-3">
+                    <Skeleton className="h-6 w-full" />
+                  </TableCell>
+                  <TableCell className="px-4 py-3">
+                    <Skeleton className="h-6 w-full" />
+                  </TableCell>
+                  <TableCell className="px-4 py-3">
+                    <Skeleton className="h-6 w-full" />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </>
           )}
         </TableBody>
       </Table>
