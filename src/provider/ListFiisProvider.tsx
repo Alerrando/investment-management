@@ -1,5 +1,3 @@
-"use client";
-
 import { useQuery } from "@tanstack/react-query";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
@@ -9,18 +7,14 @@ import { ListFiisModelContent } from "@/models/Lists/ListFiisModel";
 
 interface ListFiisState {
   dataListFiis: ListFiisModelContent[];
-  isLoadingListFiis: boolean;
   setDataListFiis: (data: ListFiisModelContent[]) => void;
-  setIsLoadingListFiis: (loading: boolean) => void;
 }
 
 const useListFiisStore = create<ListFiisState>()(
   persist(
     (set) => ({
       dataListFiis: [],
-      isLoadingListFiis: false,
       setDataListFiis: (data) => set({ dataListFiis: data }),
-      setIsLoadingListFiis: (loading) => set({ isLoadingListFiis: loading }),
     }),
     {
       name: "listFiis-storage",
@@ -29,35 +23,27 @@ const useListFiisStore = create<ListFiisState>()(
   ),
 );
 
-const getCachedData = (): ListFiisModelContent[] | null => {
-  const cachedData = localStorage.getItem("listFiis-storage");
-  return cachedData ? (JSON.parse(cachedData)?.state?.dataListFiis ?? null) : null;
-};
-
 export function useListFiis() {
-  const { setIsLoadingListFiis, setDataListFiis, dataListFiis, isLoadingListFiis } = useListFiisStore();
+  const { setDataListFiis, dataListFiis } = useListFiisStore();
 
-  const { isLoading, error } = useQuery({
+  const { isLoading, error, data } = useQuery({
     queryKey: ["list-fiis"],
     queryFn: async () => {
-      const cachedData = getCachedData();
-      if (cachedData?.length) return { content: cachedData };
+      if (dataListFiis?.length) return { content: dataListFiis };
+
       const data = await getListFiis();
       setDataListFiis(data.content);
-      return data;
+      return data.content;
     },
     staleTime: Infinity,
     cacheTime: 1000 * 60 * 60 * 24,
     onError: (err) => {
       console.error(err);
-      setIsLoadingListFiis(false);
     },
-    onSettled: () => {
-      const cachedData = getCachedData();
-      setDataListFiis(cachedData ?? []);
-      setIsLoadingListFiis(cachedData ? false : isLoading);
+    onSuccess: (data) => {
+      setDataListFiis(data);
     },
   });
 
-  return { dataListFiis, isLoadingListFiis, error };
+  return { dataListFiis: dataListFiis || data, isLoadingListFiis: isLoading, error };
 }

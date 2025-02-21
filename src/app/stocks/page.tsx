@@ -1,5 +1,5 @@
 "use client";
-import { ArrowDown, ArrowUp, ChartCandlestick, Filter, Medal } from "lucide-react";
+import { AlignLeft, ArrowDown, ArrowUp, ChartCandlestick, LayoutDashboard, Medal } from "lucide-react";
 import { useState } from "react";
 
 import Title from "@/components/Title/Title";
@@ -9,11 +9,7 @@ import { useListStocks } from "@/provider/ListStockProvider";
 
 export default function AllStocksPage() {
   const { dataListStocks } = useListStocks();
-  const [filters, setFilters] = useState({
-    sector: "",
-    minDividendYield: 0,
-    maxPL: Infinity,
-  });
+  const [order, setOrder] = useState<"categories" | "list">("categories");
   const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" });
 
   function requestSort(key: string) {
@@ -28,23 +24,19 @@ export default function AllStocksPage() {
     <div className="flex h-[calc(100vh_-_53px)] flex-col gap-8 border px-8 pt-8 dark:border-[#444444] dark:bg-[#2C2C2C]">
       <Title name="Todos os Stocks" icon={<Medal size={20} className="text-indigo-600" />} />
 
-      <div className="flex gap-4">
-        <Filter size={16} />
-        <div className="flex items-center gap-2">
-          <input
-            type="number"
-            placeholder="Dividend Yield Mínimo"
-            className="rounded-md border p-2"
-            onChange={(e) => setFilters({ ...filters, minDividendYield: parseFloat(e.target.value) })}
-          />
+      <div className="flex gap-2">
+        <div
+          className={`cursor-pointer rounded-lg ${order === "categories" && "bg-gray-600 hover:bg-gray-600/50"} p-2`}
+          onClick={() => setOrder("categories")}
+        >
+          <LayoutDashboard size={20} />
         </div>
-        <div className="flex items-center gap-2">
-          <input
-            type="number"
-            placeholder="P/L Máximo"
-            className="rounded-md border p-2"
-            onChange={(e) => setFilters({ ...filters, maxPL: parseFloat(e.target.value) })}
-          />
+
+        <div
+          className={`cursor-pointer rounded-lg ${order === "list" && "bg-gray-600 hover:bg-gray-600/50"} p-2`}
+          onClick={() => setOrder("list")}
+        >
+          <AlignLeft size={20} />
         </div>
       </div>
 

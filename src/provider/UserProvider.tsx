@@ -11,12 +11,8 @@ import { ReturnResponseUser, Role, UserModel } from "@/models/UserModel";
 
 interface UserState {
   dataUser: UserModel;
-  isLoadingUserSignIn: boolean;
-  isLoadingUserSignUp: boolean;
   waitingAuth: boolean;
   setDataUser: (data: UserModel) => void;
-  setIsLoadingUserSignIn: (loading: boolean) => void;
-  setIsLoadingUserSignUp: (loading: boolean) => void;
   setWaitingAuth: (waitingAuth: boolean) => void;
 }
 
@@ -29,12 +25,8 @@ const useUserStore = create<UserState>()(
         name: "",
         roles: [] as Role[],
       },
-      isLoadingUserSignIn: false,
-      isLoadingUserSignUp: false,
       waitingAuth: false,
       setDataUser: (data) => set({ dataUser: data }),
-      setIsLoadingUserSignIn: (loading) => set({ isLoadingUserSignIn: loading }),
-      setIsLoadingUserSignUp: (loading) => set({ isLoadingUserSignUp: loading }),
       setWaitingAuth: (waitingAuth) => set({ waitingAuth }),
     }),
     {
@@ -45,27 +37,14 @@ const useUserStore = create<UserState>()(
 );
 
 export function useUser() {
-  const {
-    dataUser,
-    isLoadingUserSignIn,
-    isLoadingUserSignUp,
-    waitingAuth,
-    setDataUser,
-    setIsLoadingUserSignIn,
-    setIsLoadingUserSignUp,
-    setWaitingAuth,
-  } = useUserStore();
+  const { dataUser, waitingAuth, setDataUser, setWaitingAuth } = useUserStore();
 
-  const { mutateAsync: mutateSignIn } = useMutation({
+  const { mutateAsync: mutateSignIn, isLoading: isLoadingUserSignIn } = useMutation({
     mutationKey: ["query-sign-in"],
     mutationFn: (data: string) => signIn(data),
-    onMutate() {
-      setIsLoadingUserSignIn(true);
-    },
     onSuccess(data: ReturnResponseUser) {
       setDataUser(data.user);
       setWaitingAuth(true);
-      setIsLoadingUserSignIn(false);
       toast.success(
         <div className="flex flex-col">
           <h2 className="text-sm font-semibold">Enviamos um link de autenticação para seu e-mail</h2>
@@ -78,22 +57,17 @@ export function useUser() {
       );
     },
     onError() {
-      setIsLoadingUserSignIn(false);
       toast.error(`Erro ao fazer login!`, {
         closeOnClick: true,
       });
     },
   });
 
-  const { mutateAsync: mutateSignUp } = useMutation({
+  const { mutateAsync: mutateSignUp, isLoading: isLoadingUserSignUp } = useMutation({
     mutationKey: ["query-sign-up"],
     mutationFn: (data: SignUpProps) => signUp(data),
-    onMutate() {
-      setIsLoadingUserSignUp(true);
-    },
     onSuccess(data: ReturnResponseUser) {
       setDataUser(data.user);
-      setIsLoadingUserSignUp(false);
       toast.success(
         <div className="flex flex-col">
           <h2 className="font-semibold">Usuário criado com sucesso!</h2>
@@ -105,7 +79,6 @@ export function useUser() {
       );
     },
     onError(error: ReturnResponseUser) {
-      setIsLoadingUserSignUp(false);
       toast.error(`${error.message}`, {
         closeOnClick: true,
       });
