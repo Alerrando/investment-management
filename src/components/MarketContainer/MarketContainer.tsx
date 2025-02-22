@@ -3,7 +3,7 @@ import { ArrowDownLeft, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-import { listMarket } from "@/api/listMarket";
+import { getListMarket } from "@/api/getListMarket";
 
 import { Button } from "../ui/button";
 import { Table, TableBody, TableCell, TableRow } from "../ui/table";
@@ -16,7 +16,7 @@ export default function MarketContainer() {
   useEffect(() => {
     (async () => {
       try {
-        const response = await listMarket();
+        const response = await getListMarket();
         setInvoices(response.stocks || []);
       } catch (error) {
         console.error("Error fetching market data:", error);

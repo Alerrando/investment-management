@@ -1,13 +1,13 @@
 "use client";
-import { ArrowDownLeft, ArrowUpRight, Building2 } from "lucide-react";
+import { Building2 } from "lucide-react";
 import { useState } from "react";
 
 import { getLogo } from "@/api/getLogo";
 import { useQueryHook } from "@/hook/useQueryHook";
-import { logoNameMapping } from "@/util/logoNameMapping";
+import { ListStockModelContent } from "@/models/Lists/ListStockModel";
 
 interface RankingCardItemStockProps {
-  item: any;
+  item: ListStockModelContent;
   formatMarketCap: (value: any) => string;
   index: number;
 }
@@ -16,9 +16,9 @@ export default function RankingCardItemStock({ item, formatMarketCap, index }: R
   const [img, setImage] = useState<string | undefined>("/path-to-placeholder-image");
 
   const { isLoading } = useQueryHook({
-    queryKey: ["query-logo", item.name],
+    queryKey: ["query-logo", item.paper],
     options: {
-      queryFn: () => getLogo({ name: logoNameMapping[item.name] || item.name.split(" ")[0] }),
+      queryFn: () => getLogo({ name: item.paper }),
       staleTime: Infinity,
       cacheTime: Infinity,
       onSuccess: (data) => {
@@ -43,29 +43,23 @@ export default function RankingCardItemStock({ item, formatMarketCap, index }: R
         {isLoading || img === "/path-to-placeholder-image" ? (
           <Building2 size={28} className="text-gray-500 dark:text-gray-300" />
         ) : (
-          <img src={img && img} alt={item.name} className="h-8 w-8 rounded-full" />
+          <img src={img && img} alt={item.paper} className="h-8 w-8 rounded-full" />
         )}
         <div>
-          <h3 className="text-sm text-gray-900 dark:text-white">{item.stock}</h3>
-          <p className="text-[10px] text-gray-500 dark:text-gray-400">{item.name}</p>
+          <h3 className="text-sm text-gray-900 dark:text-white">{item.paper}</h3>
         </div>
       </div>
 
       <div className="flex flex-col items-end">
-        <p className="text-sm font-semibold text-green-500 dark:text-green-400">R${item.close}</p>
+        <p className="text-sm font-semibold text-green-500 dark:text-green-400">R${item.quotation}</p>
 
         <div className="flex items-center gap-[2px]">
-          <p className="text-[10px] text-gray-600 dark:text-gray-300">{item.change.toFixed(2)}%</p>
-          {item.change > 0 ? (
-            <ArrowUpRight size={10} className="text-green-500 dark:text-green-400" />
-          ) : (
-            <ArrowDownLeft size={10} className="text-red-500 dark:text-red-400" />
-          )}
+          <p className="text-[10px] text-gray-600 dark:text-gray-300">{item.dividend}%</p>
         </div>
       </div>
 
       <span className="w-16 text-right text-base font-semibold text-gray-900 dark:text-white">
-        {formatMarketCap(item.market_cap)}
+        {formatMarketCap(item.marketValue)}
       </span>
     </li>
   );

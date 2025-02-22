@@ -8,9 +8,9 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { ListCryptoModel } from "@/models/Lists/ListCryptoModel";
 import { ListFiisModelContent } from "@/models/Lists/ListFiisModel";
 import { ListStockModelContent } from "@/models/Lists/ListStockModel";
-import { useListCrypto } from "@/provider/ListCryptoProvider";
-import { useListFiis } from "@/provider/ListFiisProvider";
-import { useListStocks } from "@/provider/ListStockProvider";
+import { useListCrypto } from "@/provider/Lists/ListCryptoProvider";
+import { useListFiis } from "@/provider/Lists/ListFiisProvider";
+import { useListStocks } from "@/provider/Lists/ListStockProvider";
 import { useRecommendationCrypto } from "@/provider/Recommendation/RecommendationCryptoProvider";
 import { useRecommendationFiis } from "@/provider/Recommendation/RecommendationFiisProvider";
 import { useRecommendationStocks } from "@/provider/Recommendation/RecommendationStockProvider";

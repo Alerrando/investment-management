@@ -26,7 +26,7 @@ const useListFiisStore = create<ListFiisState>()(
 export function useListFiis() {
   const { setDataListFiis, dataListFiis } = useListFiisStore();
 
-  const { isLoading, error, data } = useQuery({
+  const { isLoading, error } = useQuery({
     queryKey: ["list-fiis"],
     queryFn: async () => {
       if (dataListFiis?.length) return { content: dataListFiis };
@@ -45,5 +45,5 @@ export function useListFiis() {
     },
   });
 
-  return { dataListFiis: dataListFiis || data, isLoadingListFiis: isLoading, error };
+  return { dataListFiis: dataListFiis, isLoadingListFiis: isLoading, error };
 }

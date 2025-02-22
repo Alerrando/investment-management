@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { Footer } from "@/components/Footer/Footer";
 import RankingCard from "@/components/RankingCard/RankingCard";
 import Title from "@/components/Title/Title";
-import { useListStocks } from "@/provider/ListStockProvider";
+import { useListStocks } from "@/provider/Lists/ListStockProvider";
 
 export default function StockDetail() {
   const { paper } = useParams();

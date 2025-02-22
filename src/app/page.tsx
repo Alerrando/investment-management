@@ -11,11 +11,13 @@ import RankingCardCryptoMoreVisited from "@/components/RankingCard/RankingCardIC
 import RankingCardCryptosRise from "@/components/RankingCard/RankingCardICrypto/RankingCardCryptosRise/RankingCardCryptosRise";
 import RankingCardICrypto from "@/components/RankingCard/RankingCardICrypto/RankingCardICrypto";
 import Title from "@/components/Title/Title";
-import { useListCrypto } from "@/provider/ListCryptoProvider";
+import { useListCrypto } from "@/provider/Lists/ListCryptoProvider";
+import { useListStocks } from "@/provider/Lists/ListStockProvider";
 
 export default function Home() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [items, setItems] = useState<any[]>([]);
+  const { dataListStocks } = useListStocks();
   const { dataListCrypto, isLoadingListCrypto } = useListCrypto();
 
   useEffect(() => {
@@ -63,154 +65,19 @@ export default function Home() {
         <div className="flex w-full items-center justify-between">
           <RankingCard
             title="New Rankings"
-            data={[
-              {
-                stock: "HAPV3",
-                name: "HAPVIDA",
-                close: 2.21,
-                change: -0.896860986547086,
-                volume: 27813000,
-                market_cap: 16801583439.999998,
-                logo: "https://s3-symbol-logo.tradingview.com/hapvida--big.svg",
-                sector: "Health Services",
-                type: "stock",
-              },
-              {
-                stock: "CVCB3",
-                name: "CVC BRASIL",
-                close: 1.41,
-                change: -1.3986013986014,
-                volume: 27179800,
-                market_cap: 751583213,
-                logo: "https://s3-symbol-logo.tradingview.com/cvc-brasil-on-nm--big.svg",
-                sector: "Consumer Services",
-                type: "stock",
-              },
-              {
-                stock: "MGLU3",
-                name: "MAGAZINE LUIZA",
-                close: 6.38,
-                change: -2.297090352220526,
-                volume: 24666900,
-                market_cap: 4361457925,
-                logo: "https://s3-symbol-logo.tradingview.com/magaz-luiza-on-nm--big.svg",
-                sector: "Retail Trade",
-                type: "stock",
-              },
-              {
-                stock: "B3SA3",
-                name: "B3",
-                close: 10.36,
-                change: 0.2904162633107392,
-                volume: 23844500,
-                market_cap: 54113633985,
-                logo: "https://s3-symbol-logo.tradingview.com/b3-on-nm--big.svg",
-                sector: "Finance",
-                type: "stock",
-              },
-            ]}
+            data={dataListStocks.length === 0 ? [] : dataListStocks.filter((_: any, index: number) => index < 4)}
             onViewAll={() => console.log("Clicked!")}
             styleRankingCard="w-[30%]"
           />
           <RankingCard
             title="New Rankings"
-            data={[
-              {
-                stock: "HAPV3",
-                name: "HAPVIDA",
-                close: 2.21,
-                change: -0.896860986547086,
-                volume: 27813000,
-                market_cap: 16801583439.999998,
-                logo: "https://s3-symbol-logo.tradingview.com/hapvida--big.svg",
-                sector: "Health Services",
-                type: "stock",
-              },
-              {
-                stock: "CVCB3",
-                name: "CVC BRASIL",
-                close: 1.41,
-                change: -1.3986013986014,
-                volume: 27179800,
-                market_cap: 751583213,
-                logo: "https://s3-symbol-logo.tradingview.com/cvc-brasil-on-nm--big.svg",
-                sector: "Consumer Services",
-                type: "stock",
-              },
-              {
-                stock: "MGLU3",
-                name: "MAGAZINE LUIZA",
-                close: 6.38,
-                change: -2.297090352220526,
-                volume: 24666900,
-                market_cap: 4361457925,
-                logo: "https://s3-symbol-logo.tradingview.com/magaz-luiza-on-nm--big.svg",
-                sector: "Retail Trade",
-                type: "stock",
-              },
-              {
-                stock: "B3SA3",
-                name: "B3",
-                close: 10.36,
-                change: 0.2904162633107392,
-                volume: 23844500,
-                market_cap: 54113633985,
-                logo: "https://s3-symbol-logo.tradingview.com/b3-on-nm--big.svg",
-                sector: "Finance",
-                type: "stock",
-              },
-            ]}
+            data={dataListStocks.length === 0 ? [] : dataListStocks.filter((_: any, index: number) => index < 4)}
             onViewAll={() => console.log("Clicked!")}
             styleRankingCard="w-[30%]"
           />
           <RankingCard
             title="New Rankings"
-            data={[
-              {
-                stock: "HAPV3",
-                name: "HAPVIDA",
-                close: 2.21,
-                change: -0.896860986547086,
-                volume: 27813000,
-                market_cap: 16801583439.999998,
-                logo: "https://s3-symbol-logo.tradingview.com/hapvida--big.svg",
-                sector: "Health Services",
-                type: "stock",
-              },
-              {
-                stock: "CVCB3",
-                name: "CVC BRASIL",
-                close: 1.41,
-                change: -1.3986013986014,
-                volume: 27179800,
-                market_cap: 751583213,
-                logo: "https://s3-symbol-logo.tradingview.com/cvc-brasil-on-nm--big.svg",
-                sector: "Consumer Services",
-                type: "stock",
-              },
-              {
-                stock: "MGLU3",
-                name: "MAGAZINE LUIZA",
-                close: 6.38,
-                change: -2.297090352220526,
-                volume: 24666900,
-                market_cap: 4361457925,
-                logo: "https://s3-symbol-logo.tradingview.com/magaz-luiza-on-nm--big.svg",
-                sector: "Retail Trade",
-                type: "stock",
-              },
-              {
-                stock: "B3SA3",
-                name: "B3",
-                close: 10.36,
-                change: 0.2904162633107392,
-                volume: 23844500,
-                market_cap: 54113633985,
-                logo: "https://s3-symbol-logo.tradingview.com/b3-on-nm--big.svg",
-                sector: "Finance",
-                type: "stock",
-              },
-            ]}
+            data={dataListStocks.length === 0 ? [] : dataListStocks.filter((_: any, index: number) => index < 4)}
             onViewAll={() => console.log("Clicked!")}
             styleRankingCard="w-[30%]"
           />
@@ -223,14 +90,14 @@ export default function Home() {
           <div className="flex w-full items-center justify-between">
             <RankingCardCryptosRise
               title="Cryptos em Alta"
-              data={dataListCrypto}
+              data={dataListCrypto.length === 0 ? [] : dataListCrypto.filter((_: any, index: number) => index < 4)}
               onViewAll={() => console.log("Clicked!")}
               styleRankingCard="w-[65%]"
             />
 
             <RankingCardICrypto
               title="Crypto Mais Visitados"
-              data={isLoadingListCrypto ? [] : dataListCrypto?.filter((_: any, index: number) => index < 4)}
+              data={dataListCrypto.length === 0 ? [] : dataListCrypto.filter((_: any, index: number) => index < 4)}
               onViewAll={() => console.log("Clicked!")}
               styleRankingCard="w-[30%] h-[242px] overflow-auto"
             />
@@ -238,7 +105,7 @@ export default function Home() {
 
           <RankingCardCryptoMoreVisited
             title="Crypto Mais Visitados"
-            data={isLoadingListCrypto ? [] : dataListCrypto?.filter((_: any, index: number) => index < 4)}
+            data={dataListCrypto.length === 0 ? [] : dataListCrypto.filter((_: any, index: number) => index < 4)}
             onViewAll={() => console.log("Clicked!")}
             styleRankingCard="w-full"
           />

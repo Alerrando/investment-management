@@ -26,7 +26,7 @@ const useListStocksStore = create<ListStocksState>()(
 export function useListStocks() {
   const { setDataListStocks, dataListStocks } = useListStocksStore();
 
-  const { isLoading, error, data } = useQuery({
+  const { isLoading, error } = useQuery({
     queryKey: ["list-stocks"],
     queryFn: async () => {
       if (dataListStocks?.length) return { content: dataListStocks };
@@ -45,5 +45,5 @@ export function useListStocks() {
     },
   });
 
-  return { dataListStocks: dataListStocks || data, isLoadingListStocks: isLoading, error };
+  return { dataListStocks: dataListStocks, isLoadingListStocks: isLoading, error };
 }

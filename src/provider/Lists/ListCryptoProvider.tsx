@@ -26,7 +26,7 @@ const useListCryptoStore = create<ListCryptoState>()(
 export function useListCrypto() {
   const { setDataListCrypto, dataListCrypto } = useListCryptoStore();
 
-  const { isLoading, error, data } = useQuery({
+  const { isLoading, error } = useQuery({
     queryKey: ["list-crypto"],
     queryFn: async () => {
       if (dataListCrypto.length) return { content: dataListCrypto };
@@ -45,5 +45,5 @@ export function useListCrypto() {
     },
   });
 
-  return { dataListCrypto: dataListCrypto || data, isLoadingListCrypto: isLoading, error };
+  return { dataListCrypto: dataListCrypto, isLoadingListCrypto: isLoading, error };
 }
