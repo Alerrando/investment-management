@@ -27,6 +27,8 @@ export default function Home() {
     })();
   }, []);
 
+  console.log(dataListStocks);
+
   return (
     <div className="flex flex-col gap-16">
       <main className="relative flex h-[calc(65vh-_53px)] w-full flex-col items-start justify-end gap-20 px-16">

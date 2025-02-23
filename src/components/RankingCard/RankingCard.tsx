@@ -1,5 +1,7 @@
 import { twMerge } from "tailwind-merge";
 
+import { Skeleton } from "../ui/skeleton";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 import RankingCardItemStock from "./RankingCardItemStock/RankingCardItemStock";
 
 interface RankingCardProps {
@@ -39,16 +41,53 @@ export default function RankingCard({ title, data, onViewAll, styleRankingCard }
         </button>
       </header>
 
-      <ul className="space-y-4 overflow-y-auto">
-        {data.map((item, index) => (
-          <RankingCardItemStock
-            item={item}
-            formatMarketCap={formatMarketCap}
-            index={index}
-            key={`ranking-cark-stock-${index}`}
-          />
-        ))}
-      </ul>
+      <Table className="w-full overflow-auto">
+        <TableHeader>
+          <TableRow className="border-b-[#F2F2F2] dark:border-b-[#444444]">
+            <TableHead className="text-gray-900 dark:text-white">Nome</TableHead>
+            <TableHead className="text-gray-900 dark:text-white">Volume</TableHead>
+            <TableHead className="text-gray-900 dark:text-white">Preço</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {data.length > 0 ? (
+            <>
+              {data.map((item, index) => (
+                <TableRow
+                  key={index}
+                  className="border-b border-b-[#F2F2F2] transition-all duration-300 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
+                >
+                  <RankingCardItemStock
+                    name={item.name}
+                    volume={item.volume}
+                    price={item.price}
+                    marketCap={formatMarketCap(item.marketCap)}
+                  />
+                </TableRow>
+              ))}
+            </>
+          ) : (
+            <>
+              {Array.from({ length: 3 }).map((_, index) => (
+                <TableRow
+                  className="border-b border-b-[#F2F2F2] transition-all duration-300 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
+                  key={index}
+                >
+                  <TableCell className="px-4 py-3">
+                    <Skeleton className="h-6 w-full" />
+                  </TableCell>
+                  <TableCell className="px-4 py-3">
+                    <Skeleton className="h-6 w-full" />
+                  </TableCell>
+                  <TableCell className="px-4 py-3">
+                    <Skeleton className="h-6 w-full" />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </>
+          )}
+        </TableBody>
+      </Table>
     </div>
   );
 }
