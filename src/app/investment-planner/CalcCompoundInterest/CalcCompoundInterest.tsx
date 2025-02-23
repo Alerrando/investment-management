@@ -56,10 +56,12 @@ export default function CalcCompoundInterest() {
   });
   const [valueTimesSelected, setValueTimesSelected] = useState("month");
   const [valueInterestSelected, setValueInterestSelected] = useState("monthly");
-  const [valuesInterest, setValuesInterest] = useState<number[]>([]);
-  const [monthlyData, setMonthlyData] = useState<{ month: number; totalAmount: number; accumulatedInterest: number }[]>(
-    [],
-  );
+  const [valuesInterest, setValuesInterest] = useState<string[]>([]);
+  const [monthlyData, setMonthlyData] = useState<
+    { month: number; totalAmount: number; amountAllCalc: number; accumulatedInterest: number }[]
+  >([]);
+
+  console.log(monthlyData, valuesInterest);
 
   return (
     <form
@@ -160,7 +162,7 @@ export default function CalcCompoundInterest() {
           <div className="flex w-full flex-col items-center justify-center rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800 sm:w-auto">
             <span className="text-lg font-medium text-gray-700 dark:text-white">Montante Total</span>
             <span className="mt-2 text-2xl font-semibold text-purple-600 dark:text-purple-400">
-              {valuesInterest[0].toLocaleString("pt-BR", {
+              {Number(valuesInterest[0]).toLocaleString("pt-BR", {
                 style: "currency",
                 currency: "BRL",
               })}
@@ -169,13 +171,13 @@ export default function CalcCompoundInterest() {
           <div className="flex w-full flex-col items-center justify-center rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800 sm:w-auto">
             <span className="text-lg font-medium text-gray-700 dark:text-white">Juros Acumulados</span>
             <span className="mt-2 text-2xl font-semibold text-purple-600 dark:text-purple-400">
-              {valuesInterest[1].toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+              {Number(valuesInterest[1]).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
             </span>
           </div>
           <div className="flex w-full flex-col items-center justify-center rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800 sm:w-auto">
             <span className="text-lg font-medium text-gray-700 dark:text-white">Contribuições Mensais Totais</span>
             <span className="mt-2 text-2xl font-semibold text-purple-600 dark:text-purple-400">
-              {valuesInterest[2].toLocaleString("pt-BR", {
+              {Number(valuesInterest[2]).toLocaleString("pt-BR", {
                 style: "currency",
                 currency: "BRL",
               })}
@@ -194,6 +196,7 @@ export default function CalcCompoundInterest() {
                   <th className="px-4 py-2 text-left">Mês</th>
                   <th className="px-4 py-2 text-left">Total Investido (R$)</th>
                   <th className="px-4 py-2 text-left">Juros Acumulados (R$)</th>
+                  <th className="px-4 py-2 text-left">Total Juros (R$)</th>
                   <th className="px-4 py-2 text-left">Total Acumulados (R$)</th>
                 </tr>
               </thead>
@@ -214,7 +217,13 @@ export default function CalcCompoundInterest() {
                       })}
                     </td>
                     <td className="px-4 py-2">
-                      {(data.totalAmount + data.accumulatedInterest).toLocaleString("pt-BR", {
+                      {data.amountAllCalc.toLocaleString("pt-BR", {
+                        style: "currency",
+                        currency: "BRL",
+                      })}
+                    </td>
+                    <td className="px-4 py-2">
+                      {Number(data.totalAmount + data.accumulatedInterest).toLocaleString("pt-BR", {
                         style: "currency",
                         currency: "BRL",
                       })}
@@ -268,41 +277,35 @@ export default function CalcCompoundInterest() {
   function submit(e: SchemaDataType) {
     const { valueInitial, valueMonthly, interestRate, months } = e;
 
-    let totalAmount = 0;
+    let totalAmount = valueInitial;
     let accumulatedInterest = 0;
-
+    let totalContributed = valueInitial;
     const monthRate =
       valueInterestSelected === "monthly" ? interestRate / 100 : Math.pow(1 + interestRate / 100, 1 / 12) - 1;
 
     const monthsLoop = valueTimesSelected === "month" ? months : months * 12;
 
-    let amountFromInitial = valueInitial;
-    let amountFromMonthlyContributions = valueInitial;
-    let calcRateMonthAccumulate = 0;
-
     const monthlyInterestData = [];
 
     for (let i = 1; i <= monthsLoop; i++) {
-      amountFromInitial += valueMonthly;
-      const calcRateMonth = amountFromMonthlyContributions * monthRate;
-      calcRateMonthAccumulate += calcRateMonth;
-      amountFromMonthlyContributions = amountFromInitial + calcRateMonthAccumulate;
+      // Calculando os juros compostos para o mês
+      const interestForMonth = totalAmount * monthRate;
+      accumulatedInterest += interestForMonth;
 
-      totalAmount = amountFromMonthlyContributions;
-      accumulatedInterest = calcRateMonthAccumulate;
+      // Adicionando a contribuição mensal
+      totalAmount += valueMonthly + interestForMonth;
+
+      totalContributed += valueMonthly;
 
       monthlyInterestData.push({
         month: i,
-        totalAmount: amountFromInitial,
+        totalAmount: Number(totalContributed),
         accumulatedInterest: Number(accumulatedInterest),
+        amountAllCalc: Number(totalAmount),
       });
     }
 
     setMonthlyData(monthlyInterestData);
-    setValuesInterest([
-      Number(totalAmount.toFixed(2)),
-      Number(accumulatedInterest.toFixed(2)),
-      Number(valueMonthly * monthsLoop + valueInitial),
-    ]);
+    setValuesInterest([totalAmount.toFixed(2), accumulatedInterest.toFixed(2), totalContributed.toFixed(2)]);
   }
 }
