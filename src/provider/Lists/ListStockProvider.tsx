@@ -29,7 +29,7 @@ export function useListStocks() {
   const { isLoading, error } = useQuery({
     queryKey: ["list-stocks"],
     queryFn: async () => {
-      if (dataListStocks?.length) return { content: dataListStocks.content };
+      if (dataListStocks?.length) return { content: dataListStocks };
 
       const data = await getListStock();
       setDataListStocks(data.content);
@@ -41,7 +41,7 @@ export function useListStocks() {
       console.error(err);
     },
     onSuccess: (data) => {
-      setDataListStocks(data);
+      setDataListStocks(data.content);
     },
   });
 

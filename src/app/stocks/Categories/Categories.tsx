@@ -1,41 +1,31 @@
-import RankingCardItemStock from "@/components/RankingCard/RankingCardItemStock/RankingCardItemStock";
-import { useListStocksByDividend } from "@/provider/Lists/ListStockByDividend";
+import RankingCard from "@/components/RankingCard/RankingCard";
+import { useListStocksByDividend } from "@/provider/Lists/ListStockByDividendProvider";
 
 export default function Categories() {
   const { dataListStocksByDividend } = useListStocksByDividend();
 
   return (
-    <div className={"z-30 w-full rounded-lg border p-4 shadow-sm dark:border-[#444444] dark:bg-[#2C2C2C]"}>
-      <header className="mb-4 flex items-center justify-between">
-        <h2 className="text-lg font-semibold">Ações que mais pagam dividendos</h2>
-        <button className="rounded-md border px-3 py-1 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:bg-[#222] dark:text-gray-300 dark:hover:bg-[#444444]">
-          View All
-        </button>
-      </header>
+    <div className="flex w-full items-center justify-between gap-8">
+      <RankingCard
+        title="Ações que mais pagam dividendos"
+        onViewAll={() => {}}
+        styleRankingCard="w-full"
+        data={dataListStocksByDividend}
+      />
 
-      <ul className="space-y-4 overflow-y-auto">
-        {dataListStocksByDividend.length > 0 &&
-          dataListStocksByDividend.map((item, index) => (
-            <RankingCardItemStock
-              item={item}
-              formatMarketCap={formatMarketCap}
-              index={index}
-              key={`ranking-cark-stock-${index}`}
-            />
-          ))}
-      </ul>
+      <RankingCard
+        title="Empresas com mais valor de mercado"
+        onViewAll={() => {}}
+        styleRankingCard="w-full"
+        data={dataListStocksByDividend}
+      />
+
+      <RankingCard
+        title="Aumento de Receita nos Últimos 5 Anos"
+        onViewAll={() => {}}
+        styleRankingCard="w-full"
+        data={dataListStocksByDividend}
+      />
     </div>
   );
-
-  function formatMarketCap(value: any) {
-    if (value >= 1e12) {
-      return `${(value / 1e12).toFixed(2)}T`;
-    } else if (value >= 1e9) {
-      return `${(value / 1e9).toFixed(2)}B`;
-    } else if (value >= 1e6) {
-      return `${(value / 1e6).toFixed(2)}M`;
-    } else {
-      return value.toLocaleString();
-    }
-  }
 }

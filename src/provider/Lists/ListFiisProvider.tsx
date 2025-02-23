@@ -41,7 +41,7 @@ export function useListFiis() {
       console.error(err);
     },
     onSuccess: (data) => {
-      setDataListFiis(data);
+      setDataListFiis(data.content);
     },
   });
 
