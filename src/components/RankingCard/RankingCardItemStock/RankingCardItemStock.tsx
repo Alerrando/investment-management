@@ -38,7 +38,7 @@ export default function RankingCardItemStock({ item, formatMarketCap, index }: R
   return (
     <TableRow
       key={index}
-      className="flex items-center justify-between border-b border-b-[#F2F2F2] p-2 hover:bg-[#F2F2F2] dark:border-b-[#555] dark:hover:bg-[#444444]"
+      className="border-b border-b-[#F2F2F2] p-2 hover:bg-[#F2F2F2] dark:border-b-[#555] dark:hover:bg-[#444444]"
     >
       <TableCell>
         <div className="flex items-center gap-2">

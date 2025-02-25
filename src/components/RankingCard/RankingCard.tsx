@@ -13,15 +13,21 @@ interface RankingCardProps {
 }
 
 export default function RankingCard({ title, data, onViewAll, styleRankingCard }: RankingCardProps) {
-  function formatMarketCap(value: any) {
-    if (value >= 1e12) {
-      return `${(value / 1e12).toFixed(2)}T`;
-    } else if (value >= 1e9) {
-      return `${(value / 1e9).toFixed(2)}B`;
-    } else if (value >= 1e6) {
-      return `${(value / 1e6).toFixed(2)}M`;
+  function formatMarketCap(value: string | number): string {
+    const numericValue = typeof value === "string" ? parseFloat(value.replace(/\./g, "")) : value;
+
+    if (isNaN(numericValue)) {
+      return "Invalid value";
+    }
+
+    if (numericValue >= 1e12) {
+      return `${(numericValue / 1e12).toFixed(2)}T`;
+    } else if (numericValue >= 1e9) {
+      return `${(numericValue / 1e9).toFixed(2)}B`;
+    } else if (numericValue >= 1e6) {
+      return `${(numericValue / 1e6).toFixed(2)}M`;
     } else {
-      return value.toLocaleString();
+      return numericValue.toLocaleString();
     }
   }
 
@@ -41,7 +47,7 @@ export default function RankingCard({ title, data, onViewAll, styleRankingCard }
           <TableRow className="border-b-[#F2F2F2] dark:border-b-[#444444]">
             <TableHead className="pl-4 text-gray-900 dark:text-white">Nome</TableHead>
             <TableHead className="pl-4 text-gray-900 dark:text-white">Volume</TableHead>
-            <TableHead className="pl-4 text-gray-900 dark:text-white">Preço</TableHead>
+            <TableHead className="pl-4 text-gray-900 dark:text-white">Volume</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

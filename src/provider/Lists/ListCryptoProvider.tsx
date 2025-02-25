@@ -41,7 +41,7 @@ export function useListCrypto() {
       console.error(err);
     },
     onSuccess: (data) => {
-      setDataListCrypto(data.content);
+      setDataListCrypto(data);
     },
   });
 

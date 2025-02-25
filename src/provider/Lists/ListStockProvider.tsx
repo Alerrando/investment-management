@@ -41,7 +41,7 @@ export function useListStocks() {
       console.error(err);
     },
     onSuccess: (data) => {
-      setDataListStocks(data.content);
+      setDataListStocks(data);
     },
   });
 

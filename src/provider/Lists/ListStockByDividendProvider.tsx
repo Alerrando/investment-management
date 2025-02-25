@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-import { getListStock } from "@/api/getListStock";
+import { getListStockByDividend } from "@/api/getListStockByDividend";
 import { ListStockModelContent } from "@/models/Lists/ListStockModel";
 
 interface ListStocksByDividendState {
@@ -27,11 +27,11 @@ export function useListStocksByDividend() {
   const { setDataListStocksByDividend, dataListStocksByDividend } = useListStocksByDividendStore();
 
   const { isLoading, error } = useQuery({
-    queryKey: ["list-stocks"],
+    queryKey: ["list-stocks-by-dividend"],
     queryFn: async () => {
       if (dataListStocksByDividend?.length) return { content: dataListStocksByDividend };
 
-      const data = await getListStock();
+      const data = await getListStockByDividend();
       setDataListStocksByDividend(data.content);
       return data.content;
     },
@@ -45,5 +45,5 @@ export function useListStocksByDividend() {
     },
   });
 
-  return { dataListStocksByDividend: dataListStocksByDividend, isLoadingListStocks: isLoading, error };
+  return { dataListStocksByDividend: dataListStocksByDividend, isLoadingListStocksByDividend: isLoading, error };
 }
