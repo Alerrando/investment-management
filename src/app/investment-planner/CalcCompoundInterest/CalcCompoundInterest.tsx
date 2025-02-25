@@ -61,8 +61,6 @@ export default function CalcCompoundInterest() {
     { month: number; totalAmount: number; amountAllCalc: number; accumulatedInterest: number }[]
   >([]);
 
-  console.log(monthlyData, valuesInterest);
-
   return (
     <form
       className="flex w-full flex-col items-start justify-start gap-8 rounded-lg border border-gray-200 bg-[#f7f7f7] p-6 shadow-lg dark:border-gray-600 dark:bg-gray-700 dark:text-white"
@@ -275,11 +273,11 @@ export default function CalcCompoundInterest() {
   );
 
   function submit(e: SchemaDataType) {
-    const { valueInitial, valueMonthly, interestRate, months } = e;
+    const { valueMonthly, interestRate, months } = e;
 
-    let totalAmount = valueInitial;
+    let totalAmount = 0;
     let accumulatedInterest = 0;
-    let totalContributed = valueInitial;
+    let totalContributed = 0;
     const monthRate =
       valueInterestSelected === "monthly" ? interestRate / 100 : Math.pow(1 + interestRate / 100, 1 / 12) - 1;
 
@@ -287,12 +285,10 @@ export default function CalcCompoundInterest() {
 
     const monthlyInterestData = [];
 
-    for (let i = 1; i <= monthsLoop; i++) {
-      // Calculando os juros compostos para o mês
+    for (let i = 0; i <= monthsLoop; i++) {
       const interestForMonth = totalAmount * monthRate;
       accumulatedInterest += interestForMonth;
 
-      // Adicionando a contribuição mensal
       totalAmount += valueMonthly + interestForMonth;
 
       totalContributed += valueMonthly;
