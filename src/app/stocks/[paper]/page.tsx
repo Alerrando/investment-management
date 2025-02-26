@@ -69,7 +69,7 @@ export default function StockDetail() {
   }, [paper]);
 
   console.log(
-    dataListStocks.filter((item) => item.paper.toLowerCase() === (paper as string)?.toLowerCase()),
+    dataListStocks.content.filter((item) => item.paper.toLowerCase() === (paper as string)?.toLowerCase()),
     paper,
   );
 

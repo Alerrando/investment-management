@@ -3,17 +3,17 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 import { getListStock } from "@/api/getListStock";
-import { ListStockModelContent } from "@/models/Lists/ListStockModel";
+import { ListStockModel } from "@/models/Lists/ListStockModel";
 
 interface ListStocksState {
-  dataListStocks: ListStockModelContent[];
-  setDataListStocks: (data: ListStockModelContent[]) => void;
+  dataListStocks: ListStockModel;
+  setDataListStocks: (data: ListStockModel) => void;
 }
 
 const useListStocksStore = create<ListStocksState>()(
   persist(
     (set) => ({
-      dataListStocks: [],
+      dataListStocks: {} as ListStockModel,
       setDataListStocks: (data) => set({ dataListStocks: data }),
     }),
     {
@@ -29,11 +29,11 @@ export function useListStocks() {
   const { isLoading, error } = useQuery({
     queryKey: ["list-stocks"],
     queryFn: async () => {
-      if (dataListStocks?.length) return { content: dataListStocks };
+      if (dataListStocks?.content?.length) return { content: dataListStocks };
 
       const data = await getListStock();
-      setDataListStocks(data.content);
-      return data.content;
+      setDataListStocks(data);
+      return data;
     },
     staleTime: Infinity,
     cacheTime: 1000 * 60 * 60 * 24,

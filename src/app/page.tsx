@@ -67,19 +67,31 @@ export default function Home() {
         <div className="flex w-full items-center justify-between">
           <RankingCard
             title="New Rankings"
-            data={dataListStocks.length === 0 ? [] : dataListStocks.filter((_: any, index: number) => index < 4)}
+            data={
+              dataListStocks.content.length === 0
+                ? []
+                : dataListStocks.content.filter((_: any, index: number) => index < 4)
+            }
             onViewAll={() => console.log("Clicked!")}
             styleRankingCard="w-[30%]"
           />
           <RankingCard
             title="New Rankings"
-            data={dataListStocks.length === 0 ? [] : dataListStocks.filter((_: any, index: number) => index < 4)}
+            data={
+              dataListStocks.content.length === 0
+                ? []
+                : dataListStocks.content.filter((_: any, index: number) => index < 4)
+            }
             onViewAll={() => console.log("Clicked!")}
             styleRankingCard="w-[30%]"
           />
           <RankingCard
             title="New Rankings"
-            data={dataListStocks.length === 0 ? [] : dataListStocks.filter((_: any, index: number) => index < 4)}
+            data={
+              dataListStocks.content.length === 0
+                ? []
+                : dataListStocks.content.filter((_: any, index: number) => index < 4)
+            }
             onViewAll={() => console.log("Clicked!")}
             styleRankingCard="w-[30%]"
           />

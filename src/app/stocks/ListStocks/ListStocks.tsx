@@ -61,8 +61,8 @@ export default function ListStocks() {
       </thead>
 
       <tbody>
-        {dataListStocks.length > 0 ? (
-          dataListStocks.map((stock, index) => (
+        {dataListStocks.content.length > 0 ? (
+          dataListStocks.content.map((stock, index) => (
             <tr
               key={index}
               className="border-b border-b-[#F2F2F2] p-2 transition-colors hover:bg-[#F2F2F2] dark:border-b-[#555] dark:hover:bg-[#444444]"

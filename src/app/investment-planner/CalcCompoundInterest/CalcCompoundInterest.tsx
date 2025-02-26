@@ -273,11 +273,11 @@ export default function CalcCompoundInterest() {
   );
 
   function submit(e: SchemaDataType) {
-    const { valueMonthly, interestRate, months } = e;
+    const { valueInitial, valueMonthly, interestRate, months } = e;
 
-    let totalAmount = 0;
+    let totalAmount = valueInitial;
     let accumulatedInterest = 0;
-    let totalContributed = 0;
+    let totalContributed = valueInitial;
     const monthRate =
       valueInterestSelected === "monthly" ? interestRate / 100 : Math.pow(1 + interestRate / 100, 1 / 12) - 1;
 
@@ -285,7 +285,7 @@ export default function CalcCompoundInterest() {
 
     const monthlyInterestData = [];
 
-    for (let i = 0; i <= monthsLoop; i++) {
+    for (let i = 1; i <= monthsLoop; i++) {
       const interestForMonth = totalAmount * monthRate;
       accumulatedInterest += interestForMonth;
 

@@ -116,17 +116,17 @@ export default function AssetManagement() {
       </div>
 
       <div className="h-72 overflow-auto rounded-lg border border-gray-300 shadow-sm dark:border-gray-700">
-        {dataListFiis.length > 0 && activeTab === "Fiis" ? (
+        {dataListFiis.content.length > 0 && activeTab === "Fiis" ? (
           <TableFiis
-            filteredAssets={dataListFiis.filter((asset) =>
+            filteredAssets={dataListFiis.content.filter((asset) =>
               asset.paper.toLowerCase().includes(searchQuery.toLowerCase()),
             )}
             handleAddToBag={handleAddToBag}
             dataRecommendationFiis={dataRecommendationFiis}
           />
-        ) : dataListStocks.length > 0 && activeTab === "Ações" ? (
+        ) : dataListStocks.content.length > 0 && activeTab === "Ações" ? (
           <TableStock
-            filteredAssets={dataListStocks.filter((asset) =>
+            filteredAssets={dataListStocks.content.filter((asset) =>
               asset.paper.toLowerCase().includes(searchQuery.toLowerCase()),
             )}
             handleAddToBag={handleAddToBag}
@@ -245,11 +245,11 @@ export default function AssetManagement() {
 
   async function recommendationsInvestment() {
     const auxStock = bag.filter((item) => item.assets === "Ações");
-    const stocks = dataListStocks.filter((stock) => auxStock.some((item) => item.name === stock.paper));
+    const stocks = dataListStocks.content.filter((stock) => auxStock.some((item) => item.name === stock.paper));
     if (auxStock.length > 0) await mutateRecommendationStock(stocks as ListStockModelContent[]);
 
     const auxFiis = bag.filter((item) => item.assets === "Fiis");
-    const fiis = dataListFiis.filter((fiis) => auxFiis.some((item) => item.name === fiis.paper));
+    const fiis = dataListFiis.content.filter((fiis) => auxFiis.some((item) => item.name === fiis.paper));
     if (auxFiis.length > 0) await mutateRecommendationFiis(fiis as ListFiisModelContent[]);
 
     const auxCrypto = bag.filter((item) => item.assets === "Cryptos");

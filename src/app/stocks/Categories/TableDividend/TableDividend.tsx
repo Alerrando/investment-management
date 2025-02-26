@@ -3,6 +3,8 @@ import { ArrowRight } from "lucide-react";
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useListStocksByDividend } from "@/provider/Lists/ListStockByDividendProvider";
 
+import SkeletonCategories from "../SkeletonCategories";
+
 export default function TableDividend() {
   const { dataListStocksByDividend } = useListStocksByDividend();
 
@@ -24,20 +26,26 @@ export default function TableDividend() {
           </TableRow>
         </TableHeader>
         <tbody>
-          {dataListStocksByDividend
-            .filter((_, index) => index < 3)
-            .map((stock, index) => (
-              <TableRow
-                key={index}
-                className="border-b-2 border-b-gray-100 transition-colors duration-300 hover:bg-gray-50 dark:border-b-[#555] dark:hover:bg-[#444444]"
-              >
-                <td className="py-4 text-sm font-medium text-gray-900 dark:text-white">{stock.paper}</td>
-                <td className="py-4 text-sm text-gray-700 dark:text-gray-300">{stock.dividend}</td>
-                <td className="py-4 text-sm text-gray-700 dark:text-gray-300">{stock.quotation}</td>
-                <td className="py-4 text-sm text-gray-700 dark:text-gray-300">{stock.pL}</td>
-                <td className="py-4 text-sm text-gray-700 dark:text-gray-300">{stock.roe}</td>
-              </TableRow>
-            ))}
+          {dataListStocksByDividend.length > 0 ? (
+            <>
+              {dataListStocksByDividend
+                .filter((_, index) => index < 3)
+                .map((stock, index) => (
+                  <TableRow
+                    key={index}
+                    className="border-b-2 border-b-gray-100 transition-colors duration-300 hover:bg-gray-50 dark:border-b-[#555] dark:hover:bg-[#444444]"
+                  >
+                    <td className="py-4 text-sm font-medium text-gray-900 dark:text-white">{stock.paper}</td>
+                    <td className="py-4 text-sm text-gray-700 dark:text-gray-300">{stock.dividend}</td>
+                    <td className="py-4 text-sm text-gray-700 dark:text-gray-300">{stock.quotation}</td>
+                    <td className="py-4 text-sm text-gray-700 dark:text-gray-300">{stock.pL}</td>
+                    <td className="py-4 text-sm text-gray-700 dark:text-gray-300">{stock.roe}</td>
+                  </TableRow>
+                ))}
+            </>
+          ) : (
+            <SkeletonCategories quantity={5} />
+          )}
         </tbody>
       </Table>
       <div className="mt-6 flex justify-center">

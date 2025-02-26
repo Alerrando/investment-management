@@ -3,17 +3,17 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 import { getListFiis } from "@/api/getListFiis";
-import { ListFiisModelContent } from "@/models/Lists/ListFiisModel";
+import { ListFiisModel } from "@/models/Lists/ListFiisModel";
 
 interface ListFiisState {
-  dataListFiis: ListFiisModelContent[];
-  setDataListFiis: (data: ListFiisModelContent[]) => void;
+  dataListFiis: ListFiisModel;
+  setDataListFiis: (data: ListFiisModel) => void;
 }
 
 const useListFiisStore = create<ListFiisState>()(
   persist(
     (set) => ({
-      dataListFiis: [],
+      dataListFiis: {} as ListFiisModel,
       setDataListFiis: (data) => set({ dataListFiis: data }),
     }),
     {
@@ -29,11 +29,11 @@ export function useListFiis() {
   const { isLoading, error } = useQuery({
     queryKey: ["list-fiis"],
     queryFn: async () => {
-      if (dataListFiis?.length) return { content: dataListFiis };
+      if (dataListFiis?.content?.length) return { content: dataListFiis };
 
       const data = await getListFiis();
-      setDataListFiis(data.content);
-      return data.content;
+      setDataListFiis(data);
+      return data;
     },
     staleTime: Infinity,
     cacheTime: 1000 * 60 * 60 * 24,

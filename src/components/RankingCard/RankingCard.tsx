@@ -1,9 +1,8 @@
 import { twMerge } from "tailwind-merge";
 
-import SkeletonCategories from "@/app/stocks/Categories/SkeletonCategories";
-
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "../ui/table";
 import RankingCardItemStock from "./RankingCardItemStock/RankingCardItemStock";
+import SkeletonCard from "./SkeletonCard/SkeletonCard";
 
 interface RankingCardProps {
   title: string;
@@ -61,7 +60,7 @@ export default function RankingCard({ title, data, onViewAll, styleRankingCard }
               />
             ))
           ) : (
-            <SkeletonCategories />
+            <SkeletonCard />
           )}
         </TableBody>
       </Table>
