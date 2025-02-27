@@ -5,6 +5,10 @@ import { createJSONStorage, persist } from "zustand/middleware";
 import { getListStock } from "@/api/getListStock";
 import { ListStockModel } from "@/models/Lists/ListStockModel";
 
+const initialState: ListStockModel = {
+  content: [],
+} as ListStockModel;
+
 interface ListStocksState {
   dataListStocks: ListStockModel;
   setDataListStocks: (data: ListStockModel) => void;
@@ -13,7 +17,7 @@ interface ListStocksState {
 const useListStocksStore = create<ListStocksState>()(
   persist(
     (set) => ({
-      dataListStocks: {} as ListStockModel,
+      dataListStocks: initialState,
       setDataListStocks: (data) => set({ dataListStocks: data }),
     }),
     {

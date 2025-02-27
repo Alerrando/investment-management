@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { BriefcaseBusiness, Search, Sparkles } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import { Skeleton } from "@/components/ui/skeleton";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { ListCryptoModel } from "@/models/Lists/ListCryptoModel";
 import { ListFiisModelContent } from "@/models/Lists/ListFiisModel";
@@ -16,6 +15,7 @@ import { useRecommendationFiis } from "@/provider/Recommendation/RecommendationF
 import { useRecommendationStocks } from "@/provider/Recommendation/RecommendationStockProvider";
 
 import BagContent from "./BagContent/BagContent";
+import SkeletonAssetManagement from "./SkeletonAssetManagement/SkeletonAssetManagement";
 import TableCrypto from "./TableCrypto/TableCrypto";
 import TableFiis from "./TableFiis/TableFiis";
 import TableStock from "./TableStock/TableStock";
@@ -141,52 +141,7 @@ export default function AssetManagement() {
             dataRecommendationCrypto={dataRecommendationCrypto}
           />
         ) : (
-          <table className="w-full table-auto border-collapse text-left text-sm text-gray-600 dark:text-gray-300">
-            <thead className="sticky top-0 z-10 bg-gray-100 dark:bg-gray-800">
-              <tr>
-                <th className="px-4 py-3">
-                  <Skeleton className="h-4 w-16" />
-                </th>
-                <th className="px-4 py-3">
-                  <Skeleton className="h-4 w-16" />
-                </th>
-                <th className="px-4 py-3">
-                  <Skeleton className="h-4 w-16" />
-                </th>
-                <th className="px-4 py-3">
-                  <Skeleton className="h-4 w-16" />
-                </th>
-                <th className="px-4 py-3">
-                  <Skeleton className="h-4 w-16" />
-                </th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {Array.from({ length: 5 }).map((_, index) => (
-                <tr
-                  key={index}
-                  className="border-b transition-all duration-300 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
-                >
-                  <td className="px-4 py-3">
-                    <Skeleton className="h-6 w-full" />
-                  </td>
-                  <td className="px-4 py-3">
-                    <Skeleton className="h-6 w-full" />
-                  </td>
-                  <td className="px-4 py-3">
-                    <Skeleton className="h-6 w-full" />
-                  </td>
-                  <td className="px-4 py-3">
-                    <Skeleton className="h-6 w-full" />
-                  </td>
-                  <td className="px-4 py-3">
-                    <Skeleton className="h-6 w-full" />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <SkeletonAssetManagement />
         )}
       </div>
 

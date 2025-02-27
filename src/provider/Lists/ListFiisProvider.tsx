@@ -5,6 +5,10 @@ import { createJSONStorage, persist } from "zustand/middleware";
 import { getListFiis } from "@/api/getListFiis";
 import { ListFiisModel } from "@/models/Lists/ListFiisModel";
 
+const initialState: ListFiisModel = {
+  content: [],
+} as ListFiisModel;
+
 interface ListFiisState {
   dataListFiis: ListFiisModel;
   setDataListFiis: (data: ListFiisModel) => void;
@@ -13,7 +17,7 @@ interface ListFiisState {
 const useListFiisStore = create<ListFiisState>()(
   persist(
     (set) => ({
-      dataListFiis: {} as ListFiisModel,
+      dataListFiis: initialState,
       setDataListFiis: (data) => set({ dataListFiis: data }),
     }),
     {

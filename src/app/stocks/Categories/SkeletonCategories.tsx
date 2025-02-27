@@ -14,7 +14,7 @@ export default function SkeletonCategories({ quantity }: SkeletonCategoriesProps
           key={index}
         >
           {Array.from({ length: quantity }).map((_, index) => (
-            <TableCell className="py-3 pl-4" key={index}>
+            <TableCell className="animate-pulse py-3 pl-4" key={index}>
               <Skeleton className="h-6 w-full" />
             </TableCell>
           ))}
