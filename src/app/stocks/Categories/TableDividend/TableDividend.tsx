@@ -8,8 +8,6 @@ import SkeletonCategories from "../SkeletonCategories";
 export default function TableDividend() {
   const { dataListStocksByDividend } = useListStocksByDividend();
 
-  console.log(dataListStocksByDividend);
-
   return (
     <div className="z-30 min-w-[300px] flex-1 transform rounded-2xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 p-6 shadow-lg transition-all hover:shadow-xl dark:border-[#444444] dark:from-[#2C2C2C] dark:to-[#1E1E1E]">
       <header className="mb-6 flex items-center justify-between">
