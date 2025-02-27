@@ -7,7 +7,32 @@ import { ListFiisModel } from "@/models/Lists/ListFiisModel";
 
 const initialState: ListFiisModel = {
   content: [],
-} as ListFiisModel;
+  pageable: {
+    sort: {
+      unsorted: true,
+      sorted: false,
+      empty: true,
+    },
+    offset: 0,
+    pageNumber: 0,
+    pageSize: 10,
+    paged: true,
+    unpaged: false,
+  },
+  totalPages: 0,
+  totalElements: 0,
+  last: false,
+  size: 0,
+  number: 0,
+  sort: {
+    unsorted: true,
+    sorted: false,
+    empty: true,
+  },
+  numberOfElements: 0,
+  first: true,
+  empty: true,
+};
 
 interface ListFiisState {
   dataListFiis: ListFiisModel;
