@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-import { getListStockByRevenueGrowth } from "@/api/getListStockByRevenueGrowth";
+import { getListStockByMarketValueRevenueGrowth } from "@/api/getListStockByRevenueGrowth";
 import { ListStockModelContent } from "@/models/Lists/ListStockModel";
 
 interface ListStocksByRevenueGrowthState {
@@ -31,7 +31,7 @@ export function useListStocksByRevenueGrowth() {
     queryFn: async () => {
       if (dataListStocksByRevenueGrowth?.length) return { content: dataListStocksByRevenueGrowth };
 
-      const data = await getListStockByRevenueGrowth();
+      const data = await getListStockByMarketValueRevenueGrowth();
       setDataListStocksByRevenueGrowth(data.content);
       return data.content;
     },
