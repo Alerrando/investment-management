@@ -10,10 +10,10 @@ export default function SkeletonRankingCardCryptosRise() {
         >
           <header className="flex h-full items-center justify-between">
             <div className="flex items-center gap-2">
-              <Skeleton className="h-10 w-10" />
+              <Skeleton className="h-10 w-10 animate-pulse" />
               <div className="flex h-full flex-col justify-between gap-1">
-                <Skeleton className="h-[9px] w-9" />
-                <Skeleton className="h-[10px] w-14" />
+                <Skeleton className="h-[9px] w-9 animate-pulse" />
+                <Skeleton className="h-[10px] w-14 animate-pulse" />
               </div>
             </div>
 
@@ -22,13 +22,13 @@ export default function SkeletonRankingCardCryptosRise() {
 
           <div className="flex flex-col items-start justify-end gap-1">
             <div className="flex flex-col gap-1">
-              <Skeleton className="h-[9px] w-9" />
-              <Skeleton className="h-[20px] w-16" />
+              <Skeleton className="h-[9px] w-9 animate-pulse" />
+              <Skeleton className="h-[20px] w-16 animate-pulse" />
             </div>
 
             <div className="flex items-center gap-1">
-              <Skeleton className="h-4 w-4" />
-              <Skeleton className="h-3 w-3" />
+              <Skeleton className="h-4 w-4 animate-pulse" />
+              <Skeleton className="h-3 w-3 animate-pulse" />
             </div>
           </div>
         </div>

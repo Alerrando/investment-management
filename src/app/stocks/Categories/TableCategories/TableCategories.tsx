@@ -1,13 +1,15 @@
 import { ArrowRight } from "lucide-react";
 
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { useListStocksByMarketValue } from "@/provider/Lists/ListStockByMarketValueProvider";
+import { ListStockModelContent } from "@/models/Lists/ListStockModel";
 
 import SkeletonCategories from "../SkeletonCategories";
 
-export default function TableMarketValue() {
-  const { dataListStocksByMarketValue } = useListStocksByMarketValue();
+interface TableCategoriesProps {
+  data: ListStockModelContent[];
+}
 
+export default function TableCategories({ data }: TableCategoriesProps) {
   return (
     <div className="z-30 min-w-[300px] flex-1 transform rounded-2xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 p-6 shadow-lg transition-all hover:shadow-xl dark:border-[#444444] dark:from-[#2C2C2C] dark:to-[#1E1E1E]">
       <header className="mb-6 flex items-center justify-between">
@@ -16,17 +18,21 @@ export default function TableMarketValue() {
       <Table className="min-w-full table-auto">
         <TableHeader>
           <TableRow className="border-b-2 border-b-gray-100 dark:border-b-[#444444]">
-            <TableHead className="py-4 text-sm font-semibold text-gray-700 dark:text-gray-300">Ação</TableHead>
-            <TableHead className="py-4 text-sm font-semibold text-gray-700 dark:text-gray-300">Valor de M.</TableHead>
-            <TableHead className="py-4 text-sm font-semibold text-gray-700 dark:text-gray-300">Dividendo</TableHead>
-            <TableHead className="py-4 text-sm font-semibold text-gray-700 dark:text-gray-300">Preço</TableHead>
-            <TableHead className="py-4 text-sm font-semibold text-gray-700 dark:text-gray-300">P/L</TableHead>
+            <TableHead className="px-0 py-4 text-sm font-semibold text-gray-700 dark:text-gray-300">Ação</TableHead>
+            <TableHead className="px-0 py-4 text-sm font-semibold text-gray-700 dark:text-gray-300">
+              Valor de M.
+            </TableHead>
+            <TableHead className="px-0 py-4 text-sm font-semibold text-gray-700 dark:text-gray-300">
+              Dividendo
+            </TableHead>
+            <TableHead className="px-0 py-4 text-sm font-semibold text-gray-700 dark:text-gray-300">ROE</TableHead>
+            <TableHead className="px-0 py-4 text-sm font-semibold text-gray-700 dark:text-gray-300">P/L</TableHead>
           </TableRow>
         </TableHeader>
         <tbody>
-          {dataListStocksByMarketValue.length > 0 ? (
+          {data.length > 0 ? (
             <>
-              {dataListStocksByMarketValue
+              {data
                 .filter((_, index) => index < 3)
                 .map((stock, index) => (
                   <TableRow
@@ -38,7 +44,7 @@ export default function TableMarketValue() {
                       {formatMarketCap(stock.marketValue)}
                     </td>
                     <td className="py-4 text-sm text-gray-700 dark:text-gray-300">{stock.dividend}</td>
-                    <td className="py-4 text-sm text-gray-700 dark:text-gray-300">{stock.quotation}</td>
+                    <td className="py-4 text-sm text-gray-700 dark:text-gray-300">{stock.roe}</td>
                     <td className="py-4 text-sm text-gray-700 dark:text-gray-300">{stock.pL}</td>
                   </TableRow>
                 ))}

@@ -11,7 +11,7 @@ export default function AllStocksPage() {
   const [order, setOrder] = useState<"categories" | "list">("categories");
 
   return (
-    <div className="flex h-auto flex-col gap-8 border px-8 pt-8 dark:border-[#444444] dark:bg-[#2C2C2C]">
+    <div className="flex h-auto flex-col gap-8 border px-8 pt-8">
       <Title name="Todos os Stocks" icon={<Medal size={20} className="text-indigo-600" />} />
 
       <div className="flex gap-2">
