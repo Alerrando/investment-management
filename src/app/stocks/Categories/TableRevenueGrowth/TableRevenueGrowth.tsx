@@ -1,20 +1,17 @@
 import { ArrowRight } from "lucide-react";
 
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { ListStockModelContent } from "@/models/Lists/ListStockModel";
+import { useListStocksByRevenueGrowth } from "@/provider/Lists/ListStockByRevenueGrowthProvider";
 
 import SkeletonCategories from "../SkeletonCategories";
 
-interface TableCategoriesProps {
-  title: string;
-  data: ListStockModelContent[];
-}
+export default function TableRevenueGrowth() {
+  const { dataListStocksByRevenueGrowth } = useListStocksByRevenueGrowth();
 
-export default function TableCategories({ data, title }: TableCategoriesProps) {
   return (
     <div className="z-30 min-w-[300px] flex-1 transform rounded-2xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 p-6 shadow-lg transition-all hover:shadow-xl dark:border-[#444444] dark:from-[#2C2C2C] dark:to-[#1E1E1E]">
       <header className="mb-6 flex items-center justify-between">
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white">{title}</h2>
+        <h2 className="text-xl font-bold text-gray-900 dark:text-white">Ações com maior crescimento</h2>
       </header>
       <Table className="min-w-full table-auto">
         <TableHeader>
@@ -24,16 +21,16 @@ export default function TableCategories({ data, title }: TableCategoriesProps) {
               Valor de M.
             </TableHead>
             <TableHead className="px-0 py-4 text-sm font-semibold text-gray-700 dark:text-gray-300">
-              Dividendo
+              Crescimento
             </TableHead>
             <TableHead className="px-0 py-4 text-sm font-semibold text-gray-700 dark:text-gray-300">ROE</TableHead>
             <TableHead className="px-0 py-4 text-sm font-semibold text-gray-700 dark:text-gray-300">P/L</TableHead>
           </TableRow>
         </TableHeader>
         <tbody>
-          {data.length > 0 ? (
+          {dataListStocksByRevenueGrowth.length > 0 ? (
             <>
-              {data
+              {dataListStocksByRevenueGrowth
                 .filter((_, index) => index < 3)
                 .map((stock, index) => (
                   <TableRow
@@ -44,7 +41,7 @@ export default function TableCategories({ data, title }: TableCategoriesProps) {
                     <td className="py-4 text-sm text-gray-700 dark:text-gray-300">
                       {formatMarketCap(stock.marketValue)}
                     </td>
-                    <td className="py-4 text-sm text-gray-700 dark:text-gray-300">{stock.dividend}</td>
+                    <td className="py-4 text-sm text-gray-700 dark:text-gray-300">{stock.revenueGrowth5Years}</td>
                     <td className="py-4 text-sm text-gray-700 dark:text-gray-300">{stock.roe}</td>
                     <td className="py-4 text-sm text-gray-700 dark:text-gray-300">{stock.pL}</td>
                   </TableRow>
