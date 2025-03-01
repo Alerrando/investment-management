@@ -3,22 +3,24 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 import { getListStockByRoe } from "@/api/getListStockByRoe";
-import { ListStockModelContent } from "@/models/Lists/ListStockModel";
+import { initialStateStockProvider } from "@/lib/utils";
+import { ListStockModel } from "@/models/Lists/ListStockModel";
 
 interface ListStocksByRoeState {
-  dataListStocksByRoe: ListStockModelContent[];
-  setDataListStocksByRoe: (data: ListStockModelContent[]) => void;
+  dataListStocksByRoe: ListStockModel;
+  setDataListStocksByRoe: (data: ListStockModel) => void;
 }
 
 const useListStocksByRoeStore = create<ListStocksByRoeState>()(
   persist(
     (set) => ({
-      dataListStocksByRoe: [],
+      dataListStocksByRoe: initialStateStockProvider,
       setDataListStocksByRoe: (data) => set({ dataListStocksByRoe: data }),
     }),
     {
       name: "list-stocks-by-roe-storage",
       storage: createJSONStorage(() => localStorage),
+      partialize: (state) => ({ dataListStocksByRoe: state.dataListStocksByRoe }),
     },
   ),
 );
@@ -29,11 +31,11 @@ export function useListStocksByRoe() {
   const { isLoading, error } = useQuery({
     queryKey: ["list-stocks-by-roe"],
     queryFn: async () => {
-      if (dataListStocksByRoe?.length) return { content: dataListStocksByRoe };
+      if (dataListStocksByRoe?.content?.length) return { content: dataListStocksByRoe };
 
       const data = await getListStockByRoe();
-      setDataListStocksByRoe(data.content);
-      return data.content;
+      setDataListStocksByRoe(data);
+      return data;
     },
     staleTime: Infinity,
     cacheTime: 1000 * 60 * 60 * 24,

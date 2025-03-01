@@ -3,22 +3,24 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 import { getListStockByPl } from "@/api/getListStockByPl";
-import { ListStockModelContent } from "@/models/Lists/ListStockModel";
+import { initialStateStockProvider } from "@/lib/utils";
+import { ListStockModel } from "@/models/Lists/ListStockModel";
 
 interface ListStocksByPLState {
-  dataListStocksByPL: ListStockModelContent[];
-  setDataListStocksByPL: (data: ListStockModelContent[]) => void;
+  dataListStocksByPL: ListStockModel;
+  setDataListStocksByPL: (data: ListStockModel) => void;
 }
 
 const useListStocksByPLStore = create<ListStocksByPLState>()(
   persist(
     (set) => ({
-      dataListStocksByPL: [],
+      dataListStocksByPL: initialStateStockProvider,
       setDataListStocksByPL: (data) => set({ dataListStocksByPL: data }),
     }),
     {
       name: "list-stocks-by-pl-storage",
       storage: createJSONStorage(() => localStorage),
+      partialize: (state) => ({ dataListStocksByPL: state.dataListStocksByPL }),
     },
   ),
 );
@@ -29,11 +31,11 @@ export function useListStocksByPL() {
   const { isLoading, error } = useQuery({
     queryKey: ["list-stocks-by-pl"],
     queryFn: async () => {
-      if (dataListStocksByPL?.length) return { content: dataListStocksByPL };
+      if (dataListStocksByPL?.content?.length) return { content: dataListStocksByPL };
 
       const data = await getListStockByPl();
-      setDataListStocksByPL(data.content);
-      return data.content;
+      setDataListStocksByPL(data);
+      return data;
     },
     staleTime: Infinity,
     cacheTime: 1000 * 60 * 60 * 24,

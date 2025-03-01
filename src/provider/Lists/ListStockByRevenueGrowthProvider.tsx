@@ -3,22 +3,24 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 import { getListStockByMarketValueRevenueGrowth } from "@/api/getListStockByRevenueGrowth";
-import { ListStockModelContent } from "@/models/Lists/ListStockModel";
+import { initialStateStockProvider } from "@/lib/utils";
+import { ListStockModel } from "@/models/Lists/ListStockModel";
 
 interface ListStocksByRevenueGrowthState {
-  dataListStocksByRevenueGrowth: ListStockModelContent[];
-  setDataListStocksByRevenueGrowth: (data: ListStockModelContent[]) => void;
+  dataListStocksByRevenueGrowth: ListStockModel;
+  setDataListStocksByRevenueGrowth: (data: ListStockModel) => void;
 }
 
 const useListStocksByRevenueGrowthStore = create<ListStocksByRevenueGrowthState>()(
   persist(
     (set) => ({
-      dataListStocksByRevenueGrowth: [],
+      dataListStocksByRevenueGrowth: initialStateStockProvider,
       setDataListStocksByRevenueGrowth: (data) => set({ dataListStocksByRevenueGrowth: data }),
     }),
     {
       name: "list-stocks-by-revenue-growth-storage",
       storage: createJSONStorage(() => localStorage),
+      partialize: (state) => ({ dataListStocksByRevenueGrowth: state.dataListStocksByRevenueGrowth }),
     },
   ),
 );
@@ -29,11 +31,11 @@ export function useListStocksByRevenueGrowth() {
   const { isLoading, error } = useQuery({
     queryKey: ["list-stocks-by-revenue-growth"],
     queryFn: async () => {
-      if (dataListStocksByRevenueGrowth?.length) return { content: dataListStocksByRevenueGrowth };
+      if (dataListStocksByRevenueGrowth?.content?.length) return { content: dataListStocksByRevenueGrowth };
 
       const data = await getListStockByMarketValueRevenueGrowth();
-      setDataListStocksByRevenueGrowth(data.content);
-      return data.content;
+      setDataListStocksByRevenueGrowth(data);
+      return data;
     },
     staleTime: Infinity,
     cacheTime: 1000 * 60 * 60 * 24,

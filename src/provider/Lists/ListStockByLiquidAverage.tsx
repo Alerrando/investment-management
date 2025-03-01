@@ -3,22 +3,24 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 import { getListStockByLiquidAverage } from "@/api/getListStockByLiquidAverage";
-import { ListStockModelContent } from "@/models/Lists/ListStockModel";
+import { initialStateStockProvider } from "@/lib/utils";
+import { ListStockModel } from "@/models/Lists/ListStockModel";
 
 interface ListStocksByLiquidAverageState {
-  dataListStocksByLiquidAverage: ListStockModelContent[];
-  setDataListStocksByLiquidAverage: (data: ListStockModelContent[]) => void;
+  dataListStocksByLiquidAverage: ListStockModel;
+  setDataListStocksByLiquidAverage: (data: ListStockModel) => void;
 }
 
 const useListStocksByLiquidAverageStore = create<ListStocksByLiquidAverageState>()(
   persist(
     (set) => ({
-      dataListStocksByLiquidAverage: [],
+      dataListStocksByLiquidAverage: initialStateStockProvider,
       setDataListStocksByLiquidAverage: (data) => set({ dataListStocksByLiquidAverage: data }),
     }),
     {
       name: "list-stocks-by-liquid-average-storage",
       storage: createJSONStorage(() => localStorage),
+      partialize: (state) => ({ dataListStocksByLiquidAverage: state.dataListStocksByLiquidAverage }),
     },
   ),
 );
@@ -29,7 +31,7 @@ export function useListStocksByLiquidAverage() {
   const { isLoading, error } = useQuery({
     queryKey: ["list-stocks-by-LiquidAverage"],
     queryFn: async () => {
-      if (dataListStocksByLiquidAverage?.length) return { content: dataListStocksByLiquidAverage };
+      if (dataListStocksByLiquidAverage?.content?.length) return { content: dataListStocksByLiquidAverage };
 
       const data = await getListStockByLiquidAverage();
       setDataListStocksByLiquidAverage(data.content);

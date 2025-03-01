@@ -3,22 +3,24 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 import { getListStockByDividend } from "@/api/getListStockByDividend";
-import { ListStockModelContent } from "@/models/Lists/ListStockModel";
+import { initialStateStockProvider } from "@/lib/utils";
+import { ListStockModel } from "@/models/Lists/ListStockModel";
 
 interface ListStocksByDividendState {
-  dataListStocksByDividend: ListStockModelContent[];
-  setDataListStocksByDividend: (data: ListStockModelContent[]) => void;
+  dataListStocksByDividend: ListStockModel;
+  setDataListStocksByDividend: (data: ListStockModel) => void;
 }
 
 const useListStocksByDividendStore = create<ListStocksByDividendState>()(
   persist(
     (set) => ({
-      dataListStocksByDividend: [],
+      dataListStocksByDividend: initialStateStockProvider,
       setDataListStocksByDividend: (data) => set({ dataListStocksByDividend: data }),
     }),
     {
       name: "list-stocks-by-dividend-storage",
       storage: createJSONStorage(() => localStorage),
+      partialize: (state) => ({ dataListStocksByDividend: state.dataListStocksByDividend }),
     },
   ),
 );
@@ -29,11 +31,11 @@ export function useListStocksByDividend() {
   const { isLoading, error } = useQuery({
     queryKey: ["list-stocks-by-dividend"],
     queryFn: async () => {
-      if (dataListStocksByDividend?.length) return { content: dataListStocksByDividend };
+      if (dataListStocksByDividend?.content?.length) return { content: dataListStocksByDividend };
 
       const data = await getListStockByDividend();
-      setDataListStocksByDividend(data.content);
-      return data.content;
+      setDataListStocksByDividend(data);
+      return data;
     },
     staleTime: Infinity,
     cacheTime: 1000 * 60 * 60 * 24,

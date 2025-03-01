@@ -1,4 +1,5 @@
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useListStocksByRevenueGrowth } from "@/provider/Lists/ListStockByRevenueGrowthProvider";
@@ -28,9 +29,9 @@ export default function TableRevenueGrowth() {
           </TableRow>
         </TableHeader>
         <tbody>
-          {dataListStocksByRevenueGrowth.length > 0 ? (
+          {dataListStocksByRevenueGrowth.content.length > 0 ? (
             <>
-              {dataListStocksByRevenueGrowth
+              {dataListStocksByRevenueGrowth.content
                 .filter((_, index) => index < 3)
                 .map((stock, index) => (
                   <TableRow
@@ -53,10 +54,12 @@ export default function TableRevenueGrowth() {
         </tbody>
       </Table>
       <div className="mt-6 flex justify-center">
-        <button className="flex w-full items-center justify-center rounded-full border border-gray-200 bg-white px-6 py-3 font-semibold text-gray-800 transition-all duration-200 hover:border-gray-300 hover:bg-gray-100 hover:text-gray-900 dark:border-[#444444] dark:bg-[#333] dark:text-gray-300 dark:hover:border-[#555] dark:hover:bg-[#444444]">
-          Ver mais
-          <ArrowRight className="ml-2 h-4 w-4" />
-        </button>
+        <Link href={dataListStocksByRevenueGrowth.content.length > 0 ? `/stocks/lists/revenue-growth` : "#"}>
+          <button className="flex w-full items-center justify-center rounded-full border border-gray-200 bg-white px-6 py-3 font-semibold text-gray-800 transition-all duration-200 hover:border-gray-300 hover:bg-gray-100 hover:text-gray-900 dark:border-[#444444] dark:bg-[#333] dark:text-gray-300 dark:hover:border-[#555] dark:hover:bg-[#444444]">
+            Ver mais
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </button>
+        </Link>
       </div>
     </div>
   );

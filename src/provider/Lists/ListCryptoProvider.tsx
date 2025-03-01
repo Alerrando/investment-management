@@ -19,6 +19,7 @@ const useListCryptoStore = create<ListCryptoState>()(
     {
       name: "listCrypto-storage",
       storage: createJSONStorage(() => localStorage),
+      partialize: (state) => ({ dataListCrypto: state.dataListCrypto }),
     },
   ),
 );

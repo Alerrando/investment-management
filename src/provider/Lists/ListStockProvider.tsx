@@ -3,36 +3,8 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 import { getListStock } from "@/api/getListStock";
+import { initialStateStockProvider } from "@/lib/utils";
 import { ListStockModel } from "@/models/Lists/ListStockModel";
-
-const initialState: ListStockModel = {
-  content: [],
-  pageable: {
-    sort: {
-      unsorted: true,
-      sorted: false,
-      empty: true,
-    },
-    offset: 0,
-    pageNumber: 0,
-    pageSize: 10,
-    paged: true,
-    unpaged: false,
-  },
-  totalPages: 0,
-  totalElements: 0,
-  last: false,
-  size: 0,
-  number: 0,
-  sort: {
-    unsorted: true,
-    sorted: false,
-    empty: true,
-  },
-  numberOfElements: 0,
-  first: true,
-  empty: true,
-};
 
 interface ListStocksState {
   dataListStocks: ListStockModel;
@@ -42,12 +14,13 @@ interface ListStocksState {
 const useListStocksStore = create<ListStocksState>()(
   persist(
     (set) => ({
-      dataListStocks: initialState,
+      dataListStocks: initialStateStockProvider,
       setDataListStocks: (data) => set({ dataListStocks: data }),
     }),
     {
       name: "listStocks-storage",
       storage: createJSONStorage(() => localStorage),
+      partialize: (state) => ({ dataListStocks: state.dataListStocks }),
     },
   ),
 );
@@ -74,5 +47,5 @@ export function useListStocks() {
     },
   });
 
-  return { dataListStocks: dataListStocks, isLoadingListStocks: isLoading, error };
+  return { dataListStocks, isLoadingListStocks: isLoading, error };
 }
