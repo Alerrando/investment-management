@@ -2,7 +2,7 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { useListStocksByLiquidAverage } from "@/provider/Lists/ListStockByLiquidAverage";
+import { useListStocksByLiquidAverage } from "@/provider/Lists/ListStockBy/ListStockByLiquidAverage";
 
 import SkeletonCategories from "../SkeletonCategories";
 

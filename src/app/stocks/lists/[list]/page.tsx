@@ -7,12 +7,12 @@ import Title from "@/components/Title/Title";
 import { TableCell } from "@/components/ui/table";
 import { initialStateStockProvider } from "@/lib/utils";
 import { ListStockModel } from "@/models/Lists/ListStockModel";
-import { useListStocksByDividend } from "@/provider/Lists/ListStockByDividendProvider";
-import { useListStocksByLiquidAverage } from "@/provider/Lists/ListStockByLiquidAverage";
-import { useListStocksByMarketValue } from "@/provider/Lists/ListStockByMarketValueProvider";
-import { useListStocksByPL } from "@/provider/Lists/ListStockByPlProvider";
-import { useListStocksByRevenueGrowth } from "@/provider/Lists/ListStockByRevenueGrowthProvider";
-import { useListStocksByRoe } from "@/provider/Lists/ListStockByRoeProvider";
+import { useListStocksByDividend } from "@/provider/Lists/ListStockBy/ListStockByDividendProvider";
+import { useListStocksByLiquidAverage } from "@/provider/Lists/ListStockBy/ListStockByLiquidAverage";
+import { useListStocksByMarketValue } from "@/provider/Lists/ListStockBy/ListStockByMarketValueProvider";
+import { useListStocksByPL } from "@/provider/Lists/ListStockBy/ListStockByPlProvider";
+import { useListStocksByRevenueGrowth } from "@/provider/Lists/ListStockBy/ListStockByRevenueGrowthProvider";
+import { useListStocksByRoe } from "@/provider/Lists/ListStockBy/ListStockByRoeProvider";
 
 import SkeletonListStock from "../../ListStocks/SkeletonListStock";
 

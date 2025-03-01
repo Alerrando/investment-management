@@ -1,7 +1,7 @@
-import { useListStocksByDividend } from "@/provider/Lists/ListStockByDividendProvider";
-import { useListStocksByMarketValue } from "@/provider/Lists/ListStockByMarketValueProvider";
-import { useListStocksByPL } from "@/provider/Lists/ListStockByPlProvider";
-import { useListStocksByRoe } from "@/provider/Lists/ListStockByRoeProvider";
+import { useListStocksByDividend } from "@/provider/Lists/ListStockBy/ListStockByDividendProvider";
+import { useListStocksByMarketValue } from "@/provider/Lists/ListStockBy/ListStockByMarketValueProvider";
+import { useListStocksByPL } from "@/provider/Lists/ListStockBy/ListStockByPlProvider";
+import { useListStocksByRoe } from "@/provider/Lists/ListStockBy/ListStockByRoeProvider";
 
 import TableCategories from "./TableCategories/TableCategories";
 import TableLiquidAverage from "./TableLiquidAverage/TableLiquidAverage";

@@ -2,7 +2,7 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { useListStocksByRevenueGrowth } from "@/provider/Lists/ListStockByRevenueGrowthProvider";
+import { useListStocksByRevenueGrowth } from "@/provider/Lists/ListStockBy/ListStockByRevenueGrowthProvider";
 
 import SkeletonCategories from "../SkeletonCategories";
 
