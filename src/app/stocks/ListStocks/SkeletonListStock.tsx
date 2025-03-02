@@ -33,51 +33,6 @@ export default function SkeletonListStock() {
           <TableCell className="animation-pulse px-4 py-3">
             <Skeleton className="h-6 w-full" />
           </TableCell>
-          <TableCell className="animation-pulse px-4 py-3">
-            <Skeleton className="h-6 w-full" />
-          </TableCell>
-          <TableCell className="animation-pulse px-4 py-3">
-            <Skeleton className="h-6 w-full" />
-          </TableCell>
-          <TableCell className="animation-pulse px-4 py-3">
-            <Skeleton className="h-6 w-full" />
-          </TableCell>
-          <TableCell className="animation-pulse px-4 py-3">
-            <Skeleton className="h-6 w-full" />
-          </TableCell>
-          <TableCell className="animation-pulse px-4 py-3">
-            <Skeleton className="h-6 w-full" />
-          </TableCell>
-          <TableCell className="animation-pulse px-4 py-3">
-            <Skeleton className="h-6 w-full" />
-          </TableCell>
-          <TableCell className="animation-pulse px-4 py-3">
-            <Skeleton className="h-6 w-full" />
-          </TableCell>
-          <TableCell className="animation-pulse px-4 py-3">
-            <Skeleton className="h-6 w-full" />
-          </TableCell>
-          <TableCell className="animation-pulse px-4 py-3">
-            <Skeleton className="h-6 w-full" />
-          </TableCell>
-          <TableCell className="animation-pulse px-4 py-3">
-            <Skeleton className="h-6 w-full" />
-          </TableCell>
-          <TableCell className="animation-pulse px-4 py-3">
-            <Skeleton className="h-6 w-full" />
-          </TableCell>
-          <TableCell className="animation-pulse px-4 py-3">
-            <Skeleton className="h-6 w-full" />
-          </TableCell>
-          <TableCell className="animation-pulse px-4 py-3">
-            <Skeleton className="h-6 w-full" />
-          </TableCell>
-          <TableCell className="animation-pulse px-4 py-3">
-            <Skeleton className="h-6 w-full" />
-          </TableCell>
-          <TableCell className="animation-pulse px-4 py-3">
-            <Skeleton className="h-6 w-full" />
-          </TableCell>
         </TableRow>
       ))}
     </>

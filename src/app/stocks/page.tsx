@@ -30,7 +30,7 @@ export default function AllStocksPage() {
         </div>
       </div>
 
-      <div className="h-full overflow-auto">{order === "categories" ? <Categories /> : <ListStocks />}</div>
+      <div className="flex flex-col gap-2">{order === "categories" ? <Categories /> : <ListStocks />}</div>
     </div>
   );
 }

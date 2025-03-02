@@ -34,8 +34,8 @@ export function useListStocksByLiquidAverage() {
       if (dataListStocksByLiquidAverage?.content?.length) return { content: dataListStocksByLiquidAverage };
 
       const data = await getListStockByLiquidAverage();
-      setDataListStocksByLiquidAverage(data.content);
-      return data.content;
+      setDataListStocksByLiquidAverage(data);
+      return data;
     },
     staleTime: Infinity,
     cacheTime: 1000 * 60 * 60 * 24,
