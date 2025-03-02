@@ -3,18 +3,18 @@ import { ArrowDown, ArrowUp } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { useListStocksByLiquidAverage } from "@/provider/Lists/ListStockBy/ListStockByLiquidAverage";
+import { useListStocksByMarketValue } from "@/provider/Lists/ListStockBy/ListStockByMarketValueProvider";
 
 import SkeletonCategories from "../../../Categories/SkeletonCategories";
 
-export default function TableLiquidAverage() {
+export default function TableMarketValue() {
   const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" });
-  const { dataListStocksByLiquidAverage } = useListStocksByLiquidAverage();
+  const { dataListStocksByMarketValue } = useListStocksByMarketValue();
 
   const sortCofig = useMemo(() => {
-    if (!sortConfig.key) return dataListStocksByLiquidAverage.content;
+    if (!sortConfig.key) return dataListStocksByMarketValue.content;
 
-    const sortedData = [...dataListStocksByLiquidAverage.content];
+    const sortedData = [...dataListStocksByMarketValue.content];
     sortedData.sort((a, b) => {
       const aValue = a[sortConfig.key];
       const bValue = b[sortConfig.key];
@@ -25,12 +25,12 @@ export default function TableLiquidAverage() {
     });
 
     return sortedData;
-  }, [sortConfig, dataListStocksByLiquidAverage.content]);
+  }, [sortConfig, dataListStocksByMarketValue.content]);
 
   return (
     <div className="z-30 min-w-[300px] flex-1 transform rounded-2xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 p-6 shadow-lg transition-all hover:shadow-xl dark:border-[#444444] dark:from-[#2C2C2C] dark:to-[#1E1E1E]">
       <header className="mb-6 flex items-center justify-between">
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white">Ações com melhores média líquida</h2>
+        <h2 className="text-xl font-bold text-gray-900 dark:text-white">Ações com maior valor de mercado</h2>
       </header>
       <div className="h-[350px] overflow-y-auto">
         <Table className="min-w-full table-auto">
@@ -43,17 +43,10 @@ export default function TableLiquidAverage() {
                     (sortConfig.direction === "asc" ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
                 </div>
               </TableHead>
-              <TableHead className="px-0" onClick={() => requestSort("liquidCurrent")}>
+              <TableHead className="px-0" onClick={() => requestSort("marketValue")}>
                 <div className="flex cursor-pointer items-center gap-2 py-3 font-semibold">
-                  Liquidez Corrent
-                  {sortConfig.key === "liquidCurrent" &&
-                    (sortConfig.direction === "asc" ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
-                </div>
-              </TableHead>
-              <TableHead className="px-0" onClick={() => requestSort("liquid2Month")}>
-                <div className="flex cursor-pointer items-center gap-2 py-3 font-semibold">
-                  Liquidez 2 Meses
-                  {sortConfig.key === "liquid2Month" &&
+                  Valor de Mercado
+                  {sortConfig.key === "marketValue" &&
                     (sortConfig.direction === "asc" ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
                 </div>
               </TableHead>
@@ -78,6 +71,13 @@ export default function TableLiquidAverage() {
                     (sortConfig.direction === "asc" ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
                 </div>
               </TableHead>
+              <TableHead className="px-0" onClick={() => requestSort("psr")}>
+                <div className="flex cursor-pointer items-center gap-2 py-3 font-semibold">
+                  PSR
+                  {sortConfig.key === "psr" &&
+                    (sortConfig.direction === "asc" ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
+                </div>
+              </TableHead>
               <TableHead className="px-0" onClick={() => requestSort("roe")}>
                 <div className="flex cursor-pointer items-center gap-2 py-3 font-semibold">
                   ROE
@@ -95,7 +95,7 @@ export default function TableLiquidAverage() {
             </TableRow>
           </TableHeader>
           <tbody>
-            {dataListStocksByLiquidAverage.content.length > 0 ? (
+            {dataListStocksByMarketValue.content.length > 0 ? (
               <>
                 {sortCofig.slice(0, 8).map((stock, index) => (
                   <TableRow
@@ -103,11 +103,13 @@ export default function TableLiquidAverage() {
                     className="border-b-2 border-b-gray-100 transition-colors duration-300 hover:bg-gray-50 dark:border-b-[#555] dark:hover:bg-[#444444]"
                   >
                     <td className="py-4 text-sm font-medium text-gray-900 dark:text-white">{stock.paper}</td>
-                    <td className="py-4 text-sm text-gray-700 dark:text-gray-300">{stock.liquidCurrent}</td>
-                    <td className="py-4 text-sm text-gray-700 dark:text-gray-300">{stock.liquid2Month}</td>
+                    <td className="py-4 text-sm text-gray-700 dark:text-gray-300">
+                      {formatMarketCap(stock.marketValue)}
+                    </td>
                     <td className="py-4 text-sm text-gray-700 dark:text-gray-300">R$ {stock.quotation}</td>
                     <td className="py-4 text-sm text-gray-700 dark:text-gray-300">{stock.pL}</td>
                     <td className="py-4 text-sm text-gray-700 dark:text-gray-300">{stock.pVp}</td>
+                    <td className="py-4 text-sm text-gray-700 dark:text-gray-300">{stock.psr}</td>
                     <td className="py-4 text-sm text-gray-700 dark:text-gray-300">{stock.roe}</td>
                     <td className="py-4 text-sm text-gray-700 dark:text-gray-300">{stock.dividend}</td>
                   </TableRow>
@@ -128,5 +130,23 @@ export default function TableLiquidAverage() {
       direction = "desc";
     }
     setSortConfig({ key, direction });
+  }
+
+  function formatMarketCap(value: string | number): string {
+    const numericValue = typeof value === "string" ? parseFloat(value.replace(/\./g, "")) : value;
+
+    if (isNaN(numericValue)) {
+      return "Invalid value";
+    }
+
+    if (numericValue >= 1e12) {
+      return `${(numericValue / 1e12).toFixed(2)}T`;
+    } else if (numericValue >= 1e9) {
+      return `${(numericValue / 1e9).toFixed(2)}B`;
+    } else if (numericValue >= 1e6) {
+      return `${(numericValue / 1e6).toFixed(2)}M`;
+    } else {
+      return numericValue.toLocaleString();
+    }
   }
 }
