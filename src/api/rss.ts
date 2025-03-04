@@ -1,28 +1,29 @@
-import Parser from "rss-parser";
+"use server";
+import { chromium } from "playwright";
 
 export default async function handler() {
-  const parser = new Parser({
-    customFields: {
-      item: [["media:content", "media:content", { keepArray: true }]],
-    },
+  const browser = await chromium.launch();
+  const page = await browser.newPage();
+
+  // URL para realizar o scraping
+  const url = "https://www.fundamentus.com.br/detalhes.php?papel=MNSA4&interface=classic&interface=mobile";
+
+  await page.goto(url);
+
+  await page.waitForTimeout(3000);
+
+  const stockData = await page.evaluate(() => {
+    const dataValues = document.querySelectorAll(".data-value");
+    const values = Array.from(dataValues).map((div) => div?.textContent?.trim());
+    return values;
   });
 
-  try {
-    const feed = await parser.parseURL("/proxy/rss");
+  await browser.close();
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const items = feed.items.map((item: any) => {
-      return {
-        title: item.title,
-        link: item.link,
-        pubDate: item.pubDate,
-        description: item.description,
-        image: item["content:encoded"],
-      };
-    });
+  // Log para verificar os dados
+  console.log("Dados capturados:", stockData);
 
-    return items;
-  } catch (error) {
-    console.error("Erro ao processar o feed RSS:", error);
-  }
+  return {
+    stockData,
+  };
 }

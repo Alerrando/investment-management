@@ -3,15 +3,17 @@ import { ArrowDown, ArrowUp } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { ListStockModelContent } from "@/models/Lists/ListStockModel";
 import { useListStocksByRevenueGrowth } from "@/provider/Lists/ListStockBy/ListStockByRevenueGrowthProvider";
 
 import SkeletonCategories from "../../../Categories/SkeletonCategories";
+import { SortConfigProps } from "../TableDividend/TableDividend";
 
 export default function TableRevenueGrowth() {
-  const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" });
+  const [sortConfig, setSortConfig] = useState<SortConfigProps>({ key: "revenueGrowth5Years", direction: "asc" });
   const { dataListStocksByRevenueGrowth } = useListStocksByRevenueGrowth();
 
-  const sortedConfig = useMemo(() => {
+  const sortedStocks = useMemo(() => {
     if (!sortConfig.key) return dataListStocksByRevenueGrowth.content;
 
     const sortedData = [...dataListStocksByRevenueGrowth.content];
@@ -97,7 +99,7 @@ export default function TableRevenueGrowth() {
           <tbody>
             {dataListStocksByRevenueGrowth.content.length > 0 ? (
               <>
-                {sortedConfig.slice(0, 8).map((stock, index) => (
+                {sortedStocks.slice(0, 8).map((stock, index) => (
                   <TableRow
                     key={index}
                     className="border-b-2 border-b-gray-100 transition-colors duration-300 hover:bg-gray-50 dark:border-b-[#555] dark:hover:bg-[#444444]"
@@ -122,8 +124,8 @@ export default function TableRevenueGrowth() {
     </div>
   );
 
-  function requestSort(key: string) {
-    let direction = "asc";
+  function requestSort(key: keyof ListStockModelContent) {
+    let direction: "asc" | "desc" = "asc";
     if (sortConfig.key === key && sortConfig.direction === "asc") {
       direction = "desc";
     }

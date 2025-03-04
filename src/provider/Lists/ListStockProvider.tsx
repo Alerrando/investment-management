@@ -34,6 +34,7 @@ export function useListStocks() {
       if (dataListStocks?.content?.length) return { content: dataListStocks };
 
       const data = await getListStock();
+      console.log(data);
       setDataListStocks(data);
       return data;
     },

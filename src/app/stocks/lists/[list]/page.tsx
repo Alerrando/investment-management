@@ -4,7 +4,7 @@ import { useParams } from "next/navigation";
 
 import Title from "@/components/Title/Title";
 
-import SkeletonList from "./SkeletonList";
+import SkeletonCategories from "../../Categories/SkeletonCategories";
 import TableDividend from "./TableDividend/TableDividend";
 import TableLiquidAverage from "./TableLiquidAverage/TableLiquidAverage";
 import TableMarketValue from "./TableMarketValue/TableMarketValue";
@@ -32,7 +32,7 @@ export default function ListPage() {
       ) : list === "roe" ? (
         <TableROE />
       ) : (
-        <SkeletonList />
+        <SkeletonCategories />
       )}
     </div>
   );

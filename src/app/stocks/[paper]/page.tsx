@@ -1,16 +1,15 @@
 "use client";
-import { Globe, Medal, Search } from "lucide-react";
+import { BarChart3, Building, Building2, DollarSign, MapPin, Percent, TrendingUp } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { Footer } from "@/components/Footer/Footer";
-import RankingCard from "@/components/RankingCard/RankingCard";
-import Title from "@/components/Title/Title";
-import { useListStocks } from "@/provider/Lists/ListStockProvider";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 
 export default function StockDetail() {
   const { paper } = useParams();
-  const { dataListStocks } = useListStocks();
   const [stockData, setStockData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -68,11 +67,6 @@ export default function StockDetail() {
     fetchStockData();
   }, [paper]);
 
-  console.log(
-    dataListStocks.content.filter((item) => item.paper.toLowerCase() === (paper as string)?.toLowerCase()),
-    paper,
-  );
-
   if (isLoading) {
     return <div>Carregando...</div>;
   }
@@ -82,103 +76,142 @@ export default function StockDetail() {
   }
 
   return (
-    <div className={`flex h-auto flex-col gap-16 bg-white pt-8 text-gray-900 dark:bg-gray-900 dark:text-white`}>
-      <main className="relative flex w-full flex-col items-start justify-start gap-20 px-16">
-        <div className="flex flex-col gap-5">
-          <div className="flex flex-col gap-1">
-            <h1 className="m-0 text-[3.5rem] font-semibold leading-[4rem] text-indigo-600 dark:text-indigo-400">
-              {stockData.name} ({stockData.stock})
-            </h1>
-            <span className="w-1/2 text-xl text-[#8B8B8B] dark:text-[#B8B8B8]">
-              {stockData.description || "Descrição da ação não disponível."}
-            </span>
-          </div>
+    <div className="container mx-auto py-10">
+      <div className="mb-8 flex items-center justify-between">
+        <div>
+          <Button
+            variant="outline"
+            size="default"
+            className="rounded-md border-[#2980B9] bg-[#2980B9] text-white transition-colors duration-200 hover:bg-[#3498DB]"
+          >
+            Voltar para o inicio
+          </Button>
+        </div>
+        <Badge
+          variant="outline"
+          className="rounded-lg bg-[#1a1a2e] px-4 py-2 text-base font-semibold text-white transition-colors"
+        >
+          {stockData.sector}
+        </Badge>
+      </div>
 
-          <div className="flex w-1/3 items-center rounded-full border border-zinc-700 px-4 py-1.5 dark:border-zinc-300">
-            <input
-              type="text"
-              placeholder="Buscar Ativo"
-              className="w-full border-none bg-transparent text-base outline-none dark:text-white"
-            />
-            <Search size={16} className="text-gray-600 dark:text-gray-300" />
-          </div>
+      <div className="grid grid-cols-1 gap-8">
+        <Card className="rounded-lg border border-[#8C8C8C]/20 bg-transparent">
+          <CardHeader className="pb-2">
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-4xl font-bold text-white">
+                {stockData.name} ({stockData.stock})
+              </CardTitle>
+              <div className="text-3xl font-bold text-white">{`R$ ${stockData.close}`}</div>
+            </div>
+            <CardDescription className="text-base text-white/70">Current market information</CardDescription>
+          </CardHeader>
+          <Separator className="bg-[#707070]/40" />
+
+          <CardContent>
+            <div className="mt-4 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+              <div className="flex flex-col">
+                <span className="flex items-center gap-1 text-base text-muted-foreground">
+                  <DollarSign className="h-4 w-4" /> Dividend
+                </span>
+                <span className="text-2xl font-semibold text-white">{stockData.financialData.dividend}</span>
+              </div>
+              <div className="flex flex-col">
+                <span className="flex items-center gap-1 text-base text-muted-foreground">
+                  <BarChart3 className="h-4 w-4" /> FFO
+                </span>
+                <span className="text-2xl font-semibold text-white">{stockData.financialData.pL}</span>
+              </div>
+              <div className="flex flex-col">
+                <span className="flex items-center gap-1 text-base text-muted-foreground">
+                  <Percent className="h-4 w-4" /> P/VP
+                </span>
+                <span className="text-2xl font-semibold text-white">{stockData.financialData.pVp}</span>
+              </div>
+              <div className="flex flex-col">
+                <span className="flex items-center gap-1 text-base text-muted-foreground">
+                  <TrendingUp className="h-4 w-4" /> Market Value
+                </span>
+                <span className="text-2xl font-semibold text-white">{stockData.financialData.marketValue}</span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+          <Card className="rounded-lg border border-[#8C8C8C]/20 bg-transparent shadow-lg">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-2xl text-white">
+                <Building2 className="h-6 w-6" /> Market Information
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="flex justify-between">
+                  <span className="text-lg text-muted-foreground">Market Value</span>
+                  <span className="text-lg font-medium text-white">{stockData.financialData.marketValue}</span>
+                </div>
+                <Separator className="bg-[#707070]/40" />
+                <div className="flex justify-between">
+                  <span className="text-lg text-muted-foreground">Volume</span>
+                  <span className="text-lg font-medium text-white">{stockData.volume.toLocaleString()}</span>
+                </div>
+                <Separator className="bg-[#707070]/40" />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-[#8C8C8C]/20 bg-transparent">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-2xl text-white">
+                <Building className="h-6 w-6" /> Sector Information
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="flex justify-between">
+                  <span className="text-lg text-muted-foreground">Sector</span>
+                  <span className="text-lg font-medium">{stockData.sector}</span>
+                </div>
+                <Separator className="bg-[#707070]/40" />
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
-        <section className="grid w-full gap-3">
-          <Title
-            name="Informações do Stock"
-            icon={<Medal size={20} className="text-indigo-600 dark:text-indigo-400" />}
-          />
-          <div className="flex w-full items-center justify-between gap-3">
-            <div className="w-[65%] rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800">
-              <h2 className="text-2xl font-semibold text-indigo-600 dark:text-indigo-400">Informações Gerais</h2>
-              <div className="mt-3 flex flex-col gap-4 text-gray-700 dark:text-gray-300">
-                <p>
-                  <strong>Preço Atual:</strong> R$ {stockData.close}
+        <Card className="border-[#8C8C8C]/20 bg-transparent">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-2xl">
+              <MapPin className="h-6 w-6" /> Sector Analysis
+            </CardTitle>
+            <CardDescription className="text-white/70">
+              Performance metrics for {stockData.name} in the {stockData.sector} sector
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+              <div className="rounded-lg bg-[#1a1a2e] p-4 shadow-lg">
+                <h3 className="mb-2 font-semibold text-white">Dividend Yield</h3>
+                <p className="text-sm text-muted-foreground">
+                  The annual dividend yield based on current price is approximately{" "}
+                  <span className="font-medium text-white">
+                    {(((parseFloat(stockData.financialData.dividend) * 12) / stockData.close) * 100).toFixed(2)}%
+                  </span>
                 </p>
-                <p>
-                  <strong>Variação (%):</strong> {stockData.change * 100}%
-                </p>
-                <p>
-                  <strong>Volume:</strong> {stockData.volume.toLocaleString()}
-                </p>
-                <p>
-                  <strong>Capitalização de Mercado:</strong> R$ {stockData.market_cap.toLocaleString()}
-                </p>
-                <p>
-                  <strong>Setor:</strong> {stockData.sector}
-                </p>
-                <p>
-                  <strong>Tipo:</strong> {stockData.type}
+              </div>
+              <div className="rounded-lg bg-[#1a1a2e] p-4 shadow-lg">
+                <h3 className="mb-2 font-semibold text-white">FFO Yield</h3>
+                <p className="text-sm text-muted-foreground">
+                  The annual FFO yield based on current price is approximately{" "}
+                  <span className="font-medium text-white">
+                    {(((parseFloat(stockData.financialData.pL) * 12) / stockData.close) * 100).toFixed(2)}%
+                  </span>
                 </p>
               </div>
             </div>
-
-            <div className="w-[30%] rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800">
-              <h2 className="text-2xl font-semibold text-indigo-600 dark:text-indigo-400">Gráfico de Preço</h2>
-              <div className="mt-4 h-[250px] bg-gray-200 dark:bg-gray-700">Gráfico de Preço Aqui</div>
-            </div>
-          </div>
-        </section>
-
-        <section className="grid w-full gap-3">
-          <Title
-            name="Indicadores Financeiros"
-            icon={<Globe size={20} className="text-indigo-600 dark:text-indigo-400" />}
-          />
-          {stockData.financialData ? (
-            <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {Object.entries(stockData.financialData).map(([key, value]: [string, unknown]) => (
-                <div key={key} className="rounded-lg bg-white p-4 shadow-lg dark:bg-gray-800">
-                  <h3 className="text-lg font-semibold capitalize text-indigo-600 dark:text-indigo-400">
-                    {key.replace(/([A-Z])/g, " $1")}
-                  </h3>
-                  <p className="text-xl font-bold text-gray-700 dark:text-gray-300">{String(value)}</p>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center text-red-500">Informações financeiras não disponíveis.</div>
-          )}
-        </section>
-
-        <section className="grid w-full gap-3">
-          <Title
-            name="Comparativo com Outros Ativos"
-            icon={<Globe size={20} className="text-indigo-600 dark:text-indigo-400" />}
-          />
-          <div className="flex flex-wrap gap-3">
-            <RankingCard
-              title="Ranking de Ações"
-              data={[]}
-              onViewAll={() => console.log("Clicked!")}
-              styleRankingCard="w-[30%]"
-            />
-          </div>
-        </section>
-      </main>
-
-      <Footer />
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }

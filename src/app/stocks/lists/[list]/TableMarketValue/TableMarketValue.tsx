@@ -3,15 +3,17 @@ import { ArrowDown, ArrowUp } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { ListStockModelContent } from "@/models/Lists/ListStockModel";
 import { useListStocksByMarketValue } from "@/provider/Lists/ListStockBy/ListStockByMarketValueProvider";
 
 import SkeletonCategories from "../../../Categories/SkeletonCategories";
+import { SortConfigProps } from "../TableDividend/TableDividend";
 
 export default function TableMarketValue() {
-  const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" });
+  const [sortConfig, setSortConfig] = useState<SortConfigProps>({ key: "marketValue", direction: "asc" });
   const { dataListStocksByMarketValue } = useListStocksByMarketValue();
 
-  const sortCofig = useMemo(() => {
+  const sortedStocks = useMemo(() => {
     if (!sortConfig.key) return dataListStocksByMarketValue.content;
 
     const sortedData = [...dataListStocksByMarketValue.content];
@@ -67,7 +69,7 @@ export default function TableMarketValue() {
               <TableHead className="px-0" onClick={() => requestSort("pVp")}>
                 <div className="flex cursor-pointer items-center gap-2 py-3 font-semibold">
                   P/VP
-                  {sortCofig.key === "pVp" &&
+                  {sortConfig.key === "pVp" &&
                     (sortConfig.direction === "asc" ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
                 </div>
               </TableHead>
@@ -97,7 +99,7 @@ export default function TableMarketValue() {
           <tbody>
             {dataListStocksByMarketValue.content.length > 0 ? (
               <>
-                {sortCofig.slice(0, 8).map((stock, index) => (
+                {sortedStocks.slice(0, 8).map((stock, index) => (
                   <TableRow
                     key={index}
                     className="border-b-2 border-b-gray-100 transition-colors duration-300 hover:bg-gray-50 dark:border-b-[#555] dark:hover:bg-[#444444]"
@@ -124,8 +126,8 @@ export default function TableMarketValue() {
     </div>
   );
 
-  function requestSort(key: string) {
-    let direction = "asc";
+  function requestSort(key: keyof ListStockModelContent) {
+    let direction: "asc" | "desc" = "asc";
     if (sortConfig.key === key && sortConfig.direction === "asc") {
       direction = "desc";
     }

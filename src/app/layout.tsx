@@ -8,6 +8,7 @@ import { Poppins } from "next/font/google";
 import { Suspense } from "react";
 import { ToastContainer } from "react-toastify";
 
+import { Footer } from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { RecommendationCryptoProvider } from "@/provider/Recommendation/RecommendationCryptoProvider";
@@ -37,6 +38,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     <Analytics />
 
                     <ToastContainer position="bottom-right" />
+
+                    <Footer />
                   </Suspense>
                 </RecommendationCryptoProvider>
               </RecommendationFiisProvider>

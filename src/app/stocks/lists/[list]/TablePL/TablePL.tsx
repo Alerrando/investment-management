@@ -3,15 +3,17 @@ import { ArrowDown, ArrowUp } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { ListStockModelContent } from "@/models/Lists/ListStockModel";
 import { useListStocksByPL } from "@/provider/Lists/ListStockBy/ListStockByPlProvider";
 
 import SkeletonCategories from "../../../Categories/SkeletonCategories";
+import { SortConfigProps } from "../TableDividend/TableDividend";
 
 export default function TablePL() {
-  const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" });
+  const [sortConfig, setSortConfig] = useState<SortConfigProps>({ key: "pL", direction: "asc" });
   const { dataListStocksByPL } = useListStocksByPL();
 
-  const sortCofig = useMemo(() => {
+  const sortedStocks = useMemo(() => {
     if (!sortConfig.key) return dataListStocksByPL.content;
 
     const sortedData = [...dataListStocksByPL.content];
@@ -68,7 +70,7 @@ export default function TablePL() {
               <TableHead className="px-0" onClick={() => requestSort("pVp")}>
                 <div className="flex cursor-pointer items-center gap-2 py-3 font-semibold">
                   P/VP
-                  {sortCofig.key === "pVp" &&
+                  {sortConfig.key === "pVp" &&
                     (sortConfig.direction === "asc" ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
                 </div>
               </TableHead>
@@ -98,7 +100,7 @@ export default function TablePL() {
           <tbody>
             {dataListStocksByPL.content.length > 0 ? (
               <>
-                {sortCofig.slice(0, 8).map((stock, index) => (
+                {sortedStocks.slice(0, 8).map((stock, index) => (
                   <TableRow
                     key={index}
                     className="border-b-2 border-b-gray-100 transition-colors duration-300 hover:bg-gray-50 dark:border-b-[#555] dark:hover:bg-[#444444]"
@@ -123,8 +125,8 @@ export default function TablePL() {
     </div>
   );
 
-  function requestSort(key: string) {
-    let direction = "asc";
+  function requestSort(key: keyof ListStockModelContent) {
+    let direction: "asc" | "desc" = "asc";
     if (sortConfig.key === key && sortConfig.direction === "asc") {
       direction = "desc";
     }

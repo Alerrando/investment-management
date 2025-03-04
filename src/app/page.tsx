@@ -23,11 +23,10 @@ export default function Home() {
   useEffect(() => {
     (async () => {
       const response = await handler();
-      setItems(response || []);
+
+      console.log(response);
     })();
   }, []);
-
-  console.log(dataListStocks);
 
   return (
     <div className="flex flex-col gap-16">

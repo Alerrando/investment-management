@@ -3,12 +3,17 @@ import { ArrowDown, ArrowUp } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { ListStockModelContent } from "@/models/Lists/ListStockModel";
 import { useListStocksByDividend } from "@/provider/Lists/ListStockBy/ListStockByDividendProvider";
 
 import SkeletonCategories from "../../../Categories/SkeletonCategories";
 
+export interface SortConfigProps {
+  key: keyof ListStockModelContent;
+  direction: "asc" | "desc";
+}
 export default function TableDividend() {
-  const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" });
+  const [sortConfig, setSortConfig] = useState<SortConfigProps>({ key: "dividend", direction: "asc" });
   const { dataListStocksByDividend } = useListStocksByDividend();
 
   const sortedStocks = useMemo(() => {
@@ -57,23 +62,33 @@ export default function TableDividend() {
                     (sortConfig.direction === "asc" ? <ArrowDown size={12} /> : <ArrowUp size={12} />)}
                 </div>
               </TableHead>
-              <TableHead className="cursor-pointer py-3 font-semibold" onClick={() => requestSort("pl")}>
+              <TableHead className="cursor-pointer py-3 font-semibold" onClick={() => requestSort("pL")}>
                 <div className="flex cursor-pointer items-center gap-2 py-3 font-semibold">
                   P/L
-                  {sortConfig.key === "pl" &&
+                  {sortConfig.key === "pL" &&
                     (sortConfig.direction === "asc" ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
                 </div>
               </TableHead>
-              <TableHead className="px-0 py-4 text-sm font-semibold text-gray-700 dark:text-gray-300">P/VP</TableHead>
-              <TableHead className="px-0 py-4 text-sm font-semibold text-gray-700 dark:text-gray-300">PSR</TableHead>
-              <TableHead className="px-0 py-4 text-sm font-semibold text-gray-700 dark:text-gray-300">
-                P/Ativo
+              <TableHead className="cursor-pointer py-3 font-semibold" onClick={() => requestSort("pVp")}>
+                <div className="flex cursor-pointer items-center gap-2 py-3 font-semibold">
+                  P/VP
+                  {sortConfig.key === "pVp" &&
+                    (sortConfig.direction === "asc" ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
+                </div>
               </TableHead>
-              <TableHead className="px-0 py-4 text-sm font-semibold text-gray-700 dark:text-gray-300">
-                P/Capital de Giro
+              <TableHead className="cursor-pointer py-3 font-semibold" onClick={() => requestSort("pActive")}>
+                <div className="flex cursor-pointer items-center gap-2 py-3 font-semibold">
+                  P/Ativo
+                  {sortConfig.key === "pActive" &&
+                    (sortConfig.direction === "asc" ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
+                </div>
               </TableHead>
-              <TableHead className="px-0 py-4 text-sm font-semibold text-gray-700 dark:text-gray-300">
-                Valor de Mercado
+              <TableHead className="cursor-pointer py-3 font-semibold" onClick={() => requestSort("pWorkCapital")}>
+                <div className="flex cursor-pointer items-center gap-2 py-3 font-semibold">
+                  P/Capital de Giro
+                  {sortConfig.key === "pWorkCapital" &&
+                    (sortConfig.direction === "asc" ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
+                </div>
               </TableHead>
             </TableRow>
           </TableHeader>
@@ -90,17 +105,13 @@ export default function TableDividend() {
                     <td className="py-4 text-sm text-gray-700 dark:text-gray-300">{stock.quotation}</td>
                     <td className="py-4 text-sm text-gray-700 dark:text-gray-300">{stock.pL}</td>
                     <td className="py-4 text-sm text-gray-700 dark:text-gray-300">{stock.pVp}</td>
-                    <td className="py-4 text-sm text-gray-700 dark:text-gray-300">{stock.psr}</td>
                     <td className="py-4 text-sm text-gray-700 dark:text-gray-300">{stock.pActive}</td>
                     <td className="py-4 text-sm text-gray-700 dark:text-gray-300">{stock.pWorkCapital}</td>
-                    <td className="py-4 text-sm text-gray-700 dark:text-gray-300">
-                      {formatMarketCap(stock.marketValue)}
-                    </td>
                   </TableRow>
                 ))}
               </>
             ) : (
-              <SkeletonCategories quantity={6} />
+              <SkeletonCategories quantity={9} />
             )}
           </tbody>
         </Table>
@@ -108,29 +119,11 @@ export default function TableDividend() {
     </div>
   );
 
-  function requestSort(key: string) {
-    let direction = "asc";
+  function requestSort(key: keyof ListStockModelContent) {
+    let direction: "asc" | "desc" = "asc";
     if (sortConfig.key === key && sortConfig.direction === "asc") {
       direction = "desc";
     }
     setSortConfig({ key, direction });
-  }
-
-  function formatMarketCap(value: string | number): string {
-    const numericValue = typeof value === "string" ? parseFloat(value.replace(/\./g, "")) : value;
-
-    if (isNaN(numericValue)) {
-      return "Invalid value";
-    }
-
-    if (numericValue >= 1e12) {
-      return `${(numericValue / 1e12).toFixed(2)}T`;
-    } else if (numericValue >= 1e9) {
-      return `${(numericValue / 1e9).toFixed(2)}B`;
-    } else if (numericValue >= 1e6) {
-      return `${(numericValue / 1e6).toFixed(2)}M`;
-    } else {
-      return numericValue.toLocaleString();
-    }
   }
 }
