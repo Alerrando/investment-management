@@ -1,9 +1,8 @@
 "use client";
 import { DollarSign, Globe, MapPinHouse, Medal, Search } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-import handler from "@/api/rss";
 import { Footer } from "@/components/Footer/Footer";
 import RankingCard from "@/components/RankingCard/RankingCard";
 import RankingCardFiis from "@/components/RankingCard/RankingCardFB/RankingCardFiis/RankingCardFiis";
@@ -19,14 +18,6 @@ export default function Home() {
   const [items, setItems] = useState<any[]>([]);
   const { dataListStocks } = useListStocks();
   const { dataListCrypto, isLoadingListCrypto } = useListCrypto();
-
-  useEffect(() => {
-    (async () => {
-      const response = await handler();
-
-      console.log(response);
-    })();
-  }, []);
 
   return (
     <div className="flex flex-col gap-16">

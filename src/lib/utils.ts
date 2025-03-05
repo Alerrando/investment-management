@@ -4,6 +4,7 @@ import { twMerge } from "tailwind-merge";
 
 import { ListFiisModel } from "@/models/Lists/ListFiisModel";
 import { ListStockModel } from "@/models/Lists/ListStockModel";
+import { StockDetailsModel } from "@/models/StockDetailsModel";
 
 export const api = axios.create();
 
@@ -73,4 +74,83 @@ export const initialStateFiisProvider: ListFiisModel = {
   numberOfElements: 0,
   first: true,
   empty: true,
+};
+
+export const initialStateStockDetails: StockDetailsModel = {
+  marketData: {
+    marketValue: "",
+    firmValue: "",
+    shares: "",
+    lastBalanceDate: "",
+    sector: "",
+    subSector: "",
+    quote: "",
+    lastQuoteDate: "",
+    shareType: "",
+    dailyVolume: "",
+    Week52Variation: "",
+    minVariation: "",
+    maxVariation: "",
+    VPA: "",
+    LPA: "",
+    dayVariation: "",
+    monthVariation: "",
+    variation30Days: "",
+    variation12Months: "",
+    variation2018: "",
+    variation2017: "",
+    variation2016: "",
+    variation2015: "",
+    variation2014: "",
+    variation2013: "",
+  },
+  valuationIndicators: {
+    P_L: "",
+    P_VP: "",
+    P_EBIT: "",
+    PSR: "",
+    priceToAssets: "",
+    priceToLiquidAssets: "",
+    dividendYield: "",
+    EV_EBITDA: "",
+    EV_EBIT: "",
+    priceToWorkingCapital: "",
+  },
+  profitabilityIndicators: {
+    ROE: "",
+    ROIC: "",
+    EBITToAssets: "",
+    revenueGrowth: "",
+    assetTurnover: "",
+    grossMargin: "",
+    EBITMargin: "",
+    netMargin: "",
+  },
+  debtIndicators: {
+    currentLiquidity: "",
+    grossDebtToEquity: "",
+    netDebtToEquity: "",
+    netDebtToEBITDA: "",
+    equityToAssets: "",
+  },
+  balanceSheet: {
+    totalAssets: "",
+    currentAssets: "",
+    cashAndCashEquivalents: "",
+    grossDebt: "",
+    netDebt: "",
+    equity: "",
+  },
+  incomeStatement: {
+    last12Months: {
+      netRevenue: "",
+      EBIT: "",
+      netIncome: "",
+    },
+    last3Months: {
+      netRevenue: "",
+      EBIT: "",
+      netIncome: "",
+    },
+  },
 };
