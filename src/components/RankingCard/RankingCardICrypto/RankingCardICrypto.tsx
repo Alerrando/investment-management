@@ -43,10 +43,10 @@ export default function RankingCardICrypto({ title, data, onViewAll, styleRankin
               {Array.from({ length: 5 }).map((_, index) => (
                 <TableRow key={index} className="border-b transition-all duration-300 hover:bg-skeleton">
                   <TableCell className="animate-pulse px-4 py-3">
-                    <Skeleton className="bg-skeleton-foreground h-6 w-full rounded-lg" />
+                    <Skeleton className="h-6 w-full rounded-lg bg-skeleton-foreground" />
                   </TableCell>
                   <TableCell className="animate-pulse px-4 py-3">
-                    <Skeleton className="bg-skeleton-foreground h-6 w-full rounded-lg" />
+                    <Skeleton className="h-6 w-full rounded-lg bg-skeleton-foreground" />
                   </TableCell>
                 </TableRow>
               ))}

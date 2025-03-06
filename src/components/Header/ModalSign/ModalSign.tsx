@@ -58,7 +58,7 @@ export default function ModalSign({ sign }: ModalSignProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={handleModalClose}>
-      <DialogContent className="transform bg-white backdrop-blur-sm transition-all duration-300 ease-in-out dark:bg-gray-900 sm:w-full sm:max-w-[380px] sm:rounded-lg sm:shadow-xl">
+      <DialogContent className="transform bg-white backdrop-blur-sm transition-all duration-300 ease-in-out sm:w-full sm:max-w-[380px] sm:rounded-lg sm:shadow-xl dark:bg-gray-900">
         <DialogHeader className="pb-4 text-center">
           <DialogTitle className="text-xl font-semibold text-gray-800 dark:text-white">Login / Register</DialogTitle>
         </DialogHeader>

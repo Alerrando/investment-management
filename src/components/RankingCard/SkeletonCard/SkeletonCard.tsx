@@ -7,13 +7,13 @@ export default function SkeletonCard() {
       {Array.from({ length: 3 }).map((_, index) => (
         <TableRow className="border-b border-b-primary transition-all duration-300 hover:bg-skeleton" key={index}>
           <TableCell className="animate-pulse py-3 pl-4">
-            <Skeleton className="bg-skeleton-foreground h-6 w-full rounded-lg" />
+            <Skeleton className="h-6 w-full rounded-lg bg-skeleton-foreground" />
           </TableCell>
           <TableCell className="animate-pulse py-3 pl-4">
-            <Skeleton className="bg-skeleton-foreground h-6 w-full rounded-lg" />
+            <Skeleton className="h-6 w-full rounded-lg bg-skeleton-foreground" />
           </TableCell>
           <TableCell className="animate-pulse py-3 pl-4">
-            <Skeleton className="bg-skeleton-foreground h-6 w-full rounded-lg" />
+            <Skeleton className="h-6 w-full rounded-lg bg-skeleton-foreground" />
           </TableCell>
         </TableRow>
       ))}
