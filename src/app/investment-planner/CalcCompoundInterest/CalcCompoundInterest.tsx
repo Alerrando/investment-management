@@ -63,10 +63,10 @@ export default function CalcCompoundInterest() {
 
   return (
     <form
-      className="flex w-full flex-col items-start justify-start gap-8 rounded-lg border border-gray-200 bg-[#f7f7f7] p-6 shadow-lg dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+      className="flex w-full flex-col items-start justify-start gap-8 rounded-lg border border-primary/10 bg-card p-6 text-primary shadow-lg"
       onSubmit={handleSubmit(submit)}
     >
-      <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-200">Calculadora de Juros Compostos</h2>
+      <h2 className="text-2xl font-semibold text-primary">Calculadora de Juros Compostos</h2>
 
       <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2">
         <InputForm
@@ -103,7 +103,7 @@ export default function CalcCompoundInterest() {
           options={
             <div>
               <select
-                className="w-auto cursor-pointer rounded-md border px-4 py-2 text-[14px] focus:border focus-visible:border focus-visible:outline-none dark:bg-gray-600 dark:text-white"
+                className="w-auto cursor-pointer rounded-md border bg-gray-600 px-4 py-2 text-[14px] text-white focus:border focus-visible:border focus-visible:outline-none"
                 value={valueInterestSelected}
                 onChange={(e) => setValueInterestSelected(e.target.value)}
               >
@@ -128,7 +128,7 @@ export default function CalcCompoundInterest() {
           options={
             <div>
               <select
-                className="w-auto cursor-pointer rounded-md border px-4 py-2 text-[14px] focus:border focus-visible:border focus-visible:outline-none dark:bg-gray-600 dark:text-white"
+                className="w-auto cursor-pointer rounded-md border bg-gray-600 px-4 py-2 text-[14px] text-white focus:border focus-visible:border focus-visible:outline-none"
                 value={valueTimesSelected}
                 onChange={(e) => setValueTimesSelected(e.target.value)}
               >
@@ -144,7 +144,11 @@ export default function CalcCompoundInterest() {
       </div>
 
       <div className="mt-6 flex w-full justify-end gap-4">
-        <Button type="submit" variant="secondary" onClick={() => reset()}>
+        <Button
+          type="submit"
+          className="border border-primary/10 bg-foreground text-primary hover:bg-secondary"
+          onClick={() => reset()}
+        >
           Limpar
         </Button>
         <Button
@@ -157,7 +161,7 @@ export default function CalcCompoundInterest() {
 
       {valuesInterest.length > 0 && (
         <div className="mt-8 grid w-full grid-cols-1 justify-center gap-6 sm:grid-cols-3">
-          <div className="flex w-full flex-col items-center justify-center rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800 sm:w-auto">
+          <div className="flex w-full flex-col items-center justify-center rounded-lg bg-white p-6 shadow-lg sm:w-auto dark:bg-gray-800">
             <span className="text-lg font-medium text-gray-700 dark:text-white">Montante Total</span>
             <span className="mt-2 text-2xl font-semibold text-purple-600 dark:text-purple-400">
               {Number(valuesInterest[0]).toLocaleString("pt-BR", {
@@ -166,13 +170,13 @@ export default function CalcCompoundInterest() {
               })}
             </span>
           </div>
-          <div className="flex w-full flex-col items-center justify-center rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800 sm:w-auto">
+          <div className="flex w-full flex-col items-center justify-center rounded-lg bg-white p-6 shadow-lg sm:w-auto dark:bg-gray-800">
             <span className="text-lg font-medium text-gray-700 dark:text-white">Juros Acumulados</span>
             <span className="mt-2 text-2xl font-semibold text-purple-600 dark:text-purple-400">
               {Number(valuesInterest[1]).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
             </span>
           </div>
-          <div className="flex w-full flex-col items-center justify-center rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800 sm:w-auto">
+          <div className="flex w-full flex-col items-center justify-center rounded-lg bg-white p-6 shadow-lg sm:w-auto dark:bg-gray-800">
             <span className="text-lg font-medium text-gray-700 dark:text-white">Contribuições Mensais Totais</span>
             <span className="mt-2 text-2xl font-semibold text-purple-600 dark:text-purple-400">
               {Number(valuesInterest[2]).toLocaleString("pt-BR", {

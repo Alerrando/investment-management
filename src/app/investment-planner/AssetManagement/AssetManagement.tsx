@@ -72,7 +72,7 @@ export default function AssetManagement() {
   }, [showBag]);
 
   return (
-    <div className="flex w-full flex-col gap-6 py-6 dark:bg-gray-900 dark:text-white">
+    <div className="flex w-full flex-col gap-6 py-6 pb-8">
       <div className="flex gap-4 border-b dark:border-gray-700">
         {["Ações", "Fiis", "Cryptos", "BDRs"].map((tab) => (
           <button
@@ -81,7 +81,7 @@ export default function AssetManagement() {
             className={`px-4 py-2 transition-all duration-300 ${
               activeTab === tab
                 ? "border-b-2 border-purple-600 font-semibold text-purple-600 dark:border-purple-400 dark:text-purple-400"
-                : "text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200"
+                : "text-primary/60 hover:text-primary"
             }`}
           >
             {tab}
@@ -104,18 +104,18 @@ export default function AssetManagement() {
         </TooltipProvider>
       </div>
 
-      <div className="flex items-center gap-2 rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 shadow-sm transition-all duration-300 hover:shadow-md dark:border-gray-700 dark:bg-gray-800">
-        <Search size={18} className="text-gray-600 dark:text-gray-400" />
+      <div className="flex items-center gap-2 rounded-lg border border-primary/60 bg-foreground px-4 py-2 shadow-sm transition-all duration-300 hover:shadow-md">
+        <Search size={18} className="text-primary" />
         <input
           type="text"
           placeholder={`Buscar ${activeTab}...`}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full bg-transparent text-sm text-gray-700 outline-none placeholder:text-gray-400 dark:text-gray-300 dark:placeholder:text-gray-500"
+          className="w-full bg-transparent text-sm text-primary outline-none placeholder:text-primary/40"
         />
       </div>
 
-      <div className="h-72 overflow-auto rounded-lg border border-gray-300 shadow-sm dark:border-gray-700">
+      <div className="h-72 overflow-auto rounded-lg border border-primary/60 bg-foreground shadow-sm">
         {dataListFiis.content.length > 0 && activeTab === "Fiis" ? (
           <TableFiis
             filteredAssets={dataListFiis.content.filter((asset) =>

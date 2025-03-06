@@ -16,12 +16,12 @@ export default function RankingCardICrypto({ title, data, onViewAll, styleRankin
   return (
     <div
       className={twMerge(
-        "relative w-full rounded-lg border p-4 shadow-sm dark:border-[#444444] dark:bg-[#2C2C2C]",
+        "relative w-full rounded-lg border bg-card p-4 shadow-sm dark:border-[#444444]",
         styleRankingCard,
       )}
     >
       <header className="mb-4 flex items-center justify-between">
-        <h2 className="text-lg font-semibold">{title}</h2>
+        <h2 className="text-lg font-semibold text-primary">{title}</h2>
         <button
           className="rounded-md border px-3 py-1 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:bg-[#222] dark:text-gray-300 dark:hover:bg-[#444444]"
           onClick={onViewAll}
@@ -41,15 +41,12 @@ export default function RankingCardICrypto({ title, data, onViewAll, styleRankin
           <table className="w-full table-auto border-collapse text-left text-sm text-gray-600 dark:text-gray-300">
             <tbody>
               {Array.from({ length: 5 }).map((_, index) => (
-                <TableRow
-                  key={index}
-                  className="border-b transition-all duration-300 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
-                >
+                <TableRow key={index} className="border-b transition-all duration-300 hover:bg-skeleton">
                   <TableCell className="animate-pulse px-4 py-3">
-                    <Skeleton className="h-6 w-full" />
+                    <Skeleton className="bg-skeleton-foreground h-6 w-full rounded-lg" />
                   </TableCell>
                   <TableCell className="animate-pulse px-4 py-3">
-                    <Skeleton className="h-6 w-full" />
+                    <Skeleton className="bg-skeleton-foreground h-6 w-full rounded-lg" />
                   </TableCell>
                 </TableRow>
               ))}

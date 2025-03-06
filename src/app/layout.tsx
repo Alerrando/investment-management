@@ -26,7 +26,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt-br">
       <body className={`${poppins.variable} antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          themes={["light", "dark", "blue"]}
+          enableSystem
+          disableTransitionOnChange
+        >
           <TanstackProvider>
             <RecommendationStocksProvider>
               <RecommendationFiisProvider>

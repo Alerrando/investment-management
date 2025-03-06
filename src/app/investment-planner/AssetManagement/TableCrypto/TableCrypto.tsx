@@ -18,24 +18,27 @@ export default function TableCrypto({ filteredAssets, handleAddToBag, dataRecomm
   );
 
   return (
-    <table className="w-full table-auto border-collapse text-left text-sm text-gray-600 dark:text-gray-300">
-      <thead className="sticky top-0 bg-gray-100 dark:bg-gray-800">
+    <table className="w-full table-auto border-collapse text-left text-sm">
+      <thead className="sticky top-0 z-10 bg-primary">
         <tr>
-          <th className="px-4 py-3">Nome</th>
-          <th className="px-4 py-3">Preço</th>
-          <th className="px-4 py-3">Ação</th>
+          <th className="px-4 py-3 text-foreground">Nome</th>
+          <th className="px-4 py-3 text-foreground">Preço</th>
+          <th className="px-4 py-3 text-foreground">Ação</th>
         </tr>
       </thead>
 
       <tbody>
         {dataRecommendationCrypto?.length > 0 &&
           dataRecommendationCrypto.slice(0, 5).map((asset) => (
-            <tr key={asset.name} className="hover:bg-gray-50 dark:hover:bg-gray-800">
+            <tr
+              key={asset.name}
+              className="border-primary-80 relative border-b bg-card transition-all duration-300 hover:bg-skeleton"
+            >
               <td className="px-4 py-3">
                 <div className="flex items-center gap-2">
                   <img src={asset.image} alt={asset.name} className="h-8 w-8 rounded-full" />
                   <div>
-                    <p className="text-[10px] text-gray-500 dark:text-gray-400">{asset.name}</p>
+                    <p className="text-[10px] text-primary">{asset.name}</p>
                   </div>
                 </div>
               </td>
@@ -49,7 +52,7 @@ export default function TableCrypto({ filteredAssets, handleAddToBag, dataRecomm
               <td className="px-4 py-3">
                 <button
                   onClick={() => handleAddToBag(asset)}
-                  className="flex items-center gap-1 rounded-full bg-purple-600 px-3 py-1.5 text-sm text-white transition-all duration-300 hover:bg-purple-700"
+                  className="flex items-center gap-1 rounded-full bg-purple-600 px-3 py-1.5 text-sm text-foreground transition-all duration-300 hover:bg-purple-700"
                 >
                   <Plus size={14} />
                   Adicionar
@@ -58,14 +61,16 @@ export default function TableCrypto({ filteredAssets, handleAddToBag, dataRecomm
             </tr>
           ))}
 
-        {/* Exibe as Cryptos restantes */}
         {filteredAssetsWithoutTop5Recommendations?.map((asset, index) => (
-          <tr key={index} className="hover:bg-gray-50 dark:hover:bg-gray-800">
+          <tr
+            key={index}
+            className="border-primary-80 relative border-b bg-card transition-all duration-300 hover:bg-skeleton"
+          >
             <td className="px-4 py-3">
               <div className="flex items-center gap-2">
                 <img src={asset.image} alt={asset.name} className="h-8 w-8 rounded-full" />
                 <div>
-                  <p className="text-[10px] text-gray-500 dark:text-gray-400">{asset.name}</p>
+                  <p className="text-[10px] text-primary">{asset.name}</p>
                 </div>
               </div>
             </td>
@@ -79,7 +84,7 @@ export default function TableCrypto({ filteredAssets, handleAddToBag, dataRecomm
             <td className="px-4 py-3">
               <button
                 onClick={() => handleAddToBag(asset)}
-                className="flex items-center gap-1 rounded-full bg-purple-600 px-3 py-1.5 text-sm text-white transition-all duration-300 hover:bg-purple-700"
+                className="flex items-center gap-1 rounded-full bg-purple-600 px-3 py-1.5 text-sm text-foreground transition-all duration-300 hover:bg-purple-700"
               >
                 <Plus size={14} />
                 Adicionar

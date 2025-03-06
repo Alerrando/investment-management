@@ -3,7 +3,6 @@ import { DollarSign, Globe, MapPinHouse, Medal, Search } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 
-import { Footer } from "@/components/Footer/Footer";
 import RankingCard from "@/components/RankingCard/RankingCard";
 import RankingCardFiis from "@/components/RankingCard/RankingCardFB/RankingCardFiis/RankingCardFiis";
 import RankingCardCryptoMoreVisited from "@/components/RankingCard/RankingCardICrypto/RankingCardCryptoMoreVisited/RankingCardCryptoMoreVisited";
@@ -31,16 +30,16 @@ export default function Home() {
 
         <div className="flex flex-col gap-5">
           <div className="flex flex-col gap-1">
-            <h1 className="m-0 w-9/12 text-[3.5rem] font-semibold leading-[4rem]">
+            <h1 className="m-0 w-9/12 text-[3.5rem] font-semibold leading-[4rem] text-primary">
               Construa Seu Futuro Financeiro com Sabedoria
             </h1>
-            <span className="w-1/2 text-xl text-[#8B8B8B]">
+            <span className="w-1/2 text-xl text-primary/60">
               Invista com confiança, transforme seu futuro financeiro e alcance seus objetivos com inteligência e
               segurança.
             </span>
           </div>
 
-          <div className="ronuded-full flex w-1/3 items-center rounded-full border border-zinc-700 px-4 py-1.5">
+          <div className="ronuded-full flex w-1/3 items-center rounded-full border border-primary px-4 py-1.5">
             <input
               type="text"
               placeholder="Buscar Ativo"
@@ -53,7 +52,7 @@ export default function Home() {
       </main>
 
       <section className="grid w-11/12 gap-3 px-16">
-        <Title name="Rankings de Ativos" icon={<Medal size={20} />} />
+        <Title name="Rankings de Ativos" icon={<Medal size={20} className="text-primary" />} />
         <div className="flex w-full items-center justify-between">
           <RankingCard
             title="New Rankings"
@@ -89,7 +88,7 @@ export default function Home() {
       </section>
 
       <section className="flex h-auto w-11/12 flex-col gap-3 px-16">
-        <Title name="Rankings de Criptos" icon={<DollarSign size={20} />} />
+        <Title name="Rankings de Criptos" icon={<DollarSign size={20} className="text-primary" />} />
         <div className="flex h-full w-full flex-wrap items-start justify-start gap-3">
           <div className="flex w-full items-center justify-between">
             <RankingCardCryptosRise
@@ -116,9 +115,9 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="flex h-full w-11/12 items-start justify-between px-16">
+      <div className="flex h-full w-11/12 items-start justify-between px-16 pb-8">
         <section className="flex h-full w-[60%] flex-wrap items-start justify-start gap-3">
-          <Title name="Rankings de FIIs" icon={<MapPinHouse size={20} />} />
+          <Title name="Rankings de FIIs" icon={<MapPinHouse size={20} className="text-primary" />} />
           <div className="flex h-full w-full flex-wrap items-start justify-start gap-3">
             <div className="flex w-full items-center justify-between">
               <RankingCardFiis
@@ -130,7 +129,7 @@ export default function Home() {
           </div>
         </section>
         <section className="flex h-full w-[35%] flex-wrap items-start justify-start gap-3">
-          <Title name="Rankings de BDRs" icon={<Globe size={20} />} />
+          <Title name="Rankings de BDRs" icon={<Globe size={20} className="text-primary" />} />
           <div className="flex h-full w-full flex-wrap items-start justify-start gap-3">
             <div className="flex w-full items-center justify-between">
               <RankingCardFiis
@@ -142,7 +141,6 @@ export default function Home() {
           </div>
         </section>
       </div>
-      <Footer />
     </div>
   );
 }

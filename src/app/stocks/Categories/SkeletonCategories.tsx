@@ -9,13 +9,10 @@ export default function SkeletonCategories({ quantity = 8 }: SkeletonCategoriesP
   return (
     <>
       {Array.from({ length: 3 }).map((_, index) => (
-        <TableRow
-          className="border-b border-b-[#F2F2F2] transition-all duration-300 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
-          key={index}
-        >
+        <TableRow className="border-b border-b-primary/40 transition-all duration-300 hover:bg-skeleton" key={index}>
           {Array.from({ length: quantity }).map((_, index) => (
-            <TableCell className="animate-pulse py-3 pl-4" key={index}>
-              <Skeleton className="h-6 w-full" />
+            <TableCell className="animate-pulse px-0 py-3" key={index}>
+              <Skeleton className="bg-skeleton-foreground h-6 w-[70%] rounded-lg" />
             </TableCell>
           ))}
         </TableRow>

@@ -5,18 +5,15 @@ export default function SkeletonCard() {
   return (
     <>
       {Array.from({ length: 3 }).map((_, index) => (
-        <TableRow
-          className="border-b border-b-[#F2F2F2] transition-all duration-300 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
-          key={index}
-        >
+        <TableRow className="border-b border-b-primary transition-all duration-300 hover:bg-skeleton" key={index}>
           <TableCell className="animate-pulse py-3 pl-4">
-            <Skeleton className="h-6 w-full" />
+            <Skeleton className="bg-skeleton-foreground h-6 w-full rounded-lg" />
           </TableCell>
           <TableCell className="animate-pulse py-3 pl-4">
-            <Skeleton className="h-6 w-full" />
+            <Skeleton className="bg-skeleton-foreground h-6 w-full rounded-lg" />
           </TableCell>
           <TableCell className="animate-pulse py-3 pl-4">
-            <Skeleton className="h-6 w-full" />
+            <Skeleton className="bg-skeleton-foreground h-6 w-full rounded-lg" />
           </TableCell>
         </TableRow>
       ))}

@@ -31,22 +31,17 @@ export default function RankingCard({ title, data, onViewAll, styleRankingCard }
   }
 
   return (
-    <div
-      className={twMerge(
-        "z-30 w-full rounded-lg border p-4 shadow-sm dark:border-[#444444] dark:bg-[#2C2C2C]",
-        styleRankingCard,
-      )}
-    >
+    <div className={twMerge("z-30 w-full rounded-lg border bg-card p-4 shadow-sm", styleRankingCard)}>
       <header className="mb-4 flex items-center justify-between">
-        <h2 className="text-lg font-semibold">{title}</h2>
+        <h2 className="text-lg font-semibold text-primary">{title}</h2>
       </header>
 
       <Table className="space-y-4 overflow-y-auto">
         <TableHeader>
-          <TableRow className="border-b-[#F2F2F2] dark:border-b-[#444444]">
-            <TableHead className="pl-4 text-gray-900 dark:text-white">Nome</TableHead>
-            <TableHead className="pl-4 text-gray-900 dark:text-white">Volume</TableHead>
-            <TableHead className="pl-4 text-gray-900 dark:text-white">Volume</TableHead>
+          <TableRow className="border-primary/20 hover:bg-primary/10">
+            <TableHead className="pl-4 text-primary">Nome</TableHead>
+            <TableHead className="pl-4 text-primary">Volume</TableHead>
+            <TableHead className="pl-4 text-primary">Volume</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

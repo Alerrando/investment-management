@@ -4,7 +4,7 @@ import { chromium } from "playwright";
 import { StockDetailsModel } from "@/models/StockDetailsModel";
 
 export default async function handler(stock: string) {
-  const browser = await chromium.launch();
+  const browser = await chromium.launch({ headless: false });
   const page = await browser.newPage();
 
   const url = `https://www.fundamentus.com.br/detalhes.php?papel=${stock}&interface=classic&interface=mobile`;

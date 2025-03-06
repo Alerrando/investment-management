@@ -14,12 +14,12 @@ export default function RankingCardFiis({ title, data, onViewAll, styleRankingCa
   return (
     <div
       className={twMerge(
-        "h-65 w-full overflow-y-auto rounded-lg border p-4 shadow-sm dark:border-[#444444] dark:bg-[#2C2C2C]",
+        "h-65 w-full overflow-y-auto rounded-lg border bg-card p-4 shadow-sm dark:border-[#444444]",
         styleRankingCard,
       )}
     >
       <header className="mb-4 flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{title}</h2>
+        <h2 className="text-lg font-semibold text-primary">{title}</h2>
         <button
           className="rounded-md border px-3 py-1 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:bg-[#222] dark:text-gray-300 dark:hover:bg-[#444444]"
           onClick={onViewAll}
@@ -30,10 +30,10 @@ export default function RankingCardFiis({ title, data, onViewAll, styleRankingCa
 
       <Table className="w-full overflow-auto">
         <TableHeader>
-          <TableRow className="border-b-[#F2F2F2] dark:border-b-[#444444]">
-            <TableHead className="text-gray-900 dark:text-white">Nome</TableHead>
-            <TableHead className="text-gray-900 dark:text-white">Volume</TableHead>
-            <TableHead className="text-gray-900 dark:text-white">Preço</TableHead>
+          <TableRow className="border-b-primary/40 hover:bg-primary/10">
+            <TableHead className="text-primary">Nome</TableHead>
+            <TableHead className="text-primary">Volume</TableHead>
+            <TableHead className="text-primary">Preço</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -43,18 +43,18 @@ export default function RankingCardFiis({ title, data, onViewAll, styleRankingCa
               ?.sort((item1, item2) => item2.price - item1.price)
               ?.filter((_, index) => index < 3)
               ?.map((item: ListCryptoModel, index) => (
-                <TableRow className="border-b-[#F2F2F2] dark:border-b-[#444444]" key={index}>
-                  <TableCell className="text-gray-900 dark:text-white">
+                <TableRow className="border-b-primary/40" key={index}>
+                  <TableCell className="text-primary">
                     <div className="flex h-full items-center justify-start gap-2">
                       <img src={item.image} alt="" className="h-8 w-8" />
                       <div className="flex h-full flex-col justify-between py-2">
-                        <span className="text-[9px] text-black/60 dark:text-gray-400">Proof of Stake</span>
+                        <span className="text-[9px] text-primary/60">Proof of Stake</span>
                         <h2 className="text-[10px]">{item.name}</h2>
                       </div>
                     </div>
                   </TableCell>
 
-                  <TableCell className="text-gray-900 dark:text-white">
+                  <TableCell className="text-primary">
                     <div className="flex w-fit flex-col items-end">
                       <span>{item.volume}</span>
                       <span
@@ -65,7 +65,7 @@ export default function RankingCardFiis({ title, data, onViewAll, styleRankingCa
                     </div>
                   </TableCell>
 
-                  <TableCell className="text-gray-900 dark:text-white">${item.price.toFixed(2)}</TableCell>
+                  <TableCell className="text-primary">${item.price.toFixed(2)}</TableCell>
                 </TableRow>
               ))}
         </TableBody>

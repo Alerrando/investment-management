@@ -6,7 +6,7 @@ import InvestmentDistribution from "./InvestmentDistribution/InvestmentDistribut
 
 export default function InvestmentPlanner() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-start px-16 dark:bg-gray-900 dark:text-white">
+    <div className="flex min-h-screen flex-col items-center justify-start gap-12 bg-background px-16 text-primary">
       <InvestmentDistribution />
 
       <CalcCompoundInterest />

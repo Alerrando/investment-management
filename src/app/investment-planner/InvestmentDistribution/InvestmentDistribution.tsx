@@ -24,11 +24,11 @@ export default function InvestmentDistribution() {
 
   return (
     <main className="mt-[52px] flex h-[calc(85vh_-_52px)] w-full flex-col items-start justify-center rounded-lg">
-      <h2 className="mb-6 text-3xl font-semibold text-gray-800 dark:text-gray-200">Distribuição de Investimentos</h2>
+      <h2 className="mb-6 text-3xl font-semibold text-primary">Distribuição de Investimentos</h2>
 
       <div className="flex w-full items-center justify-between gap-6">
-        <div className="flex w-full flex-col rounded-lg border p-3 shadow-lg dark:border-gray-700">
-          <h3 className="mb-4 text-lg font-bold text-purple-600 dark:text-purple-400">Gráfico</h3>
+        <div className="flex w-full flex-col rounded-lg border border-primary/20 bg-foreground p-3 shadow-lg">
+          <h3 className="mb-4 text-lg font-bold text-purple-600">Gráfico</h3>
           <ResponsiveContainer width="100%" height={220}>
             <PieChart>
               <Pie
@@ -57,43 +57,43 @@ export default function InvestmentDistribution() {
                     borderRadius: "50%",
                   }}
                 ></div>
-                <span className="text-sm text-gray-700 dark:text-gray-300">{entry.name}</span>
+                <span className="text-sm text-primary">{entry.name}</span>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="flex h-full w-full flex-col rounded-lg border p-3 shadow-lg dark:border-gray-700">
-          <h3 className="mb-4 text-lg font-bold text-purple-600 dark:text-purple-400">Tabela de Investimentos</h3>
-          <Table className="w-full text-left text-sm text-gray-600 dark:text-gray-300">
+        <div className="flex h-full w-full flex-col rounded-lg border border-primary/20 bg-foreground p-3 shadow-lg">
+          <h3 className="mb-4 text-lg font-bold text-purple-600">Tabela de Investimentos</h3>
+          <Table className="w-full text-sm">
             <TableHeader>
-              <tr>
-                <th className="py-2 text-left">Investimento</th>
-                <th className="py-2 text-left">Percentual</th>
-                <th className="py-2 text-left">Valor</th>
+              <tr className="border-primary/20">
+                <th className="py-2 text-left text-primary">Investimento</th>
+                <th className="py-2 text-left text-primary">Percentual</th>
+                <th className="py-2 text-left text-primary">Valor</th>
               </tr>
             </TableHeader>
             <TableBody>
               {dataInfos.map((entry, index) => (
-                <tr key={index} className="border-b dark:border-gray-600">
-                  <td className="py-2">{entry.name}</td>
-                  <td className="py-2">{entry.value}%</td>
-                  <td className="py-2">{((investmentValue * entry.value) / 100).toFixed(2)}</td>
+                <tr key={index} className="border-b border-primary/20">
+                  <td className="py-2 text-left text-primary">{entry.name}</td>
+                  <td className="py-2 text-left text-primary">{entry.value}%</td>
+                  <td className="py-2 text-left text-primary">{((investmentValue * entry.value) / 100).toFixed(2)}</td>
                 </tr>
               ))}
 
-              <tr className="border-t font-semibold dark:border-gray-600">
-                <td className="py-2">Total</td>
-                <td className="py-2"></td>
-                <td className="py-2">{totalValue.toFixed(2)}</td>
+              <tr className="border-t border-primary/20 font-semibold">
+                <td className="py-2 text-left text-primary">Total</td>
+                <td className="py-2 text-left text-primary"></td>
+                <td className="py-2 text-left text-primary">{totalValue.toFixed(2)}</td>
               </tr>
             </TableBody>
           </Table>
         </div>
 
-        <div className="flex h-full w-full flex-col rounded-lg border p-3 shadow-lg dark:border-gray-700">
+        <div className="flex h-full w-full flex-col rounded-lg border border-primary/20 bg-foreground p-3 shadow-lg">
           <div className="flex w-full items-center justify-between">
-            <h3 className="text-lg font-bold text-purple-600 dark:text-purple-400">Configurações</h3>
+            <h3 className="text-lg font-bold text-purple-600">Configurações</h3>
 
             <PopoverAddConfig dataInfos={dataInfos} setDataInfos={setDataInfos} />
           </div>
@@ -101,15 +101,11 @@ export default function InvestmentDistribution() {
             {dataInfos.map((item, index: number) => (
               <div key={item.name} className="flex w-full flex-col">
                 <div className="flex w-full items-center justify-between">
-                  <div className="mb-1 text-[14px] font-semibold text-gray-600 dark:text-gray-300">
+                  <div className="mb-1 text-[14px] font-semibold text-primary">
                     {`${item.name.charAt(0).toUpperCase() + item.name.slice(1)} ${item.value}%`}
                   </div>
 
-                  <Trash
-                    size={16}
-                    className="cursor-pointer text-gray-600 dark:text-gray-300"
-                    onClick={() => handleDeleteConfig(index)}
-                  />
+                  <Trash size={16} className="cursor-pointer text-primary" onClick={() => handleDeleteConfig(index)} />
                 </div>
                 <Slider
                   onValueChange={(value) => handleChangeSlider(index, value[0])}
@@ -122,7 +118,7 @@ export default function InvestmentDistribution() {
               </div>
             ))}
           </div>
-          <div className="mt-2 text-sm font-semibold text-gray-600 dark:text-gray-300">
+          <div className="mt-2 text-sm font-semibold text-primary">
             <span className={`${totalPercentage > 100 && "text-red-600"}`}>
               Soma das porcentagens: {totalPercentage}%
             </span>
@@ -130,13 +126,13 @@ export default function InvestmentDistribution() {
         </div>
       </div>
 
-      <div className="mt-6 flex w-full items-center gap-4 rounded-full border border-gray-300 bg-gray-50 px-4 py-2 shadow-sm dark:border-gray-600 dark:bg-gray-800">
+      <div className="mt-6 flex w-full items-center gap-4 rounded-full border border-primary/40 bg-foreground px-4 py-2 shadow-sm">
         <input
           type="number"
           value={investmentValue}
           onChange={handleInputChange}
           placeholder="Insira o valor"
-          className="w-full appearance-none bg-transparent text-sm text-gray-700 outline-none dark:text-gray-300"
+          className="w-full appearance-none bg-transparent text-sm text-primary outline-none"
         />
         <button className="rounded-full bg-purple-600 px-4 py-1 text-sm text-white hover:bg-purple-700">
           Calcular
