@@ -28,12 +28,12 @@ export function StockTabs() {
   return (
     <Tabs defaultValue="overview" className="w-full">
       <TabsList className="w-full">
-        <TabsTrigger className="w-full" value="overview">
+        <TabsTrigger className="w-full active:text-primary data-[state=active]:text-primary" value="overview">
           Overview
         </TabsTrigger>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="w-full">
+            <Button variant="ghost" className="w-full text-primary data-[state=active]:text-primary">
               Information <ChevronDown className="ml-2 h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
@@ -44,7 +44,7 @@ export function StockTabs() {
             <DropdownMenuItem>Relevant Facts</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-        <TabsTrigger className="w-full" value="quotes">
+        <TabsTrigger className="w-full text-primary data-[state=active]:text-primary" value="quotes">
           Quotes
         </TabsTrigger>
       </TabsList>
@@ -52,147 +52,155 @@ export function StockTabs() {
       <TabsContent value="overview">
         <div className="grid gap-4">
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            <Card className="rounded-lg border border-[#8C8C8C]/20 bg-[#232337]">
+            <Card className="rounded-lg border border-primary/40 bg-card">
               <CardHeader>
-                <CardTitle>Valuation</CardTitle>
+                <CardTitle className="text-primary">Valuation</CardTitle>
               </CardHeader>
               <CardContent>
                 <dl className="space-y-2">
                   <div className="flex justify-between">
-                    <dt>P/L</dt>
-                    <dd>{stockDetails.valuationIndicators.P_L}</dd>
+                    <dt className="text-primary">P/L</dt>
+                    <dd className="text-primary">{stockDetails.valuationIndicators.P_L}</dd>
                   </div>
                   <div className="flex justify-between">
-                    <dt>P/VP</dt>
-                    <dd>{stockDetails.valuationIndicators.P_VP}</dd>
+                    <dt className="text-primary">P/VP</dt>
+                    <dd className="text-primary">{stockDetails.valuationIndicators.P_VP}</dd>
                   </div>
                   <div className="flex justify-between">
-                    <dt>Dividend Yield</dt>
-                    <dd>{stockDetails.valuationIndicators.dividendYield}</dd>
+                    <dt className="text-primary">Dividend Yield</dt>
+                    <dd className="text-primary">{stockDetails.valuationIndicators.dividendYield}</dd>
                   </div>
                 </dl>
               </CardContent>
             </Card>
 
-            <Card className="rounded-lg border border-[#8C8C8C]/20 bg-[#232337]">
+            <Card className="rounded-lg border border-primary/40 bg-card">
               <CardHeader>
-                <CardTitle>Profitability</CardTitle>
+                <CardTitle className="text-primary">Profitability</CardTitle>
               </CardHeader>
               <CardContent>
                 <dl className="space-y-2">
                   <div className="flex justify-between">
-                    <dt>ROE</dt>
-                    <dd>{stockDetails.profitabilityIndicators.ROE}</dd>
+                    <dt className="text-primary">ROE</dt>
+                    <dd className="text-primary">{stockDetails.profitabilityIndicators.ROE}</dd>
                   </div>
                   <div className="flex justify-between">
-                    <dt>ROIC</dt>
-                    <dd>{stockDetails.profitabilityIndicators.ROIC}</dd>
+                    <dt className="text-primary">ROIC</dt>
+                    <dd className="text-primary">{stockDetails.profitabilityIndicators.ROIC}</dd>
                   </div>
                   <div className="flex justify-between">
-                    <dt>Net Margin</dt>
-                    <dd>{stockDetails.profitabilityIndicators.netMargin}</dd>
+                    <dt className="text-primary">Net Margin</dt>
+                    <dd className="text-primary">{stockDetails.profitabilityIndicators.netMargin}</dd>
                   </div>
                 </dl>
               </CardContent>
             </Card>
 
-            <Card className="rounded-lg border border-[#8C8C8C]/20 bg-[#232337]">
+            <Card className="rounded-lg border border-primary/40 bg-card">
               <CardHeader>
-                <CardTitle>Debt</CardTitle>
+                <CardTitle className="text-primary">Debt</CardTitle>
               </CardHeader>
               <CardContent>
                 <dl className="space-y-2">
                   <div className="flex justify-between">
-                    <dt>Current Liquidity</dt>
-                    <dd>{stockDetails.debtIndicators.currentLiquidity}</dd>
+                    <dt className="text-primary">Current Liquidity</dt>
+                    <dd className="text-primary">{stockDetails.debtIndicators.currentLiquidity}</dd>
                   </div>
                   <div className="flex justify-between">
-                    <dt>Net Debt/EBITDA</dt>
-                    <dd>{stockDetails.debtIndicators.netDebtToEBITDA}</dd>
+                    <dt className="text-primary">Net Debt/EBITDA</dt>
+                    <dd className="text-primary">{stockDetails.debtIndicators.netDebtToEBITDA}</dd>
                   </div>
                   <div className="flex justify-between">
-                    <dt>Equity/Assets</dt>
-                    <dd>{stockDetails.debtIndicators.equityToAssets}</dd>
+                    <dt className="text-primary">Equity/Assets</dt>
+                    <dd className="text-primary">{stockDetails.debtIndicators.equityToAssets}</dd>
                   </div>
                 </dl>
               </CardContent>
             </Card>
           </div>
 
-          <Card className="rounded-lg border border-[#8C8C8C]/20 bg-[#232337]">
+          <Card className="rounded-lg border border-primary/40 bg-card">
             <CardHeader>
-              <CardTitle>Balance Sheet</CardTitle>
+              <CardTitle className="text-primary">Balance Sheet</CardTitle>
             </CardHeader>
             <CardContent>
               <dl className="grid gap-4 md:grid-cols-2">
                 <div>
-                  <dt className="font-medium">Total Assets</dt>
-                  <dd className="text-2xl font-bold">{stockDetails.balanceSheet.totalAssets}</dd>
+                  <dt className="font-medium text-primary">Total Assets</dt>
+                  <dd className="text-2xl font-bold text-primary">{stockDetails.balanceSheet.totalAssets}</dd>
                 </div>
                 <div>
-                  <dt className="font-medium">Current Assets</dt>
-                  <dd className="text-2xl font-bold">{stockDetails.balanceSheet.currentAssets}</dd>
+                  <dt className="font-medium text-primary">Current Assets</dt>
+                  <dd className="text-2xl font-bold text-primary">{stockDetails.balanceSheet.currentAssets}</dd>
                 </div>
                 <div>
-                  <dt className="font-medium">Cash & Equivalents</dt>
-                  <dd className="text-2xl font-bold">{stockDetails.balanceSheet.cashAndCashEquivalents}</dd>
+                  <dt className="font-medium text-primary">Cash & Equivalents</dt>
+                  <dd className="text-2xl font-bold text-primary">
+                    {stockDetails.balanceSheet.cashAndCashEquivalents}
+                  </dd>
                 </div>
                 <div>
-                  <dt className="font-medium">Net Debt</dt>
-                  <dd className="text-2xl font-bold">{stockDetails.balanceSheet.netDebt}</dd>
+                  <dt className="font-medium text-primary">Net Debt</dt>
+                  <dd className="text-2xl font-bold text-primary">{stockDetails.balanceSheet.netDebt}</dd>
                 </div>
                 <div>
-                  <dt className="font-medium">Equity</dt>
-                  <dd className="text-2xl font-bold">{stockDetails.balanceSheet.equity}</dd>
+                  <dt className="font-medium text-primary">Equity</dt>
+                  <dd className="text-2xl font-bold text-primary">{stockDetails.balanceSheet.equity}</dd>
                 </div>
               </dl>
             </CardContent>
           </Card>
 
           <div className="grid gap-4 md:grid-cols-2">
-            <Card className="rounded-lg border border-[#8C8C8C]/20 bg-[#232337]">
+            <Card className="rounded-lg border border-primary/40 bg-card">
               <CardHeader>
-                <CardTitle>Last 12 Months</CardTitle>
+                <CardTitle className="text-primary">Last 12 Months</CardTitle>
               </CardHeader>
               <CardContent>
                 <dl className="space-y-4">
                   <div>
-                    <dt className="font-medium">Net Revenue</dt>
-                    <dd className="text-2xl font-bold">{stockDetails.incomeStatement.last12Months.netRevenue}</dd>
+                    <dt className="font-medium text-primary">Net Revenue</dt>
+                    <dd className="text-2xl font-bold text-primary">
+                      {stockDetails.incomeStatement.last12Months.netRevenue}
+                    </dd>
                   </div>
                   <div>
-                    <dt className="font-medium">EBIT</dt>
-                    <dd className="text-2xl font-bold">{stockDetails.incomeStatement.last12Months.EBIT}</dd>
+                    <dt className="font-medium text-primary">EBIT</dt>
+                    <dd className="text-2xl font-bold text-primary">
+                      {stockDetails.incomeStatement.last12Months.EBIT}
+                    </dd>
                   </div>
                   <div>
-                    <dt className="font-medium">Net Income</dt>
-                    <dd className="text-2xl font-bold">{stockDetails.incomeStatement.last12Months.netIncome}</dd>
+                    <dt className="font-medium text-primary">Net Income</dt>
+                    <dd className="text-2xl font-bold text-primary">
+                      {stockDetails.incomeStatement.last12Months.netIncome}
+                    </dd>
                   </div>
                 </dl>
               </CardContent>
             </Card>
 
-            <Card className="rounded-lg border border-[#8C8C8C]/20 bg-[#232337]">
+            <Card className="rounded-lg border border-primary/40 bg-card">
               <CardHeader>
-                <CardTitle>Properties</CardTitle>
+                <CardTitle className="text-primary">Properties</CardTitle>
               </CardHeader>
               <CardContent>
                 <dl className="grid grid-cols-2 gap-4">
                   <div>
-                    <dt className="font-medium">Sector</dt>
-                    <dd className="text-muted-foreground">{stockDetails.marketData.sector}</dd>
+                    <dt className="font-medium text-primary">Sector</dt>
+                    <dd className="text-primary/70">{stockDetails.marketData.sector}</dd>
                   </div>
                   <div>
-                    <dt className="font-medium">Sub-sector</dt>
-                    <dd className="text-muted-foreground">{stockDetails.marketData.subSector}</dd>
+                    <dt className="font-medium text-primary">Sub-sector</dt>
+                    <dd className="text-primary/70">{stockDetails.marketData.subSector}</dd>
                   </div>
                   <div>
-                    <dt className="font-medium">Share Type</dt>
-                    <dd className="text-muted-foreground">{stockDetails.marketData.shareType}</dd>
+                    <dt className="font-medium text-primary">Share Type</dt>
+                    <dd className="text-primary/70">{stockDetails.marketData.shareType}</dd>
                   </div>
                   <div>
-                    <dt className="font-medium">Total Shares</dt>
-                    <dd className="text-muted-foreground">{stockDetails.marketData.shares.toLocaleString()}</dd>
+                    <dt className="font-medium text-primary">Total Shares</dt>
+                    <dd className="text-primary/70">{stockDetails.marketData.shares.toLocaleString()}</dd>
                   </div>
                 </dl>
               </CardContent>
@@ -202,9 +210,9 @@ export function StockTabs() {
       </TabsContent>
 
       <TabsContent value="quotes">
-        <Card className="rounded-lg border border-[#8C8C8C]/20 bg-[#232337]">
+        <Card className="rounded-lg border border-primary/40 bg-card">
           <CardHeader>
-            <CardTitle>Stock Price History</CardTitle>
+            <CardTitle className="text-primary">Stock Price History</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="h-[400px] w-full">
@@ -216,8 +224,9 @@ export function StockTabs() {
                   <Tooltip
                     formatter={(value) => Number(value)}
                     labelFormatter={(label) => new Date(label).toLocaleDateString()}
+                    labelClassName="text-foreground"
                   />
-                  <Line type="monotone" dataKey="value" stroke="hsl(var(--primary))" strokeWidth={2} dot={false} />
+                  <Line type="monotone" dataKey="value" stroke="hsl(var(--primary)) " strokeWidth={2} dot={false} />
                 </LineChart>
               </ResponsiveContainer>
             </div>

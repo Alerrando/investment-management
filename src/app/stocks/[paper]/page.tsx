@@ -20,7 +20,7 @@ export default function StockDetail() {
   return (
     <div className="container mx-auto space-y-8 py-8">
       <div className="flex items-center justify-between">
-        <h1 className="text-4xl font-bold">{(paper as string).toUpperCase()}</h1>
+        <h1 className="text-4xl font-bold text-primary">{(paper as string).toUpperCase()}</h1>
         <div className="text-sm text-muted-foreground">Last updated: {stockDetails.marketData.lastBalanceDate}</div>
       </div>
 
