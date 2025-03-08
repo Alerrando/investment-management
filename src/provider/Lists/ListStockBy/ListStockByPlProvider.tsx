@@ -2,9 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-import { getListStockByPl } from "@/api/getListStockByPl";
 import { initialStateStockProvider } from "@/lib/utils";
 import { ListStockModel } from "@/models/Lists/ListStockModel";
+
+import { getListStockByPl } from "../../../api/getListStockByPl";
 
 interface ListStocksByPLState {
   dataListStocksByPL: ListStockModel;

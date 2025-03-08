@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-import { authValidation } from "@/api/authValidation";
+import { authValidation } from "../api/authValidation";
 
 interface ValidationAuthState {
   isLoadingAuthValidation: boolean;

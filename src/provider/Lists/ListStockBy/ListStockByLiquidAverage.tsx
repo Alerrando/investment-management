@@ -2,9 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-import { getListStockByLiquidAverage } from "@/api/getListStockByLiquidAverage";
 import { initialStateStockProvider } from "@/lib/utils";
 import { ListStockModel } from "@/models/Lists/ListStockModel";
+
+import { getListStockByLiquidAverage } from "../../../api/getListStockByLiquidAverage";
 
 interface ListStocksByLiquidAverageState {
   dataListStocksByLiquidAverage: ListStockModel;

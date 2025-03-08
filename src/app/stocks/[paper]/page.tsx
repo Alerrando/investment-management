@@ -5,16 +5,18 @@ import { useEffect } from "react";
 import { StockOverview } from "@/components/StockOverview/StockOverView";
 import { StockTabs } from "@/components/StockTabs/StocksTabs";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useStockDetails } from "@/provider/StockDataDetails";
+import { useStockDetails } from "@/provider/StockDataDetails/StockDataDetails";
 
 export default function StockDetail() {
   const { paper } = useParams();
-  const { mutateStockDetails, stockDetails } = useStockDetails();
+  const { stockDetails, mutateStockDetails } = useStockDetails();
 
   console.log(stockDetails);
 
   useEffect(() => {
-    (async () => await mutateStockDetails(paper as string))();
+    (async () => {
+      await mutateStockDetails(paper as string);
+    })();
   }, [paper]);
 
   return (

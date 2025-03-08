@@ -2,10 +2,11 @@
 import { Building2 } from "lucide-react";
 import { useState } from "react";
 
-import { getLogo } from "@/api/getLogo";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { useQueryHook } from "@/hook/useQueryHook";
 import { ListStockModelContent } from "@/models/Lists/ListStockModel";
+
+import { getLogo } from "../../../api/getLogo";
 
 interface RankingCardItemStockProps {
   item: ListStockModelContent;

@@ -2,8 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-import { getListCrypto } from "@/api/getListCryptos";
 import { ListCryptoModel } from "@/models/Lists/ListCryptoModel";
+
+import { getListCrypto } from "../../api/getListCryptos";
 
 interface ListCryptoState {
   dataListCrypto: ListCryptoModel[];

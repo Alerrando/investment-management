@@ -2,9 +2,10 @@ import { useMutation } from "@tanstack/react-query";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-import handler from "@/api/rss";
 import { initialStateStockDetails } from "@/lib/utils";
 import { StockDetailsModel } from "@/models/StockDetailsModel";
+
+import getStockDetails from "./rss";
 
 interface StockDataDetailsState {
   stockDetails: StockDetailsModel;
@@ -18,7 +19,7 @@ const useStockDetailsStore = create<StockDataDetailsState>()(
       setStockDetails: (data) => set({ stockDetails: data }),
     }),
     {
-      name: "listStocks-storage",
+      name: "stock-details-storage",
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({ stockDetails: state.stockDetails }),
     },
@@ -30,13 +31,13 @@ export function useStockDetails() {
 
   const { mutateAsync: mutateStockDetails, isLoading } = useMutation({
     mutationKey: ["stock-details"],
-    mutationFn: (stock: string) => handler(stock),
+    mutationFn: (stock: string) => getStockDetails(stock),
     cacheTime: 1000 * 60 * 60 * 24,
     onError: (err) => {
       console.error(err);
     },
     onSuccess: (data) => {
-      setStockDetails(data);
+      setStockDetails(data as StockDetailsModel);
     },
   });
 

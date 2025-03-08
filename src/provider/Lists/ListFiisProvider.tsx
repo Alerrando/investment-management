@@ -2,9 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-import { getListFiis } from "@/api/getListFiis";
 import { initialStateFiisProvider } from "@/lib/utils";
 import { ListFiisModel } from "@/models/Lists/ListFiisModel";
+
+import { getListFiis } from "../../api/getListFiis";
 
 interface ListFiisState {
   dataListFiis: ListFiisModel;

@@ -3,8 +3,9 @@
 import { useMutation } from "@tanstack/react-query";
 import React, { createContext, useContext, useState } from "react";
 
-import { postRecommendationCrypto } from "@/api/postRecommendationCrypto";
 import { ListCryptoModel } from "@/models/Lists/ListCryptoModel";
+
+import { postRecommendationCrypto } from "../../api/postRecommendationCrypto";
 
 interface ContextProps {
   dataRecommendationCrypto: ListCryptoModel[];

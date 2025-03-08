@@ -3,8 +3,9 @@
 import { useMutation } from "@tanstack/react-query";
 import React, { createContext, useContext, useState } from "react";
 
-import { postRecommendationStock } from "@/api/postRecommendationStock";
 import { ListStockModelContent } from "@/models/Lists/ListStockModel";
+
+import { postRecommendationStock } from "../../api/postRecommendationStock";
 
 interface ContextProps {
   dataRecommendationStock: ListStockModelContent[];

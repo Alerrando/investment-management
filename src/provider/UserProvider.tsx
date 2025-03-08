@@ -5,9 +5,10 @@ import { toast } from "react-toastify";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-import { signIn } from "@/api/sign-in";
-import { signUp, SignUpProps } from "@/api/sign-up";
 import { ReturnResponseUser, Role, UserModel } from "@/models/UserModel";
+
+import { signIn } from "../api/sign-in";
+import { signUp, SignUpProps } from "../api/sign-up";
 
 interface UserState {
   dataUser: UserModel;

@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useStockDetails } from "@/provider/StockDataDetails";
+import { useStockDetails } from "@/provider/StockDataDetails/StockDataDetails";
 
 export function StockOverview() {
   const { stockDetails } = useStockDetails();

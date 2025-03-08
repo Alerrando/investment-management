@@ -3,8 +3,7 @@ import { ArrowDownLeft, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-import { getListMarket } from "@/api/getListMarket";
-
+import { getListMarket } from "../../api/getListMarket";
 import { Button } from "../ui/button";
 import { Table, TableBody, TableCell, TableRow } from "../ui/table";
 
