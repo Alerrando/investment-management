@@ -5,7 +5,7 @@ import { createJSONStorage, persist } from "zustand/middleware";
 import { initialStateStockDetails } from "@/lib/utils";
 import { StockDetailsModel } from "@/models/StockDetailsModel";
 
-import getStockDetails from "./rss";
+import getStockDetails from "../../api/rss";
 
 interface StockDataDetailsState {
   stockDetails: StockDetailsModel;
