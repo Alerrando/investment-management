@@ -22,29 +22,29 @@ export default function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-40 flex w-full items-center justify-between border-b border-b-[#9265E2] bg-foreground px-8 py-2">
+    <header className="sticky top-0 z-40 flex w-full items-center justify-between border-b border-b-[#9265E2] bg-secondary px-8 py-2">
       <div className="relative h-8 w-8 rounded-full">
         <Image src="/logo.jpg" alt="logo" className="rounded-full" fill />
       </div>
 
       <ul className="flex gap-11">
         <li className="list-none font-semibold">
-          <Link className="text-primary" href="/">
+          <Link className="text-primary-t" href="/">
             Home
           </Link>
         </li>
         <li className="list-none font-semibold">
-          <Link className="text-primary" href="/investment-planner">
+          <Link className="text-primary-t" href="/investment-planner">
             Planejador de Investimentos
           </Link>
         </li>
         <li className="list-none font-semibold">
-          <Link className="text-primary" href="/stocks">
+          <Link className="text-primary-t" href="/stocks">
             Ações
           </Link>
         </li>
-        <li className="list-none font-semibold text-primary">FIIs</li>
-        <li className="list-none font-semibold text-primary">Cripto</li>
+        <li className="list-none font-semibold text-primary-t">FIIs</li>
+        <li className="list-none font-semibold text-primary-t">Cripto</li>
       </ul>
 
       <div className="flex gap-9">

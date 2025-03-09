@@ -44,6 +44,7 @@ export default {
           DEFAULT: "hsl(var(--skeleton))",
           foreground: "hsl(var(--skeleton-foreground))",
         },
+        "primary-t": "hsl(var(--text-primaryT))",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

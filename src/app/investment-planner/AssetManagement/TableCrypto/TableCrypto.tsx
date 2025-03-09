@@ -38,7 +38,7 @@ export default function TableCrypto({ filteredAssets, handleAddToBag, dataRecomm
                 <div className="flex items-center gap-2">
                   <img src={asset.image} alt={asset.name} className="h-8 w-8 rounded-full" />
                   <div>
-                    <p className="text-[10px] text-primary">{asset.name}</p>
+                    <p className="text-[10px] text-primary-t">{asset.name}</p>
                   </div>
                 </div>
               </td>
@@ -70,7 +70,7 @@ export default function TableCrypto({ filteredAssets, handleAddToBag, dataRecomm
               <div className="flex items-center gap-2">
                 <img src={asset.image} alt={asset.name} className="h-8 w-8 rounded-full" />
                 <div>
-                  <p className="text-[10px] text-primary">{asset.name}</p>
+                  <p className="text-[10px] text-primary-t">{asset.name}</p>
                 </div>
               </div>
             </td>

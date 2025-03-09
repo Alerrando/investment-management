@@ -10,26 +10,26 @@ export function StockOverview() {
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       <Card className="rounded-lg border bg-card">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium text-primary/70">Market Value</CardTitle>
+          <CardTitle className="text-sm font-medium text-primary-t/70">Market Value</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold text-primary">{stockDetails.marketData.marketValue}</div>
+          <div className="text-2xl font-bold text-primary-t">{stockDetails.marketData.marketValue}</div>
         </CardContent>
       </Card>
 
       <Card className="rounded-lg border bg-card">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium text-primary/70">Quote</CardTitle>
+          <CardTitle className="text-sm font-medium text-primary-t/70">Quote</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold text-primary">{stockDetails.marketData.quote}</div>
+          <div className="text-2xl font-bold text-primary-t">{stockDetails.marketData.quote}</div>
           <p className="text-xs text-muted-foreground">Last updated: {stockDetails.marketData.lastQuoteDate}</p>
         </CardContent>
       </Card>
 
       <Card className="rounded-lg border bg-card">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium text-primary/70">Day Variation</CardTitle>
+          <CardTitle className="text-sm font-medium text-primary-t/70">Day Variation</CardTitle>
         </CardHeader>
         <CardContent>
           <div
@@ -42,10 +42,10 @@ export function StockOverview() {
 
       <Card className="rounded-lg border bg-card">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium text-primary/70">Volume</CardTitle>
+          <CardTitle className="text-sm font-medium text-primary-t/70">Volume</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold text-primary">{stockDetails.marketData.dailyVolume}</div>
+          <div className="text-2xl font-bold text-primary-t">{stockDetails.marketData.dailyVolume}</div>
         </CardContent>
       </Card>
     </div>

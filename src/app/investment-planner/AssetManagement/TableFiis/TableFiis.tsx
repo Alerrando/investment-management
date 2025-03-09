@@ -39,11 +39,11 @@ export default function TableFiis({ filteredAssets, handleAddToBag, dataRecommen
             >
               <TableCell className="pl-4">
                 <div className="flex h-full items-center justify-start gap-2">
-                  <Building className="h-8 w-8 text-primary" />
+                  <Building className="h-8 w-8 text-primary-t" />
                   <div className="flex h-full flex-col justify-between py-2">
-                    <span className="text-[9px] text-primary/60">{asset.segment ?? ""}</span>
+                    <span className="text-[9px] text-primary-t/60">{asset.segment ?? ""}</span>
 
-                    <h2 className="text-[10px] text-primary">{asset.paper}</h2>
+                    <h2 className="text-[10px] text-primary-t">{asset.paper}</h2>
                   </div>
                 </div>
               </TableCell>
@@ -52,7 +52,7 @@ export default function TableFiis({ filteredAssets, handleAddToBag, dataRecommen
 
               <TableCell className="pl-4">
                 {asset.dividend && (
-                  <div className="flex w-fit flex-col items-end text-primary">
+                  <div className="flex w-fit flex-col items-end text-primary-t">
                     <span>{asset.dividend}</span>
                   </div>
                 )}
@@ -60,7 +60,7 @@ export default function TableFiis({ filteredAssets, handleAddToBag, dataRecommen
 
               <TableCell className="pl-4">
                 {asset.marketValue && (
-                  <div className="flex w-fit flex-col items-end text-primary">
+                  <div className="flex w-fit flex-col items-end text-primary-t">
                     <span>
                       {asset.marketValue.toLocaleString("pt-BR", {
                         style: "currency",
@@ -94,10 +94,10 @@ export default function TableFiis({ filteredAssets, handleAddToBag, dataRecommen
           >
             <TableCell className="pl-4">
               <div className="flex h-full items-center justify-start gap-2">
-                <Building className="h-8 w-8 text-primary" />
+                <Building className="h-8 w-8 text-primary-t" />
                 <div className="flex h-full flex-col justify-between py-2">
-                  <span className="text-[9px] text-primary/60">{asset.segment ?? ""}</span>
-                  <h2 className="text-[10px] text-primary">{asset.paper}</h2>
+                  <span className="text-[9px] text-primary-t/60">{asset.segment ?? ""}</span>
+                  <h2 className="text-[10px] text-primary-t">{asset.paper}</h2>
                 </div>
               </div>
             </TableCell>
@@ -105,7 +105,7 @@ export default function TableFiis({ filteredAssets, handleAddToBag, dataRecommen
             <td className="px-4 py-3">R$ {asset.quotation.toFixed(2)}</td>
 
             <TableCell className="pl-4">
-              <div className="flex w-fit flex-col items-end text-primary">
+              <div className="flex w-fit flex-col items-end text-primary-t">
                 <span>{asset.dividend}</span>
               </div>
             </TableCell>

@@ -81,7 +81,7 @@ export default function AssetManagement() {
             className={`px-4 py-2 transition-all duration-300 ${
               activeTab === tab
                 ? "border-b-2 border-purple-600 font-semibold text-purple-600 dark:border-purple-400 dark:text-purple-400"
-                : "text-primary/60 hover:text-primary"
+                : "text-primary-t/60 hover:text-primary-t"
             }`}
           >
             {tab}
@@ -105,13 +105,13 @@ export default function AssetManagement() {
       </div>
 
       <div className="flex items-center gap-2 rounded-lg border border-primary/60 bg-foreground px-4 py-2 shadow-sm transition-all duration-300 hover:shadow-md">
-        <Search size={18} className="text-primary" />
+        <Search size={18} className="text-primary-t" />
         <input
           type="text"
           placeholder={`Buscar ${activeTab}...`}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full bg-transparent text-sm text-primary outline-none placeholder:text-primary/40"
+          className="w-full bg-transparent text-sm text-primary-t outline-none placeholder:text-primary-t/40"
         />
       </div>
 

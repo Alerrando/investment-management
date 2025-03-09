@@ -26,7 +26,7 @@ export default function InputForm<T extends FieldValues>({
 }: InputFormProps<T>) {
   return (
     <div className="flex flex-col items-start gap-2">
-      <Label htmlFor={htmlFor} className="text-sm font-medium text-primary">
+      <Label htmlFor={htmlFor} className="text-sm font-medium text-primary-t">
         {title}:
       </Label>
       <div className="flex w-full items-center overflow-hidden rounded-lg border border-primary/40 bg-card">
@@ -38,7 +38,7 @@ export default function InputForm<T extends FieldValues>({
           {...register(name)}
           type={type}
           placeholder={placeholder}
-          className="h-full w-full rounded-r-lg border-none bg-transparent px-4 py-2 text-lg text-primary focus:outline-none focus:ring-2 focus:ring-purple-500 focus-visible:ring-0"
+          className="h-full w-full rounded-r-lg border-none bg-transparent px-4 py-2 text-lg text-primary-t focus:outline-none focus:ring-2 focus:ring-purple-500 focus-visible:ring-0"
         />
         {options}
       </div>

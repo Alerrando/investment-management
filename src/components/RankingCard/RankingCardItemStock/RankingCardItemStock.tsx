@@ -36,17 +36,19 @@ export default function RankingCardItemStock({ item, formatMarketCap, index }: R
     },
   });
 
+  console.log(img);
+
   return (
     <TableRow key={index} className="border-b border-b-[#F2F2F2] p-2 hover:bg-skeleton dark:border-b-[#555]">
       <TableCell>
         <div className="flex items-center gap-2">
-          {isLoading || img === "/path-to-placeholder-image" ? (
-            <Building2 size={28} className="text-primary" />
+          {isLoading || img === "/path-to-placeholder-image" || img?.length === 0 ? (
+            <Building2 size={28} className="text-primary-t" />
           ) : (
             <img src={img && img} alt={item.paper} className="h-8 w-8 rounded-full" />
           )}
           <div>
-            <h3 className="text-sm text-primary">{item.paper}</h3>
+            <h3 className="text-sm text-primary-t">{item.paper}</h3>
           </div>
         </div>
       </TableCell>
@@ -56,12 +58,12 @@ export default function RankingCardItemStock({ item, formatMarketCap, index }: R
           <p className="text-sm font-semibold text-green-500">R${item.quotation}</p>
 
           <div className="flex items-center gap-[2px]">
-            <p className="text-[10px] text-primary/60">{item.dividend}%</p>
+            <p className="text-[10px] text-primary-t/60">{item.dividend}%</p>
           </div>
         </div>
       </TableCell>
 
-      <TableCell className="w-16 text-right text-base font-semibold text-primary">
+      <TableCell className="w-16 text-right text-base font-semibold text-primary-t">
         {formatMarketCap(item.marketValue)}
       </TableCell>
     </TableRow>

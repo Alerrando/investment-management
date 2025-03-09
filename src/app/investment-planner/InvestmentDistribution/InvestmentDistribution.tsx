@@ -24,7 +24,7 @@ export default function InvestmentDistribution() {
 
   return (
     <main className="mt-[52px] flex h-[calc(85vh_-_52px)] w-full flex-col items-start justify-center rounded-lg">
-      <h2 className="mb-6 text-3xl font-semibold text-primary">Distribuição de Investimentos</h2>
+      <h2 className="mb-6 text-3xl font-semibold text-primary-t">Distribuição de Investimentos</h2>
 
       <div className="flex w-full items-center justify-between gap-6">
         <div className="flex w-full flex-col rounded-lg border border-primary/20 bg-foreground p-3 shadow-lg">
@@ -57,7 +57,7 @@ export default function InvestmentDistribution() {
                     borderRadius: "50%",
                   }}
                 ></div>
-                <span className="text-sm text-primary">{entry.name}</span>
+                <span className="text-sm text-primary-t">{entry.name}</span>
               </div>
             ))}
           </div>
@@ -68,24 +68,26 @@ export default function InvestmentDistribution() {
           <Table className="w-full text-sm">
             <TableHeader>
               <tr className="border-primary/20">
-                <th className="py-2 text-left text-primary">Investimento</th>
-                <th className="py-2 text-left text-primary">Percentual</th>
-                <th className="py-2 text-left text-primary">Valor</th>
+                <th className="py-2 text-left text-primary-t">Investimento</th>
+                <th className="py-2 text-left text-primary-t">Percentual</th>
+                <th className="py-2 text-left text-primary-t">Valor</th>
               </tr>
             </TableHeader>
             <TableBody>
               {dataInfos.map((entry, index) => (
                 <tr key={index} className="border-b border-primary/20">
-                  <td className="py-2 text-left text-primary">{entry.name}</td>
-                  <td className="py-2 text-left text-primary">{entry.value}%</td>
-                  <td className="py-2 text-left text-primary">{((investmentValue * entry.value) / 100).toFixed(2)}</td>
+                  <td className="py-2 text-left text-primary-t">{entry.name}</td>
+                  <td className="py-2 text-left text-primary-t">{entry.value}%</td>
+                  <td className="py-2 text-left text-primary-t">
+                    {((investmentValue * entry.value) / 100).toFixed(2)}
+                  </td>
                 </tr>
               ))}
 
               <tr className="border-t border-primary/20 font-semibold">
-                <td className="py-2 text-left text-primary">Total</td>
-                <td className="py-2 text-left text-primary"></td>
-                <td className="py-2 text-left text-primary">{totalValue.toFixed(2)}</td>
+                <td className="py-2 text-left text-primary-t">Total</td>
+                <td className="py-2 text-left text-primary-t"></td>
+                <td className="py-2 text-left text-primary-t">{totalValue.toFixed(2)}</td>
               </tr>
             </TableBody>
           </Table>
@@ -101,11 +103,15 @@ export default function InvestmentDistribution() {
             {dataInfos.map((item, index: number) => (
               <div key={item.name} className="flex w-full flex-col">
                 <div className="flex w-full items-center justify-between">
-                  <div className="mb-1 text-[14px] font-semibold text-primary">
+                  <div className="mb-1 text-[14px] font-semibold text-primary-t">
                     {`${item.name.charAt(0).toUpperCase() + item.name.slice(1)} ${item.value}%`}
                   </div>
 
-                  <Trash size={16} className="cursor-pointer text-primary" onClick={() => handleDeleteConfig(index)} />
+                  <Trash
+                    size={16}
+                    className="cursor-pointer text-primary-t"
+                    onClick={() => handleDeleteConfig(index)}
+                  />
                 </div>
                 <Slider
                   onValueChange={(value) => handleChangeSlider(index, value[0])}
@@ -118,7 +124,7 @@ export default function InvestmentDistribution() {
               </div>
             ))}
           </div>
-          <div className="mt-2 text-sm font-semibold text-primary">
+          <div className="mt-2 text-sm font-semibold text-primary-t">
             <span className={`${totalPercentage > 100 && "text-red-600"}`}>
               Soma das porcentagens: {totalPercentage}%
             </span>
@@ -132,7 +138,7 @@ export default function InvestmentDistribution() {
           value={investmentValue}
           onChange={handleInputChange}
           placeholder="Insira o valor"
-          className="w-full appearance-none bg-transparent text-sm text-primary outline-none"
+          className="w-full appearance-none bg-transparent text-sm text-primary-t outline-none"
         />
         <button className="rounded-full bg-purple-600 px-4 py-1 text-sm text-white hover:bg-purple-700">
           Calcular

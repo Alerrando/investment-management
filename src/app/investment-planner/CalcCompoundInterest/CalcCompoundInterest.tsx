@@ -63,10 +63,10 @@ export default function CalcCompoundInterest() {
 
   return (
     <form
-      className="flex w-full flex-col items-start justify-start gap-8 rounded-lg border border-primary/10 bg-card p-6 text-primary shadow-lg"
+      className="flex w-full flex-col items-start justify-start gap-8 rounded-lg border border-primary/10 bg-card p-6 text-primary-t shadow-lg"
       onSubmit={handleSubmit(submit)}
     >
-      <h2 className="text-2xl font-semibold text-primary">Calculadora de Juros Compostos</h2>
+      <h2 className="text-2xl font-semibold text-primary-t">Calculadora de Juros Compostos</h2>
 
       <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2">
         <InputForm
@@ -146,7 +146,7 @@ export default function CalcCompoundInterest() {
       <div className="mt-6 flex w-full justify-end gap-4">
         <Button
           type="submit"
-          className="border border-primary/10 bg-foreground text-primary hover:bg-secondary"
+          className="border border-primary/10 bg-foreground text-primary-t hover:bg-secondary"
           onClick={() => reset()}
         >
           Limpar

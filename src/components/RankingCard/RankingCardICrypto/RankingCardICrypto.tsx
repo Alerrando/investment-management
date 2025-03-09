@@ -21,7 +21,7 @@ export default function RankingCardICrypto({ title, data, onViewAll, styleRankin
       )}
     >
       <header className="mb-4 flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-primary">{title}</h2>
+        <h2 className="text-lg font-semibold text-primary-t">{title}</h2>
         <button
           className="rounded-md border px-3 py-1 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:bg-[#222] dark:text-gray-300 dark:hover:bg-[#444444]"
           onClick={onViewAll}

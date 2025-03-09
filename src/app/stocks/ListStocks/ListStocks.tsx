@@ -127,7 +127,7 @@ export default function ListStocks() {
           <ArrowLeft size={16} />
         </button>
 
-        <span className="text-sm font-medium text-primary">
+        <span className="text-sm font-medium text-primary-t">
           Página {currentPage} de {dataListStocks.totalPages}
         </span>
 

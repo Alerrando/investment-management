@@ -26,7 +26,7 @@ export default function RankingCardCryptoMoreVisited({
       )}
     >
       <header className="mb-4 flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-primary">{title}</h2>
+        <h2 className="text-lg font-semibold text-primary-t">{title}</h2>
         <button
           className="rounded-md border px-3 py-1 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:bg-[#222] dark:text-gray-300 dark:hover:bg-[#444444]"
           onClick={onViewAll}
@@ -38,12 +38,12 @@ export default function RankingCardCryptoMoreVisited({
       <Table className="w-full overflow-auto">
         <TableHeader>
           <TableRow className="border-b-primary/40 hover:bg-primary/10">
-            <TableHead className="text-primary">Nome</TableHead>
-            <TableHead className="text-primary">Cap. de Mercado</TableHead>
-            <TableHead className="text-primary">Volume</TableHead>
-            <TableHead className="text-primary">Fornecimento total</TableHead>
-            <TableHead className="text-primary">FDV</TableHead>
-            <TableHead className="text-primary">Preço</TableHead>
+            <TableHead className="text-primary-t">Nome</TableHead>
+            <TableHead className="text-primary-t">Cap. de Mercado</TableHead>
+            <TableHead className="text-primary-t">Volume</TableHead>
+            <TableHead className="text-primary-t">Fornecimento total</TableHead>
+            <TableHead className="text-primary-t">FDV</TableHead>
+            <TableHead className="text-primary-t">Preço</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -54,17 +54,17 @@ export default function RankingCardCryptoMoreVisited({
               ?.filter((_, index) => index < 3)
               ?.map((item: ListCryptoModel, index) => (
                 <TableRow className="border-b-primary/40" key={index}>
-                  <TableCell className="text-primary">
+                  <TableCell className="text-primary-t">
                     <div className="flex h-full items-center justify-start gap-2">
                       <img src={item.image} alt="" className="h-8 w-8" />
                       <div className="flex h-full flex-col justify-between py-2">
-                        <span className="text-[9px] text-primary/60">Proof of Stake</span>
+                        <span className="text-[9px] text-primary-t/60">Proof of Stake</span>
                         <h2 className="text-[10px]">{item.name}</h2>
                       </div>
                     </div>
                   </TableCell>
 
-                  <TableCell className="text-primary">
+                  <TableCell className="text-primary-t">
                     <div className="flex flex-col justify-center">
                       <span>{item.marketCap}</span>
                       <span
@@ -75,7 +75,7 @@ export default function RankingCardCryptoMoreVisited({
                     </div>
                   </TableCell>
 
-                  <TableCell className="text-primary">
+                  <TableCell className="text-primary-t">
                     <div className="flex w-fit flex-col items-end">
                       <span>{item.volume}</span>
                       <span
@@ -86,12 +86,12 @@ export default function RankingCardCryptoMoreVisited({
                     </div>
                   </TableCell>
 
-                  <TableCell className="text-primary">
+                  <TableCell className="text-primary-t">
                     <span className="text-center">{item.circulatingSupply || "---"}</span>
                   </TableCell>
 
-                  <TableCell className="text-primary">{item.fdv || "---"}</TableCell>
-                  <TableCell className="text-primary">${item.price.toFixed(2)}</TableCell>
+                  <TableCell className="text-primary-t">{item.fdv || "---"}</TableCell>
+                  <TableCell className="text-primary-t">${item.price.toFixed(2)}</TableCell>
                 </TableRow>
               ))
           ) : (

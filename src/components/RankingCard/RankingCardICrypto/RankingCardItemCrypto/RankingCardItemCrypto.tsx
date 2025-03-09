@@ -11,8 +11,8 @@ export default function RankingCardItemCrypto({ item, index }: RankingCardItemCr
       <div className="flex items-center gap-2">
         <img src={item.image} alt={item.name} className="h-8 w-8 rounded-full" />
         <div>
-          <h3 className="text-sm text-primary">{item.stock}</h3>
-          <p className="text-[10px] text-primary/60">{item.name}</p>
+          <h3 className="text-sm text-primary-t">{item.stock}</h3>
+          <p className="text-[10px] text-primary-t/60">{item.name}</p>
         </div>
       </div>
 

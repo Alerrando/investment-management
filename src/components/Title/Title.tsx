@@ -9,7 +9,7 @@ export default function Title({ name, icon }: TitleProps) {
   return (
     <header className="flex items-center gap-3">
       {icon}
-      <h2 className="text-xl font-semibold text-primary">{name}</h2>
+      <h2 className="text-xl font-semibold text-primary-t">{name}</h2>
     </header>
   );
 }
