@@ -23,6 +23,7 @@ interface Colors {
 export function ModeToggle() {
   const { setTheme, theme } = useTheme();
   const [customColors, setCustomColors] = useState<Colors>({
+    primary: "",
     secondary: "",
     background: "",
     primaryT: "",
@@ -36,7 +37,7 @@ export function ModeToggle() {
   useEffect(() => {
     if (localStorage.getItem("customColors") && theme === "custom") {
       setTheme("custom");
-      const aux = JSON.parse(localStorage.getItem("customColors"));
+      const aux = JSON.parse(localStorage.getItem("customColors") || "");
       addValuesToCustomColors(aux);
     } else {
       const aux = handleThemeChangeSetCustomCulor();
@@ -47,8 +48,6 @@ export function ModeToggle() {
   useEffect(() => {
     console.log("Custom Colors Updated: ", customColors);
   }, [customColors]);
-
-  console.log(customColors);
 
   function addValuesToCustomColors(values: Colors) {
     const root = document.documentElement;

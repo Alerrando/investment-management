@@ -123,10 +123,10 @@ export default function AssetManagement() {
           <TableFiis
             filteredAssets={
               !Array.isArray(dataListFiis.content)
-                ? (dataListFiis?.content as any)?.content?.filter((asset) =>
+                ? (dataListFiis?.content as any)?.content?.filter((asset: any) =>
                     asset.paper.toLowerCase().includes(searchQuery.toLowerCase()),
                   )
-                : dataListFiis?.content?.filter((asset) =>
+                : dataListFiis?.content?.filter((asset: any) =>
                     asset.paper.toLowerCase().includes(searchQuery.toLowerCase()),
                   )
             }
@@ -138,10 +138,10 @@ export default function AssetManagement() {
           <TableStock
             filteredAssets={
               !Array.isArray(dataListStocks.content)
-                ? (dataListStocks?.content as any)?.content?.filter((asset) =>
+                ? (dataListStocks?.content as any)?.content?.filter((asset: any) =>
                     asset.paper.toLowerCase().includes(searchQuery.toLowerCase()),
                   )
-                : dataListStocks?.content?.filter((asset) =>
+                : dataListStocks?.content?.filter((asset: any) =>
                     asset.paper.toLowerCase().includes(searchQuery.toLowerCase()),
                   )
             }
@@ -152,10 +152,10 @@ export default function AssetManagement() {
           <TableCrypto
             filteredAssets={
               !Array.isArray(dataListCrypto)
-                ? (dataListCrypto as any)?.content?.filter((asset) =>
+                ? (dataListCrypto as any)?.content?.filter((asset: any) =>
                     asset.name.toLowerCase().includes(searchQuery.toLowerCase()),
                   )
-                : dataListCrypto?.filter((asset) => asset.name.toLowerCase().includes(searchQuery.toLowerCase()))
+                : dataListCrypto?.filter((asset: any) => asset.name.toLowerCase().includes(searchQuery.toLowerCase()))
             }
             handleAddToBag={handleAddToBag}
             dataRecommendationCrypto={dataRecommendationCrypto}
