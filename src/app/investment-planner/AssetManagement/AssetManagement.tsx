@@ -71,6 +71,8 @@ export default function AssetManagement() {
     }
   }, [showBag]);
 
+  console.log(dataListStocks?.content?.length === 0 || (dataListStocks?.content as any)?.content?.length === 0);
+
   return (
     <div className="flex w-full flex-col gap-6 py-6 pb-8">
       <div className="flex gap-4 border-b dark:border-gray-700">
@@ -104,7 +106,7 @@ export default function AssetManagement() {
         </TooltipProvider>
       </div>
 
-      <div className="flex items-center gap-2 rounded-lg border border-primary/60 bg-foreground px-4 py-2 shadow-sm transition-all duration-300 hover:shadow-md">
+      <div className="flex items-center gap-2 rounded-lg border border-border/40 bg-foreground px-4 py-2 shadow-sm transition-all duration-300 hover:shadow-md">
         <Search size={18} className="text-primary-t" />
         <input
           type="text"
@@ -115,28 +117,46 @@ export default function AssetManagement() {
         />
       </div>
 
-      <div className="h-72 overflow-auto rounded-lg border border-primary/60 bg-foreground shadow-sm">
-        {dataListFiis.content.length > 0 && activeTab === "Fiis" ? (
+      <div className="h-72 overflow-auto rounded-lg border border-border/40 bg-foreground shadow-sm">
+        {activeTab === "Fiis" &&
+        (dataListFiis?.content?.length > 0 || (dataListFiis?.content as any)?.content?.length > 0) ? (
           <TableFiis
-            filteredAssets={dataListFiis.content.filter((asset) =>
-              asset.paper.toLowerCase().includes(searchQuery.toLowerCase()),
-            )}
+            filteredAssets={
+              !Array.isArray(dataListFiis.content)
+                ? (dataListFiis?.content as any)?.content?.filter((asset) =>
+                    asset.paper.toLowerCase().includes(searchQuery.toLowerCase()),
+                  )
+                : dataListFiis?.content?.filter((asset) =>
+                    asset.paper.toLowerCase().includes(searchQuery.toLowerCase()),
+                  )
+            }
             handleAddToBag={handleAddToBag}
             dataRecommendationFiis={dataRecommendationFiis}
           />
-        ) : dataListStocks.content.length > 0 && activeTab === "Ações" ? (
+        ) : activeTab === "Ações" &&
+          (dataListStocks?.content?.length > 0 || (dataListStocks?.content as any)?.content?.length > 0) ? (
           <TableStock
-            filteredAssets={dataListStocks.content.filter((asset) =>
-              asset.paper.toLowerCase().includes(searchQuery.toLowerCase()),
-            )}
+            filteredAssets={
+              !Array.isArray(dataListStocks.content)
+                ? (dataListStocks?.content as any)?.content?.filter((asset) =>
+                    asset.paper.toLowerCase().includes(searchQuery.toLowerCase()),
+                  )
+                : dataListStocks?.content?.filter((asset) =>
+                    asset.paper.toLowerCase().includes(searchQuery.toLowerCase()),
+                  )
+            }
             handleAddToBag={handleAddToBag}
             dataRecommendationStock={dataRecommendationStock}
           />
-        ) : dataListCrypto.length > 0 && activeTab === "Cryptos" ? (
+        ) : activeTab === "Cryptos" && ((dataListCrypto as any)?.content?.length > 0 || dataListCrypto?.length > 0) ? (
           <TableCrypto
-            filteredAssets={dataListCrypto.filter((asset) =>
-              asset.name.toLowerCase().includes(searchQuery.toLowerCase()),
-            )}
+            filteredAssets={
+              !Array.isArray(dataListCrypto)
+                ? (dataListCrypto as any)?.content?.filter((asset) =>
+                    asset.name.toLowerCase().includes(searchQuery.toLowerCase()),
+                  )
+                : dataListCrypto?.filter((asset) => asset.name.toLowerCase().includes(searchQuery.toLowerCase()))
+            }
             handleAddToBag={handleAddToBag}
             dataRecommendationCrypto={dataRecommendationCrypto}
           />

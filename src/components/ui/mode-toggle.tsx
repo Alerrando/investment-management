@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { hexToHsl, hslToHex } from "@/lib/utils";
 
 interface Colors {
   primary: string;
@@ -19,121 +20,91 @@ interface Colors {
   border: string;
 }
 
-function hexToHsl(hex: string): string {
-  hex = hex.replace(/^#/, "");
-
-  // Converte para RGB
-  let r = 0,
-    g = 0,
-    b = 0;
-  if (hex.length === 3) {
-    r = parseInt(hex[0] + hex[0], 16);
-    g = parseInt(hex[1] + hex[1], 16);
-    b = parseInt(hex[2] + hex[2], 16);
-  } else if (hex.length === 6) {
-    r = parseInt(hex.slice(0, 2), 16);
-    g = parseInt(hex.slice(2, 4), 16);
-    b = parseInt(hex.slice(4, 6), 16);
-  }
-
-  // Converte RGB para HSL
-  r /= 255;
-  g /= 255;
-  b /= 255;
-  const max = Math.max(r, g, b);
-  const min = Math.min(r, g, b);
-  let h = 0,
-    s = 0,
-    l = (max + min) / 2;
-
-  if (max !== min) {
-    const d = max - min;
-    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-    switch (max) {
-      case r:
-        h = (g - b) / d + (g < b ? 6 : 0);
-        break;
-      case g:
-        h = (b - r) / d + 2;
-        break;
-      case b:
-        h = (r - g) / d + 4;
-        break;
-    }
-    h /= 6;
-  }
-
-  h = Math.round(h * 360);
-  s = Math.round(s * 100);
-  l = Math.round(l * 100);
-
-  return `${h} ${s}% ${l}%`;
-}
-
 export function ModeToggle() {
   const { setTheme, theme } = useTheme();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [selectedTheme, setSelectedTheme] = useState(theme);
   const [customColors, setCustomColors] = useState<Colors>({
-    primary: "#000000",
-    secondary: "#ffffff",
-    background: "#ffffff",
-    primaryT: "#000000",
-    card: "#f0f0f0",
-    border: "#cccccc",
-  });
-  const [nowThemeColors, setNowThemeColors] = useState<Colors>({
-    primary: "#000000",
-    secondary: "#ffffff",
-    background: "#ffffff",
-    primaryT: "#000000",
-    card: "#f0f0f0",
-    border: "#cccccc",
+    secondary: "",
+    background: "",
+    primaryT: "",
+    card: "",
+    border: "",
   });
   const [activeColorType, setActiveColorType] = useState<
     "primary" | "secondary" | "background" | "primaryT" | "card" | "border"
   >("primary");
 
   useEffect(() => {
-    const root = document.documentElement;
-    setNowThemeColors({
-      primary: root.style.getPropertyValue("--primary"),
-      secondary: root.style.getPropertyValue("--secondary"),
-      background: root.style.getPropertyValue("--background"),
-      primaryT: root.style.getPropertyValue("--primaryT"),
-      card: root.style.getPropertyValue("--card"),
-      border: root.style.getPropertyValue("--border"),
-    });
+    if (localStorage.getItem("customColors") && theme === "custom") {
+      setTheme("custom");
+      const aux = JSON.parse(localStorage.getItem("customColors"));
+      addValuesToCustomColors(aux);
+    } else {
+      const aux = handleThemeChangeSetCustomCulor();
+      setCustomColors(aux);
+    }
   }, []);
+
+  useEffect(() => {
+    console.log("Custom Colors Updated: ", customColors);
+  }, [customColors]);
+
+  console.log(customColors);
 
   function addValuesToCustomColors(values: Colors) {
     const root = document.documentElement;
     root.style.setProperty("--primary", hexToHsl(values.primary));
     root.style.setProperty("--secondary", hexToHsl(values.secondary));
     root.style.setProperty("--background", hexToHsl(values.background));
-    root.style.setProperty("--primaryT", hexToHsl(values.primaryT));
+    root.style.setProperty("--primary-t", hexToHsl(values.primaryT));
     root.style.setProperty("--card", hexToHsl(values.card));
     root.style.setProperty("--border", hexToHsl(values.border));
+
+    localStorage.setItem("customColors", JSON.stringify(values));
+    setCustomColors(values);
   }
 
-  const applyCustomTheme = () => {
+  function removeValuesFromCustomColors() {
+    const root = document.documentElement;
+    root.style.removeProperty("--primary");
+    root.style.removeProperty("--secondary");
+    root.style.removeProperty("--background");
+    root.style.removeProperty("--primary-t");
+    root.style.removeProperty("--card");
+    root.style.removeProperty("--border");
+    root.classList.remove("custom");
+  }
+
+  function handleThemeChangeSetCustomCulor() {
+    const style = window.getComputedStyle(document.body);
+    const value: Colors = {
+      primary: hslToHex(style.getPropertyValue("--primary")),
+      secondary: hslToHex(style.getPropertyValue("--secondary")),
+      background: hslToHex(style.getPropertyValue("--background")),
+      primaryT: hslToHex(style.getPropertyValue("--primary-t")),
+      card: hslToHex(style.getPropertyValue("--card")),
+      border: hslToHex(style.getPropertyValue("--border")),
+    };
+
+    return value;
+  }
+
+  const applyCustomTheme = (aux: Colors) => {
     setTheme("custom");
-    addValuesToCustomColors(nowThemeColors);
-    addValuesToCustomColors(customColors);
+    addValuesToCustomColors(aux);
   };
 
-  const handleThemeChange = (theme: string) => {
-    setSelectedTheme(theme);
-    setTheme(theme);
+  const handleThemeChange = (themeChange: string) => {
+    if (themeChange !== "custom") removeValuesFromCustomColors();
+    setTheme(themeChange);
+    const aux = handleThemeChangeSetCustomCulor();
+    setCustomColors(aux);
   };
 
   const handleCustomColorChange = (color: string) => {
-    setCustomColors((prev) => ({
-      ...prev,
-      [activeColorType]: color,
-    }));
-
-    applyCustomTheme();
+    console.log(handleThemeChangeSetCustomCulor());
+    const aux: Colors = { ...handleThemeChangeSetCustomCulor(), [activeColorType]: color };
+    console.log(aux);
+    applyCustomTheme(aux);
   };
 
   const handleHexInputChange = (value: string) => {
@@ -146,7 +117,7 @@ export function ModeToggle() {
     <Popover>
       <PopoverTrigger asChild>
         <Button className="bg-primary" size="icon">
-          <Palette className="h-[1.2rem] w-[1.2rem] text-black" />
+          <Palette className="h-[1.2rem] w-[1.2rem] text-primary-t" />
           <span className="sr-only">Toggle theme</span>
         </Button>
       </PopoverTrigger>
@@ -164,63 +135,69 @@ export function ModeToggle() {
             <div className="mt-4 grid grid-cols-3 gap-4">
               <div className="cursor-pointer" onClick={() => handleThemeChange("light")}>
                 <img src="/light-theme-preview.png" alt="Light Theme" className="rounded-lg" />
-                <p className="mt-2 text-center">Light</p>
+                <p className="mt-2 text-center text-primary-t">Branco</p>
               </div>
               <div className="cursor-pointer" onClick={() => handleThemeChange("dark")}>
                 <img src="/dark-theme-preview.png" alt="Dark Theme" className="rounded-lg" />
-                <p className="mt-2 text-center">Dark</p>
+                <p className="mt-2 text-center text-primary-t">Escuro</p>
               </div>
               <div className="cursor-pointer" onClick={() => handleThemeChange("blue")}>
                 <img src="/blue-theme-preview.png" alt="Blue Theme" className="rounded-lg" />
-                <p className="mt-2 text-center">Dark Blue</p>
+                <p className="mt-2 text-center text-primary-t">Escuro Azul</p>
               </div>
             </div>
           </TabsContent>
           <TabsContent value="custom">
             <div className="mt-4 space-y-4">
-              {/* Seletor de Tipo de Cor */}
               <div className="flex flex-wrap gap-2">
                 <Button
                   variant={activeColorType === "primary" ? "default" : "outline"}
+                  className={`rounded-lg ${activeColorType === "primary" ? "bg-card text-primary-t hover:bg-card/70" : ""} text-primary-t hover:bg-card/40 hover:text-primary-t`}
                   onClick={() => setActiveColorType("primary")}
                 >
                   Primária
                 </Button>
                 <Button
                   variant={activeColorType === "secondary" ? "default" : "outline"}
+                  className={`rounded-lg ${activeColorType === "secondary" ? "bg-card text-primary-t hover:bg-card/70" : ""} text-primary-t hover:bg-card/40 hover:text-primary-t`}
                   onClick={() => setActiveColorType("secondary")}
                 >
                   Secundária
                 </Button>
                 <Button
                   variant={activeColorType === "background" ? "default" : "outline"}
+                  className={`rounded-lg ${activeColorType === "background" ? "bg-card text-primary-t hover:bg-card/70" : ""} text-primary-t hover:bg-card/40 hover:text-primary-t`}
                   onClick={() => setActiveColorType("background")}
                 >
                   Fundo
                 </Button>
                 <Button
                   variant={activeColorType === "primaryT" ? "default" : "outline"}
+                  className={`rounded-lg ${activeColorType === "primaryT" ? "bg-card text-primary-t hover:bg-card/70" : ""} text-primary-t hover:bg-card/40 hover:text-primary-t`}
                   onClick={() => setActiveColorType("primaryT")}
                 >
                   Texto
                 </Button>
                 <Button
                   variant={activeColorType === "card" ? "default" : "outline"}
+                  className={`rounded-lg ${activeColorType === "card" ? "bg-card text-primary-t hover:bg-card/70" : ""} text-primary-t hover:bg-card/40 hover:text-primary-t`}
                   onClick={() => setActiveColorType("card")}
                 >
                   Card
                 </Button>
                 <Button
                   variant={activeColorType === "border" ? "default" : "outline"}
+                  className={`rounded-lg ${activeColorType === "border" ? "bg-card text-primary-t hover:bg-card/70" : ""} text-primary-t hover:bg-card/40 hover:text-primary-t`}
                   onClick={() => setActiveColorType("border")}
                 >
                   Borda
                 </Button>
               </div>
 
-              {/* Seletor de Cor */}
               <div className="space-y-2">
-                <label className="text-primary-t">Cor {activeColorType}</label>
+                <label className="text-primary-t">
+                  Cor {activeColorType === "primaryT" ? "Texto" : activeColorType}
+                </label>
                 <HexColorPicker
                   color={customColors[activeColorType]}
                   onChange={handleCustomColorChange}
@@ -228,14 +205,13 @@ export function ModeToggle() {
                 />
               </div>
 
-              {/* Input de Hexadecimal */}
               <div className="space-y-2">
-                <label className="text-primary">Valor Hexadecimal</label>
+                <label className="text-primary-t">Valor Hexadecimal</label>
                 <Input
                   type="text"
                   value={customColors[activeColorType]}
                   onChange={(e) => handleHexInputChange(e.target.value)}
-                  className="w-full"
+                  className="w-full text-primary-t"
                   placeholder="#000000"
                 />
               </div>

@@ -29,7 +29,7 @@ export default function InputForm<T extends FieldValues>({
       <Label htmlFor={htmlFor} className="text-sm font-medium text-primary-t">
         {title}:
       </Label>
-      <div className="flex w-full items-center overflow-hidden rounded-lg border border-primary/40 bg-card">
+      <div className="flex w-full items-center overflow-hidden rounded-lg border border-border bg-card">
         {spanText && (
           <span className="flex items-center justify-center bg-gray-600 px-4 py-2 text-sm text-white">{spanText}</span>
         )}

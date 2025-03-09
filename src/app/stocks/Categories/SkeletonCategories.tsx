@@ -12,7 +12,7 @@ export default function SkeletonCategories({ quantity = 8 }: SkeletonCategoriesP
         <TableRow className="border-b border-b-primary/40 transition-all duration-300 hover:bg-skeleton" key={index}>
           {Array.from({ length: quantity }).map((_, index) => (
             <TableCell className="animate-pulse px-0 py-3" key={index}>
-              <Skeleton className="h-6 w-[70%] rounded-lg bg-skeleton-foreground" />
+              <Skeleton className="h-6 w-[70%] rounded-lg bg-secondary" />
             </TableCell>
           ))}
         </TableRow>

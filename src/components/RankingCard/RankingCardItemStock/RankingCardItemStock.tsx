@@ -36,8 +36,6 @@ export default function RankingCardItemStock({ item, formatMarketCap, index }: R
     },
   });
 
-  console.log(img);
-
   return (
     <TableRow key={index} className="border-b border-b-[#F2F2F2] p-2 hover:bg-skeleton dark:border-b-[#555]">
       <TableCell>

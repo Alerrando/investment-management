@@ -15,7 +15,7 @@ body {
     --card-foreground: 0 0% 77.6%;
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
-    --primary: 0 0% 0%;
+    --primary: 0 0% 100%;
     --primary-foreground: 215 27.9% 16.9%;
     --secondary: 240 4.8% 95.9%;
     --secondary-foreground: 240 5.9% 10%;
@@ -27,7 +27,7 @@ body {
     --destructive-foreground: 0 0% 98%;
     --skeleton: 0 0% 77.6%;
     --skeleton-foreground: 0, 0%, 33.3%;
-    --primaryT: 0 0% 0%;
+    --primary-t: 0 0% 0%;
     --border: 240 5.9% 90%;
     --input: 240 5.9% 90%;
     --ring: 240 10% 3.9%;
@@ -46,7 +46,7 @@ body {
     --card-foreground: 0 0% 3.9%;
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
+    --primary:  0 0% 7.1%;
     --primary-foreground: 72 100% 98%;
     --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 0 0% 98%;
@@ -58,7 +58,7 @@ body {
     --destructive-foreground: 0 0% 98%;
     --skeleton: 0 0% 3.9%;
     --skeleton-foreground: 215 27.9% 16.9%;
-    --primaryT: 0 0% 98%;
+    --primary-t: 0 0% 98%;
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
     --ring: 240 4.9% 83.9%;
@@ -77,7 +77,7 @@ body {
     --card-foreground: 222.4 32.3% 24.9%;
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
+    --primary: 229.1 39.3% 11%;
     --primary-foreground: 229.1, 17.5%, 37.1%;
     --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 0 0% 98%;
@@ -89,7 +89,7 @@ body {
     --destructive-foreground: 0 0% 98%;
     --skeleton: 222.4 32.3% 24.9%;
     --skeleton-foreground: 222.4 20.6% 39%;
-    --primaryT: 0 0% 98%;
+    --primary-t: 0 0% 98%;
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
     --ring: 240 4.9% 83.9%;
@@ -118,10 +118,11 @@ body {
     --destructive-foreground:inherit;
     --skeleton: inherit;
     --skeleton-foreground: inherit;
-    --primaryT:inherit;
+    --primary-t:inherit;
     --border: inherit;
     --input: inherit;
     --ring: inherit;
+    --radius: 0.5rem;
   }
 }
 

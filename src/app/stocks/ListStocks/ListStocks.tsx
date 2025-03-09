@@ -19,56 +19,56 @@ export default function ListStocks() {
           <thead className="sticky top-0 z-10 bg-primary">
             <tr>
               <th onClick={() => requestSort("paper")}>
-                <div className="flex cursor-pointer items-center gap-2 px-6 py-3 font-semibold text-foreground">
+                <div className="flex cursor-pointer items-center gap-2 px-6 py-3 font-semibold text-primary-t">
                   Nome{" "}
                   {sortConfig.key === "paper" &&
                     (sortConfig.direction === "asc" ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
                 </div>
               </th>
               <th className="py-3" onClick={() => requestSort("quotation")}>
-                <div className="flex cursor-pointer items-center gap-2 px-6 py-3 font-semibold text-foreground">
+                <div className="flex cursor-pointer items-center gap-2 px-6 py-3 font-semibold text-primary-t">
                   Cotação{" "}
                   {sortConfig.key === "quotation" &&
                     (sortConfig.direction === "asc" ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
                 </div>
               </th>
               <th className="cursor-pointer py-3 font-semibold" onClick={() => requestSort("pL")}>
-                <div className="flex cursor-pointer items-center gap-2 px-6 py-3 font-semibold text-foreground">
+                <div className="flex cursor-pointer items-center gap-2 px-6 py-3 font-semibold text-primary-t">
                   P/L{" "}
                   {sortConfig.key === "pL" &&
                     (sortConfig.direction === "asc" ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
                 </div>
               </th>
               <th className="cursor-pointer py-3 font-semibold" onClick={() => requestSort("pVp")}>
-                <div className="flex cursor-pointer items-center gap-2 px-6 py-3 font-semibold text-foreground">
+                <div className="flex cursor-pointer items-center gap-2 px-6 py-3 font-semibold text-primary-t">
                   P/VP{" "}
                   {sortConfig.key === "pVp" &&
                     (sortConfig.direction === "asc" ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
                 </div>
               </th>
               <th className="cursor-pointer py-3 font-semibold" onClick={() => requestSort("psr")}>
-                <div className="flex cursor-pointer items-center gap-2 px-6 py-3 font-semibold text-foreground">
+                <div className="flex cursor-pointer items-center gap-2 px-6 py-3 font-semibold text-primary-t">
                   PSR{" "}
                   {sortConfig.key === "psr" &&
                     (sortConfig.direction === "asc" ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
                 </div>
               </th>
               <th className="cursor-pointer py-3 font-semibold" onClick={() => requestSort("dividend")}>
-                <div className="flex cursor-pointer items-center gap-2 px-6 py-3 font-semibold text-foreground">
+                <div className="flex cursor-pointer items-center gap-2 px-6 py-3 font-semibold text-primary-t">
                   Dividend Yield{" "}
                   {sortConfig.key === "dividend" &&
                     (sortConfig.direction === "asc" ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
                 </div>
               </th>
               <th className="cursor-pointer py-3 font-semibold" onClick={() => requestSort("pActive")}>
-                <div className="flex cursor-pointer items-center gap-2 px-6 py-3 font-semibold text-foreground">
+                <div className="flex cursor-pointer items-center gap-2 px-6 py-3 font-semibold text-primary-t">
                   P/Ativo{" "}
                   {sortConfig.key === "pActive" &&
                     (sortConfig.direction === "asc" ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
                 </div>
               </th>
               <th className="cursor-pointer py-3 font-semibold" onClick={() => requestSort("pWorkCapital")}>
-                <div className="flex cursor-pointer items-center gap-2 px-6 py-3 font-semibold text-foreground">
+                <div className="flex cursor-pointer items-center gap-2 px-6 py-3 font-semibold text-primary-t">
                   P/Capital de Giro{" "}
                   {sortConfig.key === "pWorkCapital" &&
                     (sortConfig.direction === "asc" ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
@@ -85,20 +85,20 @@ export default function ListStocks() {
                     <div className="flex items-center gap-2">
                       <ChartCandlestick className="h-8 w-8 text-indigo-600" />
                       <div className="flex flex-col py-2">
-                        <h2 className="text-sm font-medium text-foreground">{stock.paper}</h2>
+                        <h2 className="text-sm font-medium text-primary-t">{stock.paper}</h2>
                       </div>
                     </div>
                   </TableCell>
 
-                  <td className="whitespace-nowrap px-6 py-4 text-left text-foreground">
+                  <td className="whitespace-nowrap px-6 py-4 text-left text-primary-t">
                     R$ {parseFloat(stock.quotation).toFixed(2)}
                   </td>
 
-                  <td className="px-6 py-4 text-left text-foreground">{parseFloat(stock.pL).toFixed(2)}</td>
+                  <td className="px-6 py-4 text-left text-primary-t">{parseFloat(stock.pL).toFixed(2)}</td>
 
-                  <td className="px-6 py-4 text-left text-foreground">{parseFloat(stock.pVp).toFixed(2)}</td>
+                  <td className="px-6 py-4 text-left text-primary-t">{parseFloat(stock.pVp).toFixed(2)}</td>
 
-                  <td className="px-6 py-4 text-left text-foreground">{parseFloat(stock.psr).toFixed(2)}</td>
+                  <td className="px-6 py-4 text-left text-primary-t">{parseFloat(stock.psr).toFixed(2)}</td>
 
                   <TableCell className="pl-4">
                     <div className="flex w-fit flex-col items-end">
@@ -106,9 +106,9 @@ export default function ListStocks() {
                     </div>
                   </TableCell>
 
-                  <td className="px-6 py-4 text-left text-foreground">{parseFloat(stock.pActive).toFixed(2)}</td>
+                  <td className="px-6 py-4 text-left text-primary-t">{parseFloat(stock.pActive).toFixed(2)}</td>
 
-                  <td className="px-6 py-4 text-left text-foreground">{parseFloat(stock.pWorkCapital).toFixed(2)}</td>
+                  <td className="px-6 py-4 text-left text-primary-t">{parseFloat(stock.pWorkCapital).toFixed(2)}</td>
                 </tr>
               ))
             ) : (

@@ -5,30 +5,30 @@ export default function SkeletonListStock() {
   return (
     <>
       {Array.from({ length: 10 }).map((_, index) => (
-        <TableRow key={index} className="border-b transition-all duration-300 hover:bg-primary/20">
+        <TableRow key={index} className="border-b transition-all duration-300 hover:bg-secondary/20">
           <TableCell className="animation-pulse px-4 py-3">
-            <Skeleton className="h-6 w-full" />
+            <Skeleton className="h-6 w-full bg-card" />
           </TableCell>
           <TableCell className="animation-pulse px-4 py-3">
-            <Skeleton className="h-6 w-full" />
+            <Skeleton className="h-6 w-full bg-card" />
           </TableCell>
           <TableCell className="animation-pulse px-4 py-3">
-            <Skeleton className="h-6 w-full" />
+            <Skeleton className="h-6 w-full bg-card" />
           </TableCell>
           <TableCell className="animation-pulse px-4 py-3">
-            <Skeleton className="h-6 w-full" />
+            <Skeleton className="h-6 w-full bg-card" />
           </TableCell>
           <TableCell className="animation-pulse px-4 py-3">
-            <Skeleton className="h-6 w-full" />
+            <Skeleton className="h-6 w-full bg-card" />
           </TableCell>
           <TableCell className="animation-pulse px-4 py-3">
-            <Skeleton className="h-6 w-full" />
+            <Skeleton className="h-6 w-full bg-card" />
           </TableCell>
           <TableCell className="animation-pulse px-4 py-3">
-            <Skeleton className="h-6 w-full" />
+            <Skeleton className="h-6 w-full bg-card" />
           </TableCell>
           <TableCell className="animation-pulse px-4 py-3">
-            <Skeleton className="h-6 w-full" />
+            <Skeleton className="h-6 w-full bg-card" />
           </TableCell>
         </TableRow>
       ))}

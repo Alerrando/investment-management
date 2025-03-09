@@ -39,14 +39,14 @@ export default function Home() {
             </span>
           </div>
 
-          <div className="ronuded-full flex w-1/3 items-center rounded-full border border-primary px-4 py-1.5">
+          <div className="ronuded-full flex w-1/3 items-center rounded-full border border-border px-4 py-1.5">
             <input
               type="text"
               placeholder="Buscar Ativo"
               className="w-full border-none bg-transparent text-base outline-none"
             />
 
-            <Search size={16} />
+            <Search size={16} className="text-primary-t" />
           </div>
         </div>
       </main>

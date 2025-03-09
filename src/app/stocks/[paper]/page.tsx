@@ -11,8 +11,6 @@ export default function StockDetail() {
   const { paper } = useParams();
   const { stockDetails, mutateStockDetails } = useStockDetails();
 
-  console.log(stockDetails);
-
   useEffect(() => {
     (async () => {
       await mutateStockDetails(paper as string);

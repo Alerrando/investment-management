@@ -27,7 +27,7 @@ export default function InvestmentDistribution() {
       <h2 className="mb-6 text-3xl font-semibold text-primary-t">Distribuição de Investimentos</h2>
 
       <div className="flex w-full items-center justify-between gap-6">
-        <div className="flex w-full flex-col rounded-lg border border-primary/20 bg-foreground p-3 shadow-lg">
+        <div className="flex w-full flex-col rounded-lg border border-border/20 bg-foreground p-3 shadow-lg">
           <h3 className="mb-4 text-lg font-bold text-purple-600">Gráfico</h3>
           <ResponsiveContainer width="100%" height={220}>
             <PieChart>
@@ -63,11 +63,11 @@ export default function InvestmentDistribution() {
           </div>
         </div>
 
-        <div className="flex h-full w-full flex-col rounded-lg border border-primary/20 bg-foreground p-3 shadow-lg">
+        <div className="flex h-full w-full flex-col rounded-lg border border-border/20 bg-foreground p-3 shadow-lg">
           <h3 className="mb-4 text-lg font-bold text-purple-600">Tabela de Investimentos</h3>
           <Table className="w-full text-sm">
             <TableHeader>
-              <tr className="border-primary/20">
+              <tr className="border-border/20">
                 <th className="py-2 text-left text-primary-t">Investimento</th>
                 <th className="py-2 text-left text-primary-t">Percentual</th>
                 <th className="py-2 text-left text-primary-t">Valor</th>
@@ -75,7 +75,7 @@ export default function InvestmentDistribution() {
             </TableHeader>
             <TableBody>
               {dataInfos.map((entry, index) => (
-                <tr key={index} className="border-b border-primary/20">
+                <tr key={index} className="border-b border-border/20">
                   <td className="py-2 text-left text-primary-t">{entry.name}</td>
                   <td className="py-2 text-left text-primary-t">{entry.value}%</td>
                   <td className="py-2 text-left text-primary-t">
@@ -84,7 +84,7 @@ export default function InvestmentDistribution() {
                 </tr>
               ))}
 
-              <tr className="border-t border-primary/20 font-semibold">
+              <tr className="border-t border-border/20 font-semibold">
                 <td className="py-2 text-left text-primary-t">Total</td>
                 <td className="py-2 text-left text-primary-t"></td>
                 <td className="py-2 text-left text-primary-t">{totalValue.toFixed(2)}</td>
@@ -93,7 +93,7 @@ export default function InvestmentDistribution() {
           </Table>
         </div>
 
-        <div className="flex h-full w-full flex-col rounded-lg border border-primary/20 bg-foreground p-3 shadow-lg">
+        <div className="flex h-full w-full flex-col rounded-lg border border-border/20 bg-foreground p-3 shadow-lg">
           <div className="flex w-full items-center justify-between">
             <h3 className="text-lg font-bold text-purple-600">Configurações</h3>
 
@@ -132,7 +132,7 @@ export default function InvestmentDistribution() {
         </div>
       </div>
 
-      <div className="mt-6 flex w-full items-center gap-4 rounded-full border border-primary/40 bg-foreground px-4 py-2 shadow-sm">
+      <div className="mt-6 flex w-full items-center gap-4 rounded-full border border-border/40 bg-foreground px-4 py-2 shadow-sm">
         <input
           type="number"
           value={investmentValue}
