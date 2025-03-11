@@ -5,7 +5,7 @@ import { createJSONStorage, persist } from "zustand/middleware";
 import { initialStateStockProvider } from "@/lib/utils";
 import { ListStockModel } from "@/models/Lists/ListStockModel";
 
-import { getListStockByMarketValue } from "../../../api/getListStockByMarketValue";
+import { getListStockByMarketValue } from "../../../app/api/getListStockByMarketValue";
 
 interface ListStocksByMarketValueState {
   dataListStocksByMarketValue: ListStockModel;

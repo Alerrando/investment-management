@@ -4,7 +4,7 @@ import { createJSONStorage, persist } from "zustand/middleware";
 
 import { ListCryptoModel } from "@/models/Lists/ListCryptoModel";
 
-import { getListCrypto } from "../../api/getListCryptos";
+import { getListCrypto } from "../../app/api/getListCryptos";
 
 interface ListCryptoState {
   dataListCrypto: ListCryptoModel[];

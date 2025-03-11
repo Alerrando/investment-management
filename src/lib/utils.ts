@@ -5,6 +5,7 @@ import { twMerge } from "tailwind-merge";
 import { ListFiisModel } from "@/models/Lists/ListFiisModel";
 import { ListStockModel } from "@/models/Lists/ListStockModel";
 import { StockDetailsModel } from "@/models/StockDetailsModel";
+import { StockShareholdersModel } from "@/models/StockShareholdersModel";
 
 export const api = axios.create();
 
@@ -102,6 +103,15 @@ export function hslToHex(hsl: string): string {
       .padStart(2, "0");
 
   return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+}
+
+export function formatCurrency(value: number): string {
+  return new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(value);
 }
 
 export const initialStateStockProvider: ListStockModel = {
@@ -240,3 +250,5 @@ export const initialStateStockDetails: StockDetailsModel = {
     },
   },
 };
+
+export const initialStateStockShareholdersDetails: StockShareholdersModel[] = [] as StockShareholdersModel[];

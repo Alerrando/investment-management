@@ -2,10 +2,8 @@ import { useMutation } from "@tanstack/react-query";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-import { initialStateStockDetails } from "@/lib/utils";
+import { api, initialStateStockDetails } from "@/lib/utils";
 import { StockDetailsModel } from "@/models/StockDetailsModel";
-
-import getStockDetails from "../../api/rss";
 
 interface StockDataDetailsState {
   stockDetails: StockDetailsModel;
@@ -31,13 +29,13 @@ export function useStockDetails() {
 
   const { mutateAsync: mutateStockDetails, isLoading } = useMutation({
     mutationKey: ["stock-details"],
-    mutationFn: (stock: string) => getStockDetails(stock),
+    mutationFn: async (stock: string) => api.get(`/api/getStockDataDetails?stock=${stock}`),
     cacheTime: 1000 * 60 * 60 * 24,
     onError: (err) => {
       console.error(err);
     },
-    onSuccess: (data) => {
-      setStockDetails(data as StockDetailsModel);
+    onSuccess: (response) => {
+      setStockDetails(response.data);
     },
   });
 

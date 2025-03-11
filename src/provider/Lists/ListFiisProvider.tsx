@@ -5,7 +5,7 @@ import { createJSONStorage, persist } from "zustand/middleware";
 import { initialStateFiisProvider } from "@/lib/utils";
 import { ListFiisModel } from "@/models/Lists/ListFiisModel";
 
-import { getListFiis } from "../../api/getListFiis";
+import { getListFiis } from "../../app/api/getListFiis";
 
 interface ListFiisState {
   dataListFiis: ListFiisModel;

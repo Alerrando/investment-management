@@ -6,16 +6,21 @@ import { StockOverview } from "@/components/StockOverview/StockOverView";
 import { StockTabs } from "@/components/StockTabs/StocksTabs";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useStockDetails } from "@/provider/StockDataDetails/StockDataDetails";
+import { useStockShareholdersDetails } from "@/provider/StockDataDetails/StockShareholdersDataDetails";
 
 export default function StockDetail() {
   const { paper } = useParams();
   const { stockDetails, mutateStockDetails } = useStockDetails();
+  const { mutateStockShareholdersDetails, stockShareholdersDetails } = useStockShareholdersDetails();
 
   useEffect(() => {
     (async () => {
       await mutateStockDetails(paper as string);
+      await mutateStockShareholdersDetails(paper as string);
     })();
   }, [paper]);
+
+  console.log(stockDetails, stockShareholdersDetails);
 
   return (
     <div className="container mx-auto space-y-8 py-8">

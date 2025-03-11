@@ -5,7 +5,7 @@ import React, { createContext, useContext, useState } from "react";
 
 import { ListStockModelContent } from "@/models/Lists/ListStockModel";
 
-import { postRecommendationStock } from "../../api/postRecommendationStock";
+import { postRecommendationStock } from "../../app/api/postRecommendationStock";
 
 interface ContextProps {
   dataRecommendationStock: ListStockModelContent[];

@@ -1,13 +1,15 @@
 "use server";
+import { NextResponse } from "next/server";
 import { chromium } from "playwright";
 
 import { StockDetailsModel } from "@/models/StockDetailsModel";
 
-export default async function getStockDetails(stock: string) {
+export async function GET(request: Request) {
   try {
     const browser = await chromium.launch({ headless: true });
     const page = await browser.newPage();
-
+    const { searchParams } = new URL(request.url);
+    const stock = searchParams.get("stock");
     const url = `https://www.fundamentus.com.br/detalhes.php?papel=${stock}&interface=classic&interface=mobile`;
 
     await page.goto(url);
@@ -101,7 +103,7 @@ export default async function getStockDetails(stock: string) {
 
     await browser.close();
 
-    return stockData;
+    return NextResponse.json(stockData);
   } catch (error) {
     console.log(error);
   }

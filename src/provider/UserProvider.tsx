@@ -7,8 +7,8 @@ import { createJSONStorage, persist } from "zustand/middleware";
 
 import { ReturnResponseUser, Role, UserModel } from "@/models/UserModel";
 
-import { signIn } from "../api/sign-in";
-import { signUp, SignUpProps } from "../api/sign-up";
+import { signIn } from "../app/api/sign-in";
+import { signUp, SignUpProps } from "../app/api/sign-up";
 
 interface UserState {
   dataUser: UserModel;

@@ -5,7 +5,7 @@ import { createJSONStorage, persist } from "zustand/middleware";
 import { initialStateStockProvider } from "@/lib/utils";
 import { ListStockModel } from "@/models/Lists/ListStockModel";
 
-import { getListStock } from "../../api/getListStock";
+import { getListStock } from "../../app/api/getListStock";
 
 interface ListStocksState {
   dataListStocks: ListStockModel;
@@ -16,7 +16,10 @@ const useListStocksStore = create<ListStocksState>()(
   persist(
     (set) => ({
       dataListStocks: initialStateStockProvider,
-      setDataListStocks: (data) => set({ dataListStocks: data }),
+      setDataListStocks: (data) =>
+        set({
+          dataListStocks: data.content ? { ...data, content: data.content } : data,
+        }),
     }),
     {
       name: "listStocks-storage",
@@ -32,11 +35,11 @@ export function useListStocks() {
   const { isLoading, error } = useQuery({
     queryKey: ["list-stocks"],
     queryFn: async () => {
-      if (dataListStocks?.content?.length) return { content: dataListStocks };
+      if (dataListStocks?.content?.length) return dataListStocks;
 
       const data = await getListStock();
-      console.log(data);
-      setDataListStocks(data);
+      setDataListStocks(data.content ? { ...data, content: data.content } : data);
+
       return data;
     },
     staleTime: Infinity,
@@ -45,7 +48,7 @@ export function useListStocks() {
       console.error(err);
     },
     onSuccess: (data) => {
-      setDataListStocks(data);
+      setDataListStocks(data.content ? { ...data, content: data.content } : data);
     },
   });
 

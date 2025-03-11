@@ -5,7 +5,7 @@ import React, { createContext, useContext, useState } from "react";
 
 import { ListCryptoModel } from "@/models/Lists/ListCryptoModel";
 
-import { postRecommendationCrypto } from "../../api/postRecommendationCrypto";
+import { postRecommendationCrypto } from "../../app/api/postRecommendationCrypto";
 
 interface ContextProps {
   dataRecommendationCrypto: ListCryptoModel[];

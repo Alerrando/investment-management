@@ -6,7 +6,7 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import { useQueryHook } from "@/hook/useQueryHook";
 import { ListStockModelContent } from "@/models/Lists/ListStockModel";
 
-import { getLogo } from "../../../api/getLogo";
+import { getLogo } from "../../../app/api/getLogo";
 
 interface RankingCardItemStockProps {
   item: ListStockModelContent;

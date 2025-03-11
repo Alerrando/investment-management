@@ -5,7 +5,7 @@ import { createJSONStorage, persist } from "zustand/middleware";
 import { initialStateStockProvider } from "@/lib/utils";
 import { ListStockModel } from "@/models/Lists/ListStockModel";
 
-import { getListStockByLiquidAverage } from "../../../api/getListStockByLiquidAverage";
+import { getListStockByLiquidAverage } from "../../../app/api/getListStockByLiquidAverage";
 
 interface ListStocksByLiquidAverageState {
   dataListStocksByLiquidAverage: ListStockModel;

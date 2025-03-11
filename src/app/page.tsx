@@ -52,16 +52,14 @@ export default function Home() {
       </main>
 
       <section className="grid w-11/12 gap-3 px-16">
-        <Title name="Rankings de Ativos" icon={<Medal size={20} className="text-primary-t" />} />
+        <Title name="Rankings de Ativos" icon={<Medal size={20} className="text-primary" />} />
         <div className="flex w-full items-center justify-between">
           <RankingCard
             title="New Rankings"
             data={
-              dataListStocks?.content?.length === 0 || (dataListStocks?.content as any)?.content?.length === 0
+              dataListStocks.content.length === 0
                 ? []
-                : !Array.isArray(dataListStocks.content)
-                  ? (dataListStocks?.content as any)?.content?.filter((_: any, index: number) => index < 4)
-                  : dataListStocks?.content?.filter((_: any, index: number) => index < 4)
+                : dataListStocks.content.filter((_: any, index: number) => index < 4)
             }
             onViewAll={() => console.log("Clicked!")}
             styleRankingCard="w-[30%]"
@@ -69,11 +67,9 @@ export default function Home() {
           <RankingCard
             title="New Rankings"
             data={
-              dataListStocks?.content?.length === 0 || (dataListStocks?.content as any)?.content?.length === 0
+              dataListStocks.content.length === 0
                 ? []
-                : !Array.isArray(dataListStocks.content)
-                  ? (dataListStocks?.content as any)?.content?.filter((_: any, index: number) => index < 4)
-                  : dataListStocks?.content?.filter((_: any, index: number) => index < 4)
+                : dataListStocks.content.filter((_: any, index: number) => index < 4)
             }
             onViewAll={() => console.log("Clicked!")}
             styleRankingCard="w-[30%]"
@@ -81,11 +77,9 @@ export default function Home() {
           <RankingCard
             title="New Rankings"
             data={
-              dataListStocks?.content?.length === 0 || (dataListStocks?.content as any)?.content?.length === 0
+              dataListStocks.content.length === 0
                 ? []
-                : !Array.isArray(dataListStocks.content)
-                  ? (dataListStocks?.content as any)?.content?.filter((_: any, index: number) => index < 4)
-                  : dataListStocks?.content?.filter((_: any, index: number) => index < 4)
+                : dataListStocks.content.filter((_: any, index: number) => index < 4)
             }
             onViewAll={() => console.log("Clicked!")}
             styleRankingCard="w-[30%]"
