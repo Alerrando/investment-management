@@ -16,14 +16,14 @@ export default function AllStocksPage() {
 
       <div className="flex gap-2">
         <div
-          className={`cursor-pointer rounded-lg ${order === "categories" ? "bg-card text-foreground" : "text-primary-t"} p-2`}
+          className={`cursor-pointer rounded-lg ${order === "categories" && "bg-tertiary text-background"} p-2 text-primary-t`}
           onClick={() => setOrder("categories")}
         >
           <LayoutDashboard size={20} />
         </div>
 
         <div
-          className={`cursor-pointer rounded-lg ${order === "list" ? "bg-card text-foreground" : "text-primary-t"} p-2`}
+          className={`cursor-pointer rounded-lg ${order === "list" && "bg-tertiary text-background"} p-2 text-primary-t`}
           onClick={() => setOrder("list")}
         >
           <AlignLeft size={20} />

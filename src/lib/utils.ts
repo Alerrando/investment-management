@@ -251,4 +251,7 @@ export const initialStateStockDetails: StockDetailsModel = {
   },
 };
 
-export const initialStateStockShareholdersDetails: StockShareholdersModel[] = [] as StockShareholdersModel[];
+export const initialStateStockShareholdersDetails: StockShareholdersModel = {
+  commonShares: [],
+  totalCapital: [],
+};

@@ -16,59 +16,59 @@ export default function ListStocks() {
     <>
       <div className="h-[400px] w-full overflow-auto">
         <table className="w-full table-auto border-collapse text-left text-sm">
-          <thead className="sticky top-0 z-10 bg-primary">
+          <thead className="sticky top-0 z-10 bg-tertiary">
             <tr>
               <th onClick={() => requestSort("paper")}>
-                <div className="flex cursor-pointer items-center gap-2 px-6 py-3 font-semibold text-primary-t">
+                <div className="flex cursor-pointer items-center gap-2 px-6 py-3 font-semibold text-background">
                   Nome{" "}
                   {sortConfig.key === "paper" &&
                     (sortConfig.direction === "asc" ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
                 </div>
               </th>
               <th className="py-3" onClick={() => requestSort("quotation")}>
-                <div className="flex cursor-pointer items-center gap-2 px-6 py-3 font-semibold text-primary-t">
+                <div className="flex cursor-pointer items-center gap-2 px-6 py-3 font-semibold text-background">
                   Cotação{" "}
                   {sortConfig.key === "quotation" &&
                     (sortConfig.direction === "asc" ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
                 </div>
               </th>
               <th className="cursor-pointer py-3 font-semibold" onClick={() => requestSort("pL")}>
-                <div className="flex cursor-pointer items-center gap-2 px-6 py-3 font-semibold text-primary-t">
+                <div className="flex cursor-pointer items-center gap-2 px-6 py-3 font-semibold text-background">
                   P/L{" "}
                   {sortConfig.key === "pL" &&
                     (sortConfig.direction === "asc" ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
                 </div>
               </th>
               <th className="cursor-pointer py-3 font-semibold" onClick={() => requestSort("pVp")}>
-                <div className="flex cursor-pointer items-center gap-2 px-6 py-3 font-semibold text-primary-t">
+                <div className="flex cursor-pointer items-center gap-2 px-6 py-3 font-semibold text-background">
                   P/VP{" "}
                   {sortConfig.key === "pVp" &&
                     (sortConfig.direction === "asc" ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
                 </div>
               </th>
               <th className="cursor-pointer py-3 font-semibold" onClick={() => requestSort("psr")}>
-                <div className="flex cursor-pointer items-center gap-2 px-6 py-3 font-semibold text-primary-t">
+                <div className="flex cursor-pointer items-center gap-2 px-6 py-3 font-semibold text-background">
                   PSR{" "}
                   {sortConfig.key === "psr" &&
                     (sortConfig.direction === "asc" ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
                 </div>
               </th>
               <th className="cursor-pointer py-3 font-semibold" onClick={() => requestSort("dividend")}>
-                <div className="flex cursor-pointer items-center gap-2 px-6 py-3 font-semibold text-primary-t">
+                <div className="flex cursor-pointer items-center gap-2 px-6 py-3 font-semibold text-background">
                   Dividend Yield{" "}
                   {sortConfig.key === "dividend" &&
                     (sortConfig.direction === "asc" ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
                 </div>
               </th>
               <th className="cursor-pointer py-3 font-semibold" onClick={() => requestSort("pActive")}>
-                <div className="flex cursor-pointer items-center gap-2 px-6 py-3 font-semibold text-primary-t">
+                <div className="flex cursor-pointer items-center gap-2 px-6 py-3 font-semibold text-background">
                   P/Ativo{" "}
                   {sortConfig.key === "pActive" &&
                     (sortConfig.direction === "asc" ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
                 </div>
               </th>
               <th className="cursor-pointer py-3 font-semibold" onClick={() => requestSort("pWorkCapital")}>
-                <div className="flex cursor-pointer items-center gap-2 px-6 py-3 font-semibold text-primary-t">
+                <div className="flex cursor-pointer items-center gap-2 px-6 py-3 font-semibold text-background">
                   P/Capital de Giro{" "}
                   {sortConfig.key === "pWorkCapital" &&
                     (sortConfig.direction === "asc" ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}

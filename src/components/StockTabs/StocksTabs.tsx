@@ -1,44 +1,52 @@
-import { ChevronDown } from "lucide-react";
-import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { ChevronDown, Users } from "lucide-react";
+import { useState } from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { formatCurrency } from "@/lib/utils";
-import { useStockDetails } from "@/provider/StockDataDetails/StockDataDetails";
 import { useStockShareholdersDetails } from "@/provider/StockDataDetails/StockShareholdersDataDetails";
 
+import Title from "../Title/Title";
 import { Button } from "../ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
-
-const mockQuoteHistory = [
-  { date: "2024-01-01", value: 9500 },
-  { date: "2024-01-02", value: 9800 },
-  { date: "2024-01-03", value: 9600 },
-  { date: "2024-01-04", value: 9900 },
-  { date: "2024-01-05", value: 10081.9 },
-];
+import TabsOverview from "./TabsOverview/TabsOverview";
+import TabsQuotes from "./TabsQuotes/TabsQuotes";
 
 export function StockTabs() {
-  const { stockDetails } = useStockDetails();
   const { stockShareholdersDetails } = useStockShareholdersDetails();
+  const [activeTab, setActiveTab] = useState("overview");
+
+  function handleTabChange(tab: string) {
+    setActiveTab(tab);
+  }
 
   return (
-    <Tabs defaultValue="overview" className="w-full">
-      <TabsList className="flex items-center justify-between">
-        <TabsTrigger value="overview" className="w-full data-[state=active]:text-primary-t">
+    <Tabs value={activeTab} onValueChange={handleTabChange} defaultValue="overview" className="w-full">
+      <TabsList className="flex items-center justify-between border border-border bg-card">
+        <TabsTrigger
+          value="overview"
+          className="h-full w-full data-[state=active]:border data-[state=active]:border-border data-[state=active]:bg-background data-[state=active]:text-primary-t"
+        >
           Overview
         </TabsTrigger>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-full w-full data-[state=active]:text-primary-t">
+            <Button
+              variant="ghost"
+              className={`${activeTab !== "overview" && activeTab !== "quotes" ? "border border-border bg-background text-primary-t" : ""} h-full w-full`}
+            >
               Information <ChevronDown className="ml-2 h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56">
-            <DropdownMenuItem>Shareholders</DropdownMenuItem>
-            <DropdownMenuItem>
-              <TabsTrigger value="shareholders" className="px-0 data-[state=active]:text-primary-t">
+          <DropdownMenuContent className="w-56 px-0">
+            <DropdownMenuItem
+              className={`${activeTab === "shareholders" && "bg-tertiary text-primary focus:bg-tertiary/80"}`}
+            >
+              <TabsTrigger
+                value="shareholders"
+                className="px-0 hover:bg-transparent data-[state=active]:bg-transparent data-[state=active]:shadow-none"
+                onClick={() => setActiveTab("shareholders")}
+              >
                 Main Shareholders
               </TabsTrigger>
             </DropdownMenuItem>
@@ -46,226 +54,73 @@ export function StockTabs() {
             <DropdownMenuItem>Relevant Facts</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-        <TabsTrigger className="w-full" value="quotes">
+        <TabsTrigger
+          className="h-full w-full data-[state=active]:border data-[state=active]:border-border data-[state=active]:bg-background data-[state=active]:text-primary-t"
+          value="quotes"
+        >
           Quotes
         </TabsTrigger>
       </TabsList>
 
       <TabsContent value="overview">
-        <div className="grid gap-4">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            <Card className="rounded-lg border border-primary/40 bg-card">
-              <CardHeader>
-                <CardTitle className="text-primary-t">Valuation</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <dl className="space-y-2">
-                  <div className="flex justify-between">
-                    <dt className="text-primary-t">P/L</dt>
-                    <dd className="text-primary-t">{stockDetails.valuationIndicators.P_L}</dd>
-                  </div>
-                  <div className="flex justify-between">
-                    <dt className="text-primary-t">P/VP</dt>
-                    <dd className="text-primary-t">{stockDetails.valuationIndicators.P_VP}</dd>
-                  </div>
-                  <div className="flex justify-between">
-                    <dt className="text-primary-t">Dividend Yield</dt>
-                    <dd className="text-primary-t">{stockDetails.valuationIndicators.dividendYield}</dd>
-                  </div>
-                </dl>
-              </CardContent>
-            </Card>
+        <TabsOverview />
+      </TabsContent>
+      <TabsContent value="quotes">
+        <TabsQuotes />
+      </TabsContent>
 
-            <Card className="rounded-lg border border-primary/40 bg-card">
-              <CardHeader>
-                <CardTitle className="text-primary-t">Profitability</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <dl className="space-y-2">
-                  <div className="flex justify-between">
-                    <dt className="text-primary-t">ROE</dt>
-                    <dd className="text-primary-t">{stockDetails.profitabilityIndicators.ROE}</dd>
-                  </div>
-                  <div className="flex justify-between">
-                    <dt className="text-primary-t">ROIC</dt>
-                    <dd className="text-primary-t">{stockDetails.profitabilityIndicators.ROIC}</dd>
-                  </div>
-                  <div className="flex justify-between">
-                    <dt className="text-primary-t">Net Margin</dt>
-                    <dd className="text-primary-t">{stockDetails.profitabilityIndicators.netMargin}</dd>
-                  </div>
-                </dl>
-              </CardContent>
-            </Card>
+      <TabsContent value="shareholders" className="flex flex-col gap-2 pt-4">
+        <Title name="Principais Acionistas" icon={<Users size={20} />} />
 
-            <Card className="rounded-lg border border-primary/40 bg-card">
-              <CardHeader>
-                <CardTitle className="text-primary-t">Debt</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <dl className="space-y-2">
-                  <div className="flex justify-between">
-                    <dt className="text-primary-t">Current Liquidity</dt>
-                    <dd className="text-primary-t">{stockDetails.debtIndicators.currentLiquidity}</dd>
-                  </div>
-                  <div className="flex justify-between">
-                    <dt className="text-primary-t">Net Debt/EBITDA</dt>
-                    <dd className="text-primary-t">{stockDetails.debtIndicators.netDebtToEBITDA}</dd>
-                  </div>
-                  <div className="flex justify-between">
-                    <dt className="text-primary-t">Equity/Assets</dt>
-                    <dd className="text-primary-t">{stockDetails.debtIndicators.equityToAssets}</dd>
-                  </div>
-                </dl>
-              </CardContent>
-            </Card>
-          </div>
-
-          <Card className="rounded-lg border border-primary/40 bg-card">
-            <CardHeader>
-              <CardTitle className="text-primary-t">Balance Sheet</CardTitle>
+        <div className="flex items-center justify-between">
+          <Card className="rounded-lg border border-border bg-card px-5 pt-4">
+            <CardHeader className="p-0">
+              <CardTitle className="text-lg text-primary-t">Ações ordinárias </CardTitle>
             </CardHeader>
-            <CardContent>
-              <dl className="grid gap-4 md:grid-cols-2">
-                <div>
-                  <dt className="font-medium text-primary-t">Total Assets</dt>
-                  <dd className="text-2xl font-bold text-primary-t">{stockDetails.balanceSheet.totalAssets}</dd>
-                </div>
-                <div>
-                  <dt className="font-medium text-primary-t">Current Assets</dt>
-                  <dd className="text-2xl font-bold text-primary-t">{stockDetails.balanceSheet.currentAssets}</dd>
-                </div>
-                <div>
-                  <dt className="font-medium text-primary-t">Cash & Equivalents</dt>
-                  <dd className="text-2xl font-bold text-primary-t">
-                    {stockDetails.balanceSheet.cashAndCashEquivalents}
-                  </dd>
-                </div>
-                <div>
-                  <dt className="font-medium text-primary-t">Net Debt</dt>
-                  <dd className="text-2xl font-bold text-primary-t">{stockDetails.balanceSheet.netDebt}</dd>
-                </div>
-                <div>
-                  <dt className="font-medium text-primary-t">Equity</dt>
-                  <dd className="text-2xl font-bold text-primary-t">{stockDetails.balanceSheet.equity}</dd>
-                </div>
-              </dl>
+            <CardContent className="px-0 pt-2">
+              <Table>
+                <TableHeader>
+                  <TableRow className="!border-b-0 bg-tertiary hover:bg-tertiary/80">
+                    <TableHead className="text-primary">Acionista</TableHead>
+                    <TableHead className="text-right text-primary">Participação</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {stockShareholdersDetails.commonShares.map((shareholder, index) => (
+                    <TableRow key={index} className="border-border hover:bg-background">
+                      <TableCell className="text-primary-t">{shareholder.name}</TableCell>
+                      <TableCell className="text-right text-primary-t">{shareholder.percentage}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
             </CardContent>
           </Card>
 
-          <div className="grid gap-4 md:grid-cols-2">
-            <Card className="rounded-lg border border-primary/40 bg-card">
-              <CardHeader>
-                <CardTitle className="text-primary-t">Last 12 Months</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <dl className="space-y-4">
-                  <div>
-                    <dt className="font-medium text-primary-t">Net Revenue</dt>
-                    <dd className="text-2xl font-bold text-primary-t">
-                      {stockDetails.incomeStatement.last12Months.netRevenue}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt className="font-medium text-primary-t">EBIT</dt>
-                    <dd className="text-2xl font-bold text-primary-t">
-                      {stockDetails.incomeStatement.last12Months.EBIT}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt className="font-medium text-primary-t">Net Income</dt>
-                    <dd className="text-2xl font-bold text-primary-t">
-                      {stockDetails.incomeStatement.last12Months.netIncome}
-                    </dd>
-                  </div>
-                </dl>
-              </CardContent>
-            </Card>
-
-            <Card className="rounded-lg border border-primary/40 bg-card">
-              <CardHeader>
-                <CardTitle className="text-primary-t">Properties</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <dl className="grid grid-cols-2 gap-4">
-                  <div>
-                    <dt className="font-medium text-primary-t">Sector</dt>
-                    <dd className="text-primary-t/70">{stockDetails.marketData.sector}</dd>
-                  </div>
-                  <div>
-                    <dt className="font-medium text-primary-t">Sub-sector</dt>
-                    <dd className="text-primary-t/70">{stockDetails.marketData.subSector}</dd>
-                  </div>
-                  <div>
-                    <dt className="font-medium text-primary-t">Share Type</dt>
-                    <dd className="text-primary-t/70">{stockDetails.marketData.shareType}</dd>
-                  </div>
-                  <div>
-                    <dt className="font-medium text-primary-t">Total Shares</dt>
-                    <dd className="text-primary-t/70">{stockDetails.marketData.shares.toLocaleString()}</dd>
-                  </div>
-                </dl>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </TabsContent>
-      <TabsContent value="quotes">
-        <Card>
-          <CardHeader>
-            <CardTitle>Stock Price History</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="h-[400px] w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={mockQuoteHistory} className="text-primary-t">
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="date" />
-                  <YAxis domain={["auto", "auto"]} />
-                  <Tooltip
-                    formatter={(value) => formatCurrency(Number(value))}
-                    labelFormatter={(label) => new Date(label).toLocaleDateString()}
-                    labelClassName="font-semibold text-primary-t"
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey="value"
-                    stroke="hsl(var(--primary-t))"
-                    className="stroke-primary-t text-primary-t"
-                    strokeWidth={2}
-                    dot={false}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-          </CardContent>
-        </Card>
-      </TabsContent>
-
-      <TabsContent value="shareholders">
-        <Card className="rounded-lg border border-primary/40 bg-card">
-          <CardHeader>
-            <CardTitle className="text-primary-t">Main Shareholders</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Name</TableHead>
-                  <TableHead className="text-right">Percentage</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {stockShareholdersDetails.map((shareholder, index) => (
-                  <TableRow key={index}>
-                    <TableCell className="text-primary-t">{shareholder.name}</TableCell>
-                    <TableCell className="text-right text-primary-t">{shareholder.percentage}</TableCell>
+          <Card className="rounded-lg border border-border bg-card px-5 pt-4">
+            <CardHeader className="p-0">
+              <CardTitle className="text-lg text-primary-t">Capital total</CardTitle>
+            </CardHeader>
+            <CardContent className="px-0 pt-2">
+              <Table>
+                <TableHeader>
+                  <TableRow className="!border-b-0 bg-tertiary hover:bg-tertiary/80">
+                    <TableHead className="text-primary">Acionista</TableHead>
+                    <TableHead className="text-right text-primary">Participação</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </CardContent>
-        </Card>
+                </TableHeader>
+                <TableBody>
+                  {stockShareholdersDetails.totalCapital.map((shareholder, index) => (
+                    <TableRow key={index} className="border-border hover:bg-background">
+                      <TableCell className="text-primary-t">{shareholder.name}</TableCell>
+                      <TableCell className="text-right text-primary-t">{shareholder.percentage}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        </div>
       </TabsContent>
     </Tabs>
   );

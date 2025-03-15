@@ -167,7 +167,7 @@ export default function AssetManagement() {
 
       {!showBagContent && (
         <motion.div
-          className={`fixed -right-2 top-1/3 z-30 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border bg-white p-2 shadow-lg hover:bg-zinc-100 dark:bg-gray-800 dark:hover:bg-gray-700`}
+          className={`fixed -right-2 top-1/3 z-30 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border bg-card p-2 shadow-lg hover:bg-primary`}
           onClick={() => setShowBag(!showBag)}
           animate={
             showBag
@@ -184,7 +184,7 @@ export default function AssetManagement() {
             restDelta: 0.001,
           }}
         >
-          <BriefcaseBusiness size={18} />
+          <BriefcaseBusiness size={18} className="text-primary-t" />
         </motion.div>
       )}
 

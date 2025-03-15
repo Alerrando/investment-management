@@ -1,4 +1,5 @@
 "use client";
+import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -12,6 +13,7 @@ import ModalSign from "./ModalSign/ModalSign";
 
 export default function Header() {
   const [sign, setSign] = useState<string>("login");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { dataUser, setDataUser } = useUser();
 
   function openModal(type: string) {
@@ -22,12 +24,51 @@ export default function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-40 flex w-full items-center justify-between border-b border-b-[#9265E2] bg-secondary px-8 py-2">
+    <header className="sticky top-0 z-40 flex w-full items-center justify-between border-b border-b-[#9265E2] bg-background px-4 py-2 md:px-8">
       <div className="relative h-8 w-8 rounded-full">
         <Image src="/logo.jpg" alt="logo" className="rounded-full" fill />
       </div>
 
-      <ul className="flex gap-11">
+      <div
+        className={`fixed inset-0 z-30 bg-black/50 transition-opacity duration-300 md:hidden ${isMenuOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}
+        onClick={() => setIsMenuOpen(false)}
+      >
+        <div
+          className={`fixed left-0 top-0 z-40 h-full w-64 bg-background transition-transform duration-300 ${isMenuOpen ? "translate-x-0" : "-translate-x-full"}`}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="flex h-full flex-col gap-6 p-6">
+            <ul className="flex flex-col gap-6">
+              <li className="list-none font-semibold">
+                <Link className="text-primary-t" href="/" onClick={() => setIsMenuOpen(false)}>
+                  Home
+                </Link>
+              </li>
+              <li className="list-none font-semibold">
+                <Link className="text-primary-t" href="/investment-planner" onClick={() => setIsMenuOpen(false)}>
+                  Planejador de Investimentos
+                </Link>
+              </li>
+              <li className="list-none font-semibold">
+                <Link className="text-primary-t" href="/stocks" onClick={() => setIsMenuOpen(false)}>
+                  Ações
+                </Link>
+              </li>
+              <li className="list-none font-semibold text-primary-t">FIIs</li>
+              <li className="list-none font-semibold text-primary-t">Cripto</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex items-center gap-2 md:hidden">
+        <ModeToggle />
+        <button className="text-primary-t" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
+      <ul className="hidden gap-11 md:flex">
         <li className="list-none font-semibold">
           <Link className="text-primary-t" href="/">
             Home
@@ -47,23 +88,22 @@ export default function Header() {
         <li className="list-none font-semibold text-primary-t">Cripto</li>
       </ul>
 
-      <div className="flex gap-9">
+      <div className="hidden items-center gap-4 md:flex">
         <ModeToggle />
 
         {dataUser.email.length > 0 ? (
-          <div className="flex items-center gap-4">
+          <div className="hidden items-center gap-4 md:flex">
             <span className="font-semibold text-black dark:text-white">Bem-vindo, {dataUser.name}</span>
-
             <Button
               variant="destructive"
               className="h-auto bg-red-600 px-6 py-1 font-semibold text-white shadow-md hover:bg-red-700 hover:opacity-90"
-              onClick={() => handleLogout()}
+              onClick={handleLogout}
             >
               Logout
             </Button>
           </div>
         ) : (
-          <div className="flex gap-6">
+          <div className="hidden gap-6 md:flex">
             <Button
               variant="default"
               className="h-auto bg-white px-6 py-1 font-semibold text-black shadow-md hover:bg-white hover:opacity-90"

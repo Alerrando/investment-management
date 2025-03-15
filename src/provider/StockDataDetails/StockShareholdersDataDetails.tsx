@@ -6,8 +6,8 @@ import { api, initialStateStockShareholdersDetails } from "@/lib/utils";
 import { StockShareholdersModel } from "@/models/StockShareholdersModel";
 
 interface StockShareHoldersDataDetailsState {
-  stockShareholdersDetails: StockShareholdersModel[];
-  setStockShareholdersDetails: (data: StockShareholdersModel[]) => void;
+  stockShareholdersDetails: StockShareholdersModel;
+  setStockShareholdersDetails: (data: StockShareholdersModel) => void;
 }
 
 const useStockShareholdersDetailsStore = create<StockShareHoldersDataDetailsState>()(

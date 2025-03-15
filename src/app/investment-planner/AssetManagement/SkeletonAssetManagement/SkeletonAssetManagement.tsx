@@ -7,40 +7,40 @@ export default function SkeletonAssetManagement() {
       <TableHeader className="sticky top-0 z-10 bg-primary">
         <TableRow>
           <TableHead className="animate-pulse px-4 py-3">
-            <Skeleton className="h-4 w-16 bg-card" />
+            <Skeleton className="h-4 w-16 bg-skeleton" />
           </TableHead>
           <TableHead className="animate-pulse px-4 py-3">
-            <Skeleton className="h-4 w-16 bg-card" />
+            <Skeleton className="h-4 w-16 bg-skeleton" />
           </TableHead>
           <TableHead className="animate-pulse px-4 py-3">
-            <Skeleton className="h-4 w-16 bg-card" />
+            <Skeleton className="h-4 w-16 bg-skeleton" />
           </TableHead>
           <TableHead className="animate-pulse px-4 py-3">
-            <Skeleton className="h-4 w-16 bg-card" />
+            <Skeleton className="h-4 w-16 bg-skeleton" />
           </TableHead>
           <TableHead className="animate-pulse px-4 py-3">
-            <Skeleton className="h-4 w-16 bg-card" />
+            <Skeleton className="h-4 w-16 bg-skeleton" />
           </TableHead>
         </TableRow>
       </TableHeader>
 
       <tbody>
         {Array.from({ length: 5 }).map((_, index) => (
-          <TableRow key={index} className="border-primary-80 border-b transition-all duration-300 hover:bg-skeleton">
+          <TableRow key={index} className="border-primary-80 border-b transition-all duration-300">
             <TableCell className="animate-pulse px-4 py-3">
-              <Skeleton className="h-6 w-full bg-card" />
+              <Skeleton className="h-6 w-full bg-skeleton" />
             </TableCell>
             <TableCell className="animate-pulse px-4 py-3">
-              <Skeleton className="h-6 w-full bg-card" />
+              <Skeleton className="h-6 w-full bg-skeleton" />
             </TableCell>
             <TableCell className="animate-pulse px-4 py-3">
-              <Skeleton className="h-6 w-full bg-card" />
+              <Skeleton className="h-6 w-full bg-skeleton" />
             </TableCell>
             <TableCell className="animate-pulse px-4 py-3">
-              <Skeleton className="h-6 w-full bg-card" />
+              <Skeleton className="h-6 w-full bg-skeleton" />
             </TableCell>
             <TableCell className="animate-pulse px-4 py-3">
-              <Skeleton className="h-6 w-full bg-card" />
+              <Skeleton className="h-6 w-full bg-skeleton" />
             </TableCell>
           </TableRow>
         ))}

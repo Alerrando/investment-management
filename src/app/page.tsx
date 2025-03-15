@@ -1,7 +1,6 @@
 "use client";
 import { DollarSign, Globe, MapPinHouse, Medal, Search } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
 
 import RankingCard from "@/components/RankingCard/RankingCard";
 import RankingCardFiis from "@/components/RankingCard/RankingCardFB/RankingCardFiis/RankingCardFiis";
@@ -10,36 +9,36 @@ import RankingCardCryptosRise from "@/components/RankingCard/RankingCardICrypto/
 import RankingCardICrypto from "@/components/RankingCard/RankingCardICrypto/RankingCardICrypto";
 import Title from "@/components/Title/Title";
 import { useListCrypto } from "@/provider/Lists/ListCryptoProvider";
+import { useListFiis } from "@/provider/Lists/ListFiisProvider";
 import { useListStocks } from "@/provider/Lists/ListStockProvider";
 
 export default function Home() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [items, setItems] = useState<any[]>([]);
   const { dataListStocks } = useListStocks();
   const { dataListCrypto, isLoadingListCrypto } = useListCrypto();
+  const { dataListFiis } = useListFiis();
 
   return (
-    <div className="flex flex-col gap-16">
-      <main className="relative flex h-[calc(65vh-_53px)] w-full flex-col items-start justify-end gap-20 px-16">
+    <div className="flex w-full flex-col gap-8 md:gap-16">
+      <main className="relative flex h-[calc(46vh-_53px)] w-full flex-col items-start justify-end gap-10 px-4 md:h-[calc(65vh-_53px)] md:gap-20 md:px-16">
         <Image
           src="/Group 15.png"
           alt=""
-          className="left-[auto!important] right-[0%!important] z-0 h-[42.25rem!important] w-[40.625rem!important]"
+          className="left-[auto!important] right-[0%!important] z-0 !h-[16rem] !w-[14rem] md:!h-[42.25rem] md:!w-[40.625rem]"
           fill
         />
 
-        <div className="flex flex-col gap-5">
-          <div className="flex flex-col gap-1">
-            <h1 className="m-0 w-9/12 text-[3.5rem] font-semibold leading-[4rem] text-primary-t">
+        <div className="z-20 flex w-full flex-col gap-5">
+          <div className="flex w-full flex-col gap-1">
+            <h1 className="m-0 w-full text-[1.6rem] font-semibold text-primary-t md:w-9/12 md:text-[3.5rem] md:leading-[4rem]">
               Construa Seu Futuro Financeiro com Sabedoria
             </h1>
-            <span className="w-1/2 text-xl text-primary-t/60">
+            <span className="w-full text-sm text-primary-t/60 md:w-1/2 md:text-xl">
               Invista com confiança, transforme seu futuro financeiro e alcance seus objetivos com inteligência e
               segurança.
             </span>
           </div>
 
-          <div className="ronuded-full flex w-1/3 items-center rounded-full border border-border px-4 py-1.5">
+          <div className="flex w-full items-center rounded-full border border-border px-4 py-1.5 md:w-1/3">
             <input
               type="text"
               placeholder="Buscar Ativo"
@@ -51,9 +50,9 @@ export default function Home() {
         </div>
       </main>
 
-      <section className="grid w-11/12 gap-3 px-16">
-        <Title name="Rankings de Ativos" icon={<Medal size={20} className="text-primary" />} />
-        <div className="flex w-full items-center justify-between">
+      <section className="grid w-full gap-3 px-4 md:w-11/12 md:px-16">
+        <Title name="Rankings de Ativos" icon={<Medal size={20} className="text-primary-t" />} />
+        <div className="flex w-full flex-col items-center justify-between gap-6 md:flex-row md:gap-3">
           <RankingCard
             title="New Rankings"
             data={
@@ -62,7 +61,7 @@ export default function Home() {
                 : dataListStocks.content.filter((_: any, index: number) => index < 4)
             }
             onViewAll={() => console.log("Clicked!")}
-            styleRankingCard="w-[30%]"
+            styleRankingCard="w-full md:w-[30%]"
           />
           <RankingCard
             title="New Rankings"
@@ -72,7 +71,7 @@ export default function Home() {
                 : dataListStocks.content.filter((_: any, index: number) => index < 4)
             }
             onViewAll={() => console.log("Clicked!")}
-            styleRankingCard="w-[30%]"
+            styleRankingCard="w-full md:w-[30%]"
           />
           <RankingCard
             title="New Rankings"
@@ -82,15 +81,15 @@ export default function Home() {
                 : dataListStocks.content.filter((_: any, index: number) => index < 4)
             }
             onViewAll={() => console.log("Clicked!")}
-            styleRankingCard="w-[30%]"
+            styleRankingCard="w-full md:w-[30%]"
           />
         </div>
       </section>
 
-      <section className="flex h-auto w-11/12 flex-col gap-3 px-16">
+      <section className="flex h-auto w-full flex-col gap-3 px-4 md:w-11/12 md:px-16">
         <Title name="Rankings de Criptos" icon={<DollarSign size={20} className="text-primary-t" />} />
         <div className="flex h-full w-full flex-wrap items-start justify-start gap-3">
-          <div className="flex w-full items-center justify-between">
+          <div className="flex w-full flex-col items-center justify-between gap-3 md:flex-row">
             <RankingCardCryptosRise
               title="Cryptos em Alta"
               data={
@@ -101,7 +100,7 @@ export default function Home() {
                     : dataListCrypto?.filter((_: any, index: number) => index < 4)
               }
               onViewAll={() => console.log("Clicked!")}
-              styleRankingCard="w-[65%]"
+              styleRankingCard="w-full md:w-[65%]"
             />
 
             <RankingCardICrypto
@@ -114,7 +113,7 @@ export default function Home() {
                     : dataListCrypto?.filter((_: any, index: number) => index < 4)
               }
               onViewAll={() => console.log("Clicked!")}
-              styleRankingCard="w-[30%] h-[242px] overflow-auto"
+              styleRankingCard="w-full md:w-[30%] h-[242px] overflow-auto"
             />
           </div>
 
@@ -133,45 +132,39 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="flex h-full w-11/12 items-start justify-between px-16 pb-8">
-        <section className="flex h-full w-[60%] flex-wrap items-start justify-start gap-3">
+      <div className="flex h-full w-full flex-col items-start justify-between gap-3 px-4 pb-8 md:w-11/12 md:flex-row md:px-16">
+        <section className="flex h-full w-full flex-wrap items-start justify-start gap-3 md:w-[60%]">
           <Title name="Rankings de FIIs" icon={<MapPinHouse size={20} className="text-primary-t" />} />
-          <div className="flex h-full w-full flex-wrap items-start justify-start gap-3">
-            <div className="flex w-full items-center justify-between">
-              <RankingCardFiis
-                title="FIIs Markets"
-                data={
-                  isLoadingListCrypto
-                    ? []
-                    : (dataListCrypto as any)?.content?.length === 0 || dataListCrypto?.length === 0
-                      ? []
-                      : !Array.isArray(dataListCrypto)
-                        ? (dataListCrypto as any)?.content?.filter((_: any, index: number) => index < 4)
-                        : dataListCrypto?.filter((_: any, index: number) => index < 4)
-                }
-                onViewAll={() => console.log("Clicked!")}
-              />
-            </div>
+          <div className="flex w-full items-center justify-between">
+            <RankingCardFiis
+              title="FIIs Markets"
+              data={
+                (dataListFiis.content as any)?.content?.length === 0 || dataListFiis?.content.length === 0
+                  ? []
+                  : !Array.isArray(dataListFiis.content)
+                    ? (dataListFiis.content as any)?.content?.filter((_: any, index: number) => index < 4)
+                    : dataListFiis?.content.filter((_: any, index: number) => index < 4)
+              }
+              onViewAll={() => console.log("Clicked!")}
+            />
           </div>
         </section>
-        <section className="flex h-full w-[35%] flex-wrap items-start justify-start gap-3">
+        <section className="flex h-full w-full flex-wrap items-start justify-start gap-3 md:w-[35%]">
           <Title name="Rankings de BDRs" icon={<Globe size={20} className="text-primary-t" />} />
-          <div className="flex h-full w-full flex-wrap items-start justify-start gap-3">
-            <div className="flex w-full items-center justify-between">
-              <RankingCardFiis
-                title="BDRs Mais Visitados"
-                data={
-                  isLoadingListCrypto
+          <div className="flex w-full items-center justify-between">
+            <RankingCardFiis
+              title="BDRs Mais Visitados"
+              data={
+                isLoadingListCrypto
+                  ? []
+                  : (dataListCrypto as any)?.content?.length === 0 || dataListCrypto?.length === 0
                     ? []
-                    : (dataListCrypto as any)?.content?.length === 0 || dataListCrypto?.length === 0
-                      ? []
-                      : !Array.isArray(dataListCrypto)
-                        ? (dataListCrypto as any)?.content?.filter((_: any, index: number) => index < 4)
-                        : dataListCrypto?.filter((_: any, index: number) => index < 4)
-                }
-                onViewAll={() => console.log("Clicked!")}
-              />
-            </div>
+                    : !Array.isArray(dataListCrypto)
+                      ? (dataListCrypto as any)?.content?.filter((_: any, index: number) => index < 4)
+                      : dataListCrypto?.filter((_: any, index: number) => index < 4)
+              }
+              onViewAll={() => console.log("Clicked!")}
+            />
           </div>
         </section>
       </div>

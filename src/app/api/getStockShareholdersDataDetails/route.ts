@@ -12,24 +12,28 @@ export async function GET(request: Request) {
     const stock = searchParams.get("stock");
     const url = `https://www.fundamentus.com.br/principais_acionistas.php?papel=${stock}&interface=classic&interface=mobile`;
 
-    await page.goto(url);
+    await page.goto(url, { waitUntil: "domcontentloaded" });
 
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(1000);
 
     const stockData = await page.evaluate(() => {
       const tbodys = document.querySelectorAll("tbody");
 
-      const shareholderData: StockShareholdersModel[] = [];
+      const shareholderData: StockShareholdersModel = {
+        commonShares: [],
+        totalCapital: [],
+      };
 
-      tbodys.forEach((tbody) => {
+      tbodys.forEach((tbody, index) => {
         const rows = tbody.querySelectorAll("tr");
         rows.forEach((row) => {
           const columns = row.querySelectorAll("td");
-          const shareholder: StockShareholdersModel = {
-            name: columns[0]?.textContent?.trim() || "",
-            percentage: columns[1]?.textContent?.trim() || "",
+
+          const aux = {
+            name: columns[0].textContent?.trim() || "",
+            percentage: columns[1].textContent?.trim() || "",
           };
-          shareholderData.push(shareholder);
+          shareholderData[index === 0 ? "commonShares" : "totalCapital"].push(aux);
         });
       });
 

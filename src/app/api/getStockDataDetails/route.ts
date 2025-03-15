@@ -12,7 +12,7 @@ export async function GET(request: Request) {
     const stock = searchParams.get("stock");
     const url = `https://www.fundamentus.com.br/detalhes.php?papel=${stock}&interface=classic&interface=mobile`;
 
-    await page.goto(url);
+    await page.goto(url, { waitUntil: "domcontentloaded" });
 
     await page.waitForTimeout(3000);
 

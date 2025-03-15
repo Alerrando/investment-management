@@ -14,12 +14,12 @@ export default function RankingCardFiis({ title, data, onViewAll, styleRankingCa
   return (
     <div
       className={twMerge(
-        "h-65 w-full overflow-y-auto rounded-lg border bg-card p-4 shadow-sm dark:border-[#444444]",
+        "h-65 w-full overflow-y-auto rounded-lg border border-border bg-card p-4 shadow-sm",
         styleRankingCard,
       )}
     >
       <header className="mb-4 flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-primary-t">{title}</h2>
+        <h2 className="tex-base font-semibold text-primary-t md:text-lg">{title}</h2>
         <button
           className="rounded-md border px-3 py-1 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:bg-[#222] dark:text-gray-300 dark:hover:bg-[#444444]"
           onClick={onViewAll}

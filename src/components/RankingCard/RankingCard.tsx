@@ -33,7 +33,7 @@ export default function RankingCard({ title, data, onViewAll, styleRankingCard }
   return (
     <div className={twMerge("z-30 w-full rounded-lg border bg-card p-4 shadow-sm", styleRankingCard)}>
       <header className="mb-4 flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-primary-t">{title}</h2>
+        <h2 className="text-base font-semibold text-primary-t md:text-lg">{title}</h2>
       </header>
 
       <Table className="space-y-4 overflow-y-auto">

@@ -53,7 +53,7 @@ export default function TableCategories({ data, title, link }: TableCategoriesPr
       </Table>
       <div className="mt-6 flex justify-center">
         <Link href={data.content.length > 0 ? `/stocks/lists/${link}` : "#"}>
-          <button className="border:bg-background flex w-full items-center justify-center rounded-full border border-input bg-background px-6 py-3 font-semibold text-primary-t transition-colors hover:border-primary/80 hover:bg-transparent">
+          <button className="flex w-full items-center justify-center rounded-full border border-input bg-tertiary px-6 py-3 font-semibold text-background transition-colors hover:border-tertiary hover:bg-transparent hover:text-tertiary">
             Ver mais
             <ArrowRight className="ml-2 h-4 w-4" />
           </button>

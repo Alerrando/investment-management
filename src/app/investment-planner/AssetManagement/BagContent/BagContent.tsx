@@ -20,7 +20,7 @@ export default function BagContent({
 }: BagContentProps) {
   return (
     <motion.div
-      className="hover:shadow-3xl fixed right-4 top-1/3 z-30 flex h-[420px] w-96 flex-col gap-4 rounded-2xl border-2 border-gray-200 bg-white p-5 shadow-2xl transition-all duration-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+      className="hover:shadow-3xl fixed right-4 top-1/3 z-30 flex h-[420px] w-96 flex-col gap-4 rounded-2xl border-2 border-border bg-primary p-5 shadow-2xl transition-all duration-300"
       initial={{ opacity: 0, x: 100 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.5, ease: ["easeIn", "easeOut"] }}
@@ -29,19 +29,19 @@ export default function BagContent({
         <h3 className="text-lg font-bold text-purple-600 dark:text-purple-400">Minha Bag</h3>
         <X
           size={20}
-          className="cursor-pointer text-gray-600 transition-colors hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200"
+          className="cursor-pointer text-primary-t transition-colors hover:text-primary-t/80"
           onClick={() => setShowBag(false)}
         />
       </header>
 
       {bag.length === 0 ? (
-        <p className="text-sm text-gray-600 dark:text-gray-400">Nenhum ativo adicionado.</p>
+        <p className="text-sm text-primary-t/60">Nenhum ativo adicionado.</p>
       ) : (
         <div className="flex h-full flex-col gap-3 overflow-y-auto">
           {bag.map((asset) => (
             <div
               key={asset.name}
-              className="group relative flex items-center justify-between gap-3 rounded-lg border border-gray-200 bg-gray-50 p-3 transition-all duration-300 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600"
+              className="group relative flex items-center justify-between gap-3 rounded-lg border border-border bg-card p-3 transition-all duration-300 hover:bg-card/80"
             >
               <div className="flex items-center gap-3">
                 <div
@@ -56,10 +56,10 @@ export default function BagContent({
                   )}
                 </div>
                 <div className="flex flex-col">
-                  <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">{asset.name}</p>
-                  <p className="text-xs text-gray-600 dark:text-gray-400">
+                  <p className="text-sm font-semibold text-primary-t">{asset.name}</p>
+                  <p className="text-xs text-primary-t/80">
                     Valor:{" "}
-                    <span className="font-semibold text-gray-900 dark:text-gray-100">
+                    <span className="font-semibold text-primary-t">
                       {asset.quotation.toLocaleString("pt-BR", {
                         style: "currency",
                         currency: "BRL",

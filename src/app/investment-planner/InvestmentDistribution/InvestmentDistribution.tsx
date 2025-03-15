@@ -3,6 +3,7 @@ import { Trash } from "lucide-react";
 import { useState } from "react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 
+import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Table, TableBody, TableHeader } from "@/components/ui/table";
 
@@ -132,7 +133,7 @@ export default function InvestmentDistribution() {
         </div>
       </div>
 
-      <div className="mt-6 flex w-full items-center gap-4 rounded-full border border-border/40 bg-foreground px-4 py-2 shadow-sm">
+      <div className="mt-6 flex w-full items-center gap-4 rounded-full border border-border bg-foreground px-4 py-2 shadow-sm">
         <input
           type="number"
           value={investmentValue}
@@ -140,9 +141,9 @@ export default function InvestmentDistribution() {
           placeholder="Insira o valor"
           className="w-full appearance-none bg-transparent text-sm text-primary-t outline-none"
         />
-        <button className="rounded-full bg-purple-600 px-4 py-1 text-sm text-white hover:bg-purple-700">
+        <Button variant="default" className="rounded-full">
           Calcular
-        </button>
+        </Button>
       </div>
     </main>
   );

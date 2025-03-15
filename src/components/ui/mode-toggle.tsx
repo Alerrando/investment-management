@@ -100,9 +100,7 @@ export function ModeToggle() {
   };
 
   const handleCustomColorChange = (color: string) => {
-    console.log(handleThemeChangeSetCustomCulor());
     const aux: Colors = { ...handleThemeChangeSetCustomCulor(), [activeColorType]: color };
-    console.log(aux);
     applyCustomTheme(aux);
   };
 
@@ -120,9 +118,9 @@ export function ModeToggle() {
           <span className="sr-only">Toggle theme</span>
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-96 bg-background">
+      <PopoverContent className="w-80 bg-background sm:w-96">
         <Tabs defaultValue="predefined">
-          <TabsList className="grid w-full grid-cols-2">
+          <TabsList className="grid w-full grid-cols-2 bg-card">
             <TabsTrigger value="predefined" className="text-primary-t data-[state=active]:text-primary-t">
               Pré-definidos
             </TabsTrigger>
@@ -131,18 +129,18 @@ export function ModeToggle() {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="predefined">
-            <div className="mt-4 grid grid-cols-3 gap-4">
+            <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3">
               <div className="cursor-pointer" onClick={() => handleThemeChange("light")}>
                 <img src="/light-theme-preview.png" alt="Light Theme" className="rounded-lg" />
                 <p className="mt-2 text-center text-primary-t">Branco</p>
               </div>
               <div className="cursor-pointer" onClick={() => handleThemeChange("dark")}>
                 <img src="/dark-theme-preview.png" alt="Dark Theme" className="rounded-lg" />
-                <p className="mt-2 text-center text-primary-t">Escuro</p>
+                <p className="mt-2 text-center text-primary-t">Dark</p>
               </div>
               <div className="cursor-pointer" onClick={() => handleThemeChange("blue")}>
                 <img src="/blue-theme-preview.png" alt="Blue Theme" className="rounded-lg" />
-                <p className="mt-2 text-center text-primary-t">Escuro Azul</p>
+                <p className="mt-2 text-center text-primary-t">Dark Azul</p>
               </div>
             </div>
           </TabsContent>

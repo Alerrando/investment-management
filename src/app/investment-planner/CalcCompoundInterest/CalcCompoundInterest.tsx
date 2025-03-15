@@ -63,7 +63,7 @@ export default function CalcCompoundInterest() {
 
   return (
     <form
-      className="flex w-full flex-col items-start justify-start gap-8 rounded-lg border border-primary/10 bg-card p-6 text-primary-t shadow-lg"
+      className="flex w-full flex-col items-start justify-start gap-8 rounded-lg border border-border bg-card p-6 text-primary-t shadow-lg"
       onSubmit={handleSubmit(submit)}
     >
       <h2 className="text-2xl font-semibold text-primary-t">Calculadora de Juros Compostos</h2>
@@ -151,10 +151,7 @@ export default function CalcCompoundInterest() {
         >
           Limpar
         </Button>
-        <Button
-          type="submit"
-          className="w-full rounded-lg bg-purple-600 px-6 py-2 font-medium text-white shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 sm:w-auto"
-        >
+        <Button type="submit" variant="default">
           Calcular
         </Button>
       </div>
