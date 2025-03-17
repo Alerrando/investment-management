@@ -24,20 +24,20 @@ export default function InvestmentDistribution() {
   const totalValue = dataInfos.reduce((acc, entry) => acc + (investmentValue * entry.value) / 100, 0);
 
   return (
-    <main className="mt-[52px] flex h-[calc(85vh_-_52px)] w-full flex-col items-start justify-center rounded-lg">
-      <h2 className="mb-6 text-3xl font-semibold text-primary-t">Distribuição de Investimentos</h2>
+    <main className="flex h-auto w-full flex-col items-start justify-center rounded-lg p-4 md:mt-[52px]">
+      <h2 className="mb-3 text-xl font-semibold text-primary-t md:mb-6 md:text-2xl">Distribuição de Investimentos</h2>
 
-      <div className="flex w-full items-center justify-between gap-6">
+      <div className="flex w-full flex-col gap-6 lg:flex-row">
         <div className="flex w-full flex-col rounded-lg border border-border/20 bg-foreground p-3 shadow-lg">
-          <h3 className="mb-4 text-lg font-bold text-purple-600">Gráfico</h3>
-          <ResponsiveContainer width="100%" height={220}>
+          <h3 className="mb-4 text-base font-bold text-purple-600 md:text-lg">Gráfico</h3>
+          <ResponsiveContainer width="100%" height={160}>
             <PieChart>
               <Pie
                 data={dataInfos}
                 cx="50%"
                 cy="50%"
                 labelLine={false}
-                outerRadius={100}
+                outerRadius={"100%"} // Reduzido para mobile
                 fill="#8884d8"
                 dataKey="value"
               >
@@ -47,76 +47,76 @@ export default function InvestmentDistribution() {
               </Pie>
             </PieChart>
           </ResponsiveContainer>
-          <div className="mt-4 flex w-full flex-wrap justify-center gap-6">
+          <div className="mt-4 flex w-full flex-wrap justify-center gap-4">
             {dataInfos.map((entry, index) => (
               <div key={index} className="flex items-center gap-2">
                 <div
                   style={{
-                    width: "16px",
-                    height: "16px",
+                    width: "12px",
+                    height: "12px",
                     backgroundColor: entry.color,
                     borderRadius: "50%",
                   }}
                 ></div>
-                <span className="text-sm text-primary-t">{entry.name}</span>
+                <span className="text-xs text-primary-t md:text-sm">{entry.name}</span>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="flex h-full w-full flex-col rounded-lg border border-border/20 bg-foreground p-3 shadow-lg">
-          <h3 className="mb-4 text-lg font-bold text-purple-600">Tabela de Investimentos</h3>
-          <Table className="w-full text-sm">
-            <TableHeader>
-              <tr className="border-border/20">
-                <th className="py-2 text-left text-primary-t">Investimento</th>
-                <th className="py-2 text-left text-primary-t">Percentual</th>
-                <th className="py-2 text-left text-primary-t">Valor</th>
-              </tr>
-            </TableHeader>
-            <TableBody>
-              {dataInfos.map((entry, index) => (
-                <tr key={index} className="border-b border-border/20">
-                  <td className="py-2 text-left text-primary-t">{entry.name}</td>
-                  <td className="py-2 text-left text-primary-t">{entry.value}%</td>
-                  <td className="py-2 text-left text-primary-t">
-                    {((investmentValue * entry.value) / 100).toFixed(2)}
-                  </td>
+        <div className="flex h-auto w-full flex-col rounded-lg border border-border/20 bg-foreground p-3 shadow-lg">
+          <h3 className="mb-4 text-base font-bold text-purple-600 md:text-lg">Tabela de Investimentos</h3>
+          <div className="overflow-x-auto">
+            <Table className="w-full min-w-[400px] text-xs md:text-sm">
+              <TableHeader>
+                <tr className="border-border/20">
+                  <th className="py-2 text-left text-primary-t">Investimento</th>
+                  <th className="py-2 text-left text-primary-t">Percentual</th>
+                  <th className="py-2 text-left text-primary-t">Valor</th>
                 </tr>
-              ))}
+              </TableHeader>
+              <TableBody>
+                {dataInfos.map((entry, index) => (
+                  <tr key={index} className="border-b border-border/20">
+                    <td className="py-2 text-left text-primary-t">{entry.name}</td>
+                    <td className="py-2 text-left text-primary-t">{entry.value}%</td>
+                    <td className="py-2 text-left text-primary-t">
+                      {((investmentValue * entry.value) / 100).toFixed(2)}
+                    </td>
+                  </tr>
+                ))}
 
-              <tr className="border-t border-border/20 font-semibold">
-                <td className="py-2 text-left text-primary-t">Total</td>
-                <td className="py-2 text-left text-primary-t"></td>
-                <td className="py-2 text-left text-primary-t">{totalValue.toFixed(2)}</td>
-              </tr>
-            </TableBody>
-          </Table>
+                <tr className="border-t border-border/20 font-semibold">
+                  <td className="py-2 text-left text-primary-t">Total</td>
+                  <td className="py-2 text-left text-primary-t"></td>
+                  <td className="py-2 text-left text-primary-t">{totalValue.toFixed(2)}</td>
+                </tr>
+              </TableBody>
+            </Table>
+          </div>
         </div>
 
-        <div className="flex h-full w-full flex-col rounded-lg border border-border/20 bg-foreground p-3 shadow-lg">
+        <div className="flex h-full w-full flex-col gap-3 rounded-lg border border-border/20 bg-foreground p-3 shadow-lg">
           <div className="flex w-full items-center justify-between">
-            <h3 className="text-lg font-bold text-purple-600">Configurações</h3>
-
+            <h3 className="text-base font-bold text-purple-600 md:text-lg">Configurações</h3>
             <PopoverAddConfig dataInfos={dataInfos} setDataInfos={setDataInfos} />
           </div>
           <div className="flex h-full w-full flex-col items-start justify-center gap-4">
             {dataInfos.map((item, index: number) => (
               <div key={item.name} className="flex w-full flex-col">
                 <div className="flex w-full items-center justify-between">
-                  <div className="mb-1 text-[14px] font-semibold text-primary-t">
+                  <div className="mb-1 text-xs font-semibold text-primary-t md:text-sm">
                     {`${item.name.charAt(0).toUpperCase() + item.name.slice(1)} ${item.value}%`}
                   </div>
-
                   <Trash
-                    size={16}
+                    size={14}
                     className="cursor-pointer text-primary-t"
                     onClick={() => handleDeleteConfig(index)}
                   />
                 </div>
                 <Slider
                   onValueChange={(value) => handleChangeSlider(index, value[0])}
-                  style={{ height: "20px" }}
+                  style={{ height: "16px" }}
                   value={[item.value]}
                   max={100}
                   step={1}
@@ -125,7 +125,7 @@ export default function InvestmentDistribution() {
               </div>
             ))}
           </div>
-          <div className="mt-2 text-sm font-semibold text-primary-t">
+          <div className="mt-2 text-xs font-semibold text-primary-t md:text-sm">
             <span className={`${totalPercentage > 100 && "text-red-600"}`}>
               Soma das porcentagens: {totalPercentage}%
             </span>
@@ -133,15 +133,16 @@ export default function InvestmentDistribution() {
         </div>
       </div>
 
+      {/* Input de Valor */}
       <div className="mt-6 flex w-full items-center gap-4 rounded-full border border-border bg-foreground px-4 py-2 shadow-sm">
         <input
           type="number"
           value={investmentValue}
           onChange={handleInputChange}
           placeholder="Insira o valor"
-          className="w-full appearance-none bg-transparent text-sm text-primary-t outline-none"
+          className="w-full appearance-none bg-transparent text-xs text-primary-t outline-none md:text-sm"
         />
-        <Button variant="default" className="rounded-full">
+        <Button variant="default" className="rounded-full text-xs md:text-sm">
           Calcular
         </Button>
       </div>

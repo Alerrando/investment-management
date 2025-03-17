@@ -1,8 +1,8 @@
 import { twMerge } from "tailwind-merge";
 
+import SkeletonReusable from "../SkeletonReusable/SkeletonReusable";
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "../ui/table";
 import RankingCardItemStock from "./RankingCardItemStock/RankingCardItemStock";
-import SkeletonCard from "./SkeletonCard/SkeletonCard";
 
 interface RankingCardProps {
   title: string;
@@ -55,7 +55,7 @@ export default function RankingCard({ title, data, onViewAll, styleRankingCard }
               />
             ))
           ) : (
-            <SkeletonCard />
+            <SkeletonReusable classNameBody="h-6" sizeBody={3} sizeBodyChild={3} hasTBody tableBodyJust />
           )}
         </TableBody>
       </Table>

@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { BriefcaseBusiness, Search, Sparkles } from "lucide-react";
 import { useEffect, useState } from "react";
 
+import SkeletonReusable from "@/components/SkeletonReusable/SkeletonReusable";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { ListCryptoModel } from "@/models/Lists/ListCryptoModel";
 import { ListFiisModelContent } from "@/models/Lists/ListFiisModel";
@@ -15,7 +16,6 @@ import { useRecommendationFiis } from "@/provider/Recommendation/RecommendationF
 import { useRecommendationStocks } from "@/provider/Recommendation/RecommendationStockProvider";
 
 import BagContent from "./BagContent/BagContent";
-import SkeletonAssetManagement from "./SkeletonAssetManagement/SkeletonAssetManagement";
 import TableCrypto from "./TableCrypto/TableCrypto";
 import TableFiis from "./TableFiis/TableFiis";
 import TableStock from "./TableStock/TableStock";
@@ -161,7 +161,15 @@ export default function AssetManagement() {
             dataRecommendationCrypto={dataRecommendationCrypto}
           />
         ) : (
-          <SkeletonAssetManagement />
+          <SkeletonReusable
+            sizeBody={5}
+            classNameBody="h-6"
+            classNameHead="h-4 w-16"
+            sizeBodyChild={5}
+            sizeHeader={5}
+            theader
+            tableComplete
+          />
         )}
       </div>
 

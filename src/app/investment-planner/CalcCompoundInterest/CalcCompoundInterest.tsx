@@ -63,12 +63,12 @@ export default function CalcCompoundInterest() {
 
   return (
     <form
-      className="flex w-full flex-col items-start justify-start gap-8 rounded-lg border border-border bg-card p-6 text-primary-t shadow-lg"
+      className="flex w-full flex-col items-start justify-start gap-6 rounded-lg border border-border bg-card p-4 text-primary-t shadow-lg sm:gap-8 sm:p-6"
       onSubmit={handleSubmit(submit)}
     >
-      <h2 className="text-2xl font-semibold text-primary-t">Calculadora de Juros Compostos</h2>
+      <h2 className="text-xl font-semibold text-primary-t sm:text-2xl">Calculadora de Juros Compostos</h2>
 
-      <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2">
+      <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6">
         <InputForm
           errors={errors}
           register={register}
@@ -101,19 +101,17 @@ export default function CalcCompoundInterest() {
           htmlFor="taxa-juros"
           name="interestRate"
           options={
-            <div>
-              <select
-                className="w-auto cursor-pointer rounded-md border bg-gray-600 px-4 py-2 text-[14px] text-white focus:border focus-visible:border focus-visible:outline-none"
-                value={valueInterestSelected}
-                onChange={(e) => setValueInterestSelected(e.target.value)}
-              >
-                {valueInterestRate.map((interest) => (
-                  <option key={interest.value} value={interest.value}>
-                    {interest.label}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <select
+              className="h-full w-auto cursor-pointer rounded-md border bg-gray-600 px-3 py-1 text-xs text-white focus:border focus-visible:border focus-visible:outline-none sm:px-4 sm:py-2 sm:text-sm"
+              value={valueInterestSelected}
+              onChange={(e) => setValueInterestSelected(e.target.value)}
+            >
+              {valueInterestRate.map((interest) => (
+                <option key={interest.value} value={interest.value}>
+                  {interest.label}
+                </option>
+              ))}
+            </select>
           }
         />
 
@@ -126,56 +124,57 @@ export default function CalcCompoundInterest() {
           htmlFor="quantidade-meses"
           name="months"
           options={
-            <div>
-              <select
-                className="w-auto cursor-pointer rounded-md border bg-gray-600 px-4 py-2 text-[14px] text-white focus:border focus-visible:border focus-visible:outline-none"
-                value={valueTimesSelected}
-                onChange={(e) => setValueTimesSelected(e.target.value)}
-              >
-                {valueTimes.map((interest) => (
-                  <option key={interest.value} value={interest.value}>
-                    {interest.label}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <select
+              className="h-full w-auto cursor-pointer rounded-md border bg-gray-600 px-3 py-1 text-xs text-white focus:border focus-visible:border focus-visible:outline-none sm:px-4 sm:py-2 sm:text-sm"
+              value={valueTimesSelected}
+              onChange={(e) => setValueTimesSelected(e.target.value)}
+            >
+              {valueTimes.map((interest) => (
+                <option key={interest.value} value={interest.value}>
+                  {interest.label}
+                </option>
+              ))}
+            </select>
           }
         />
       </div>
 
-      <div className="mt-6 flex w-full justify-end gap-4">
+      <div className="mt-4 flex w-full justify-between gap-4 sm:gap-6 md:justify-end">
         <Button
           type="submit"
-          className="border border-primary/10 bg-foreground text-primary-t hover:bg-secondary"
+          variant="outline"
+          className="border border-primary/10 bg-primary text-xs text-primary-t transition-colors hover:text-red-600 sm:text-sm"
           onClick={() => reset()}
         >
           Limpar
         </Button>
-        <Button type="submit" variant="default">
+        <Button type="submit" variant="default" className="text-xs sm:text-sm">
           Calcular
         </Button>
       </div>
 
       {valuesInterest.length > 0 && (
-        <div className="mt-8 grid w-full grid-cols-1 justify-center gap-6 sm:grid-cols-3">
-          <div className="flex w-full flex-col items-center justify-center rounded-lg bg-white p-6 shadow-lg sm:w-auto dark:bg-gray-800">
-            <span className="text-lg font-medium text-gray-700 dark:text-white">Montante Total</span>
-            <span className="mt-2 text-2xl font-semibold text-purple-600 dark:text-purple-400">
+        <div className="mt-6 grid w-full grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-6">
+          <div className="flex w-full flex-col items-center justify-center rounded-lg bg-white p-4 shadow-lg sm:p-6 dark:bg-gray-800">
+            <span className="text-sm font-medium text-gray-700 sm:text-lg dark:text-white">Montante Total</span>
+            <span className="mt-2 text-xl font-semibold text-purple-600 sm:text-2xl dark:text-purple-400">
               {Number(valuesInterest[0]).toLocaleString("pt-BR", {
                 style: "currency",
                 currency: "BRL",
               })}
             </span>
           </div>
-          <div className="flex w-full flex-col items-center justify-center rounded-lg bg-white p-6 shadow-lg sm:w-auto dark:bg-gray-800">
-            <span className="text-lg font-medium text-gray-700 dark:text-white">Juros Acumulados</span>
-            <span className="mt-2 text-2xl font-semibold text-purple-600 dark:text-purple-400">
+          <div className="flex w-full flex-col items-center justify-center rounded-lg bg-white p-4 shadow-lg sm:p-6 dark:bg-gray-800">
+            <span className="text-sm font-medium text-gray-700 sm:text-lg dark:text-white">Juros Acumulados</span>
+            <span className="mt-2 text-xl font-semibold text-purple-600 sm:text-2xl dark:text-purple-400">
               {Number(valuesInterest[1]).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
             </span>
           </div>
-          <div className="flex w-full flex-col items-center justify-center rounded-lg bg-white p-6 shadow-lg sm:w-auto dark:bg-gray-800">
-            <span className="text-lg font-medium text-gray-700 dark:text-white">Contribuições Mensais Totais</span>
-            <span className="mt-2 text-2xl font-semibold text-purple-600 dark:text-purple-400">
+          <div className="flex w-full flex-col items-center justify-center rounded-lg bg-white p-4 shadow-lg sm:p-6 dark:bg-gray-800">
+            <span className="text-sm font-medium text-gray-700 sm:text-lg dark:text-white">
+              Contribuições Mensais Totais
+            </span>
+            <span className="mt-2 text-xl font-semibold text-purple-600 sm:text-2xl dark:text-purple-400">
               {Number(valuesInterest[2]).toLocaleString("pt-BR", {
                 style: "currency",
                 currency: "BRL",
@@ -186,42 +185,42 @@ export default function CalcCompoundInterest() {
       )}
 
       {monthlyData.length > 0 && (
-        <div className="mt-8 w-full">
-          <h3 className="text-xl font-semibold text-gray-700 dark:text-white">Tabela de Juros Mensais</h3>
-          <div className="h-[25.125rem] overflow-auto">
-            <table className="mt-4 w-full table-auto border-collapse dark:text-white">
+        <div className="mt-6 w-full">
+          <h3 className="text-lg font-semibold text-gray-700 sm:text-xl dark:text-white">Tabela de Juros Mensais</h3>
+          <div className="h-[20rem] overflow-auto sm:h-[25.125rem]">
+            <table className="mt-4 w-full min-w-[600px] table-auto border-collapse text-xs sm:text-sm dark:text-white">
               <thead className="sticky top-0 bg-white dark:bg-gray-800">
                 <tr className="border-b">
-                  <th className="px-4 py-2 text-left">Mês</th>
-                  <th className="px-4 py-2 text-left">Total Investido (R$)</th>
-                  <th className="px-4 py-2 text-left">Juros Acumulados (R$)</th>
-                  <th className="px-4 py-2 text-left">Total Juros (R$)</th>
-                  <th className="px-4 py-2 text-left">Total Acumulados (R$)</th>
+                  <th className="px-3 py-2 text-left sm:px-4 sm:py-2">Mês</th>
+                  <th className="px-3 py-2 text-left sm:px-4 sm:py-2">Total Investido (R$)</th>
+                  <th className="px-3 py-2 text-left sm:px-4 sm:py-2">Juros Acumulados (R$)</th>
+                  <th className="px-3 py-2 text-left sm:px-4 sm:py-2">Total Juros (R$)</th>
+                  <th className="px-3 py-2 text-left sm:px-4 sm:py-2">Total Acumulados (R$)</th>
                 </tr>
               </thead>
-              <tbody className="">
+              <tbody>
                 {monthlyData.map((data, index) => (
                   <tr key={index} className="border-b">
-                    <td className="px-4 py-2">{data.month}</td>
-                    <td className="px-4 py-2">
+                    <td className="px-3 py-2 sm:px-4 sm:py-2">{data.month}</td>
+                    <td className="px-3 py-2 sm:px-4 sm:py-2">
                       {data.totalAmount.toLocaleString("pt-BR", {
                         style: "currency",
                         currency: "BRL",
                       })}
                     </td>
-                    <td className="px-4 py-2">
+                    <td className="px-3 py-2 sm:px-4 sm:py-2">
                       {data.accumulatedInterest.toLocaleString("pt-BR", {
                         style: "currency",
                         currency: "BRL",
                       })}
                     </td>
-                    <td className="px-4 py-2">
+                    <td className="px-3 py-2 sm:px-4 sm:py-2">
                       {data.amountAllCalc.toLocaleString("pt-BR", {
                         style: "currency",
                         currency: "BRL",
                       })}
                     </td>
-                    <td className="px-4 py-2">
+                    <td className="px-3 py-2 sm:px-4 sm:py-2">
                       {Number(data.totalAmount + data.accumulatedInterest).toLocaleString("pt-BR", {
                         style: "currency",
                         currency: "BRL",
@@ -236,9 +235,9 @@ export default function CalcCompoundInterest() {
       )}
 
       {monthlyData.length > 0 && (
-        <div className="mt-8 flex w-full flex-col gap-6">
-          <h3 className="text-xl font-semibold text-gray-700 dark:text-white">Gráfico de Juros Compostos</h3>
-          <ResponsiveContainer width="100%" height={400}>
+        <div className="mt-6 flex w-full flex-col gap-4 sm:gap-6">
+          <h3 className="text-lg font-semibold text-gray-700 sm:text-xl dark:text-white">Gráfico de Juros Compostos</h3>
+          <ResponsiveContainer width="100%" height={300}>
             <LineChart data={monthlyData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="month" />
@@ -262,7 +261,7 @@ export default function CalcCompoundInterest() {
                 type="monotone"
                 dataKey="totalAmount"
                 stroke="#8884d8"
-                activeDot={{ r: 8 }}
+                activeDot={{ r: 6 }}
                 name="Total Investido"
               />
               <Line type="monotone" dataKey="accumulatedInterest" stroke="#82ca9d" name="Juros Acumulados" />

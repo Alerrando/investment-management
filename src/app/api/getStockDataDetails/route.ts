@@ -14,8 +14,6 @@ export async function GET(request: Request) {
 
     await page.goto(url, { waitUntil: "domcontentloaded" });
 
-    await page.waitForTimeout(3000);
-
     const stockData = await page.evaluate(() => {
       const dataValues = document.querySelectorAll(".data-value");
       const dtValues = document.querySelectorAll(".dt-value");

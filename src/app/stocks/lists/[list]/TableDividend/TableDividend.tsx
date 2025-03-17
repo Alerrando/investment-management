@@ -2,11 +2,10 @@
 import { ArrowDown, ArrowUp } from "lucide-react";
 import { useMemo, useState } from "react";
 
+import SkeletonReusable from "@/components/SkeletonReusable/SkeletonReusable";
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ListStockModelContent } from "@/models/Lists/ListStockModel";
 import { useListStocksByDividend } from "@/provider/Lists/ListStockBy/ListStockByDividendProvider";
-
-import SkeletonCategories from "../../../Categories/SkeletonCategories";
 
 export interface SortConfigProps {
   key: keyof ListStockModelContent;
@@ -17,7 +16,8 @@ export default function TableDividend() {
   const { dataListStocksByDividend } = useListStocksByDividend();
 
   const sortedStocks = useMemo(() => {
-    if (!sortConfig.key) return dataListStocksByDividend.content;
+    if (dataListStocksByDividend.content) return [];
+    if (!sortConfig.key) return dataListStocksByDividend?.content;
 
     const sortedData = [...dataListStocksByDividend.content];
     sortedData.sort((a, b) => {
@@ -30,7 +30,7 @@ export default function TableDividend() {
     });
 
     return sortedData;
-  }, [sortConfig, dataListStocksByDividend.content]);
+  }, [sortConfig, dataListStocksByDividend?.content]);
 
   return (
     <div className="z-30 min-w-[300px] flex-1 transform rounded-2xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 p-6 shadow-lg transition-all hover:shadow-xl dark:border-[#444444] dark:from-[#2C2C2C] dark:to-[#1E1E1E]">
@@ -93,7 +93,7 @@ export default function TableDividend() {
             </TableRow>
           </TableHeader>
           <tbody>
-            {dataListStocksByDividend.content.length > 0 ? (
+            {dataListStocksByDividend?.content?.length > 0 ? (
               <>
                 {sortedStocks.map((stock, index) => (
                   <TableRow
@@ -111,7 +111,7 @@ export default function TableDividend() {
                 ))}
               </>
             ) : (
-              <SkeletonCategories quantity={9} />
+              <SkeletonReusable classNameBody="h-6" hasTBody tableBodyJust sizeBody={8} sizeBodyChild={7} />
             )}
           </tbody>
         </Table>

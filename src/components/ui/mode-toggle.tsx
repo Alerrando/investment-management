@@ -18,6 +18,7 @@ interface Colors {
   primaryT: string;
   card: string;
   border: string;
+  skeleton: string;
 }
 
 export function ModeToggle() {
@@ -29,6 +30,7 @@ export function ModeToggle() {
     primaryT: "",
     card: "",
     border: "",
+    skeleton: "",
   });
   const [activeColorType, setActiveColorType] = useState<
     "primary" | "secondary" | "background" | "primaryT" | "card" | "border"
@@ -57,6 +59,7 @@ export function ModeToggle() {
     root.style.setProperty("--primary-t", hexToHsl(values.primaryT));
     root.style.setProperty("--card", hexToHsl(values.card));
     root.style.setProperty("--border", hexToHsl(values.border));
+    root.style.setProperty("--skeleton", hexToHsl(values.skeleton));
 
     localStorage.setItem("customColors", JSON.stringify(values));
     setCustomColors(values);
@@ -70,6 +73,7 @@ export function ModeToggle() {
     root.style.removeProperty("--primary-t");
     root.style.removeProperty("--card");
     root.style.removeProperty("--border");
+    root.style.removeProperty("--skeleton");
     root.classList.remove("custom");
   }
 
@@ -82,6 +86,7 @@ export function ModeToggle() {
       primaryT: hslToHex(style.getPropertyValue("--primary-t")),
       card: hslToHex(style.getPropertyValue("--card")),
       border: hslToHex(style.getPropertyValue("--border")),
+      skeleton: hslToHex(style.getPropertyValue("--skeleton")),
     };
 
     return value;

@@ -2,11 +2,11 @@
 import { ArrowDown, ArrowUp } from "lucide-react";
 import { useMemo, useState } from "react";
 
+import SkeletonReusable from "@/components/SkeletonReusable/SkeletonReusable";
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ListStockModelContent } from "@/models/Lists/ListStockModel";
 import { useListStocksByRevenueGrowth } from "@/provider/Lists/ListStockBy/ListStockByRevenueGrowthProvider";
 
-import SkeletonCategories from "../../../Categories/SkeletonCategories";
 import { SortConfigProps } from "../TableDividend/TableDividend";
 
 export default function TableRevenueGrowth() {
@@ -14,6 +14,7 @@ export default function TableRevenueGrowth() {
   const { dataListStocksByRevenueGrowth } = useListStocksByRevenueGrowth();
 
   const sortedStocks = useMemo(() => {
+    if (dataListStocksByRevenueGrowth.content) return [];
     if (!sortConfig.key) return dataListStocksByRevenueGrowth.content;
 
     const sortedData = [...dataListStocksByRevenueGrowth.content];
@@ -116,7 +117,7 @@ export default function TableRevenueGrowth() {
                 ))}
               </>
             ) : (
-              <SkeletonCategories quantity={5} />
+              <SkeletonReusable classNameBody="h-6" hasTBody tableBodyJust sizeBody={8} sizeBodyChild={8} />
             )}
           </tbody>
         </Table>

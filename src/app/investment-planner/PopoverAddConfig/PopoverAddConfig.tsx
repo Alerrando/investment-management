@@ -66,16 +66,13 @@ export default function PopoverAddConfig({ dataInfos, setDataInfos }: PopoverAdd
         <TooltipTrigger>
           <Popover>
             <PopoverTrigger asChild={true} onClick={generateRandomColor}>
-              <Button
-                variant="default"
-                className="inline-flex h-9 items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium"
-              >
+              <div className="rounded-lg border border-tertiary bg-tertiary px-4 py-1 text-sm text-background shadow transition-colors hover:border hover:border-tertiary hover:bg-transparent hover:text-tertiary">
                 Adicionar
-              </Button>
+              </div>
             </PopoverTrigger>
             <PopoverContent className="w-80">
               <form onSubmit={handleSubmit(onSubmit)} className="grid gap-2">
-                <div className="flex items-center gap-2">
+                <div className="flex flex-col gap-2">
                   <Label className="w-[25%]" htmlFor="name">
                     Título:{" "}
                   </Label>
@@ -87,7 +84,7 @@ export default function PopoverAddConfig({ dataInfos, setDataInfos }: PopoverAdd
                   {errors.name && <span className="text-red-500">{errors.name.message}</span>}
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex flex-col gap-2">
                   <Label
                     style={{ color: color, fontWeight: color ? "bold" : "normal" }}
                     className={`w-[25%] ${color && "text-bold"}`}

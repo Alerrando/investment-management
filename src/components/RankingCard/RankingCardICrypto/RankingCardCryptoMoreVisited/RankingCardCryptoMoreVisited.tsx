@@ -1,9 +1,8 @@
 import { twMerge } from "tailwind-merge";
 
+import SkeletonReusable from "@/components/SkeletonReusable/SkeletonReusable";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ListCryptoModel } from "@/models/Lists/ListCryptoModel";
-
-import SkeletonRankingCardCryptoMoreVisited from "./SkeletonRankingCardCryptoMoreVisited/SkeletonRankingCardCryptoMoreVisited";
 
 interface RankingCardCryptoMoreVisitedProps {
   title: string;
@@ -96,7 +95,7 @@ export default function RankingCardCryptoMoreVisited({
                   </TableRow>
                 ))
             ) : (
-              <SkeletonRankingCardCryptoMoreVisited />
+              <SkeletonReusable classNameBody="h-6" hasTBody tableBodyJust sizeBody={5} sizeBodyChild={6} />
             )}
           </TableBody>
         </Table>

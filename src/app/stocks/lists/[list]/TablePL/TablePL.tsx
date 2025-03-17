@@ -2,11 +2,11 @@
 import { ArrowDown, ArrowUp } from "lucide-react";
 import { useMemo, useState } from "react";
 
+import SkeletonReusable from "@/components/SkeletonReusable/SkeletonReusable";
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ListStockModelContent } from "@/models/Lists/ListStockModel";
 import { useListStocksByPL } from "@/provider/Lists/ListStockBy/ListStockByPlProvider";
 
-import SkeletonCategories from "../../../Categories/SkeletonCategories";
 import { SortConfigProps } from "../TableDividend/TableDividend";
 
 export default function TablePL() {
@@ -14,6 +14,7 @@ export default function TablePL() {
   const { dataListStocksByPL } = useListStocksByPL();
 
   const sortedStocks = useMemo(() => {
+    if (dataListStocksByPL.content) return [];
     if (!sortConfig.key) return dataListStocksByPL.content;
 
     const sortedData = [...dataListStocksByPL.content];
@@ -117,7 +118,7 @@ export default function TablePL() {
                 ))}
               </>
             ) : (
-              <SkeletonCategories quantity={6} />
+              <SkeletonReusable classNameBody="h-6" hasTBody tableBodyJust sizeBody={8} sizeBodyChild={8} />
             )}
           </tbody>
         </Table>

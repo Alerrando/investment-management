@@ -2,9 +2,9 @@
 import { Medal } from "lucide-react";
 import { useParams } from "next/navigation";
 
+import SkeletonReusable from "@/components/SkeletonReusable/SkeletonReusable";
 import Title from "@/components/Title/Title";
 
-import SkeletonCategories from "../../Categories/SkeletonCategories";
 import TableDividend from "./TableDividend/TableDividend";
 import TableLiquidAverage from "./TableLiquidAverage/TableLiquidAverage";
 import TableMarketValue from "./TableMarketValue/TableMarketValue";
@@ -32,7 +32,7 @@ export default function ListPage() {
       ) : list === "roe" ? (
         <TableROE />
       ) : (
-        <SkeletonCategories />
+        <SkeletonReusable classNameBody="h-6" tableComplete sizeHeader={8} sizeBody={5} sizeBodyChild={3} />
       )}
     </div>
   );

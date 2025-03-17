@@ -2,11 +2,11 @@
 import { ArrowDown, ArrowUp } from "lucide-react";
 import { useMemo, useState } from "react";
 
+import SkeletonReusable from "@/components/SkeletonReusable/SkeletonReusable";
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ListStockModelContent } from "@/models/Lists/ListStockModel";
 import { useListStocksByLiquidAverage } from "@/provider/Lists/ListStockBy/ListStockByLiquidAverage";
 
-import SkeletonCategories from "../../../Categories/SkeletonCategories";
 import { SortConfigProps } from "../TableDividend/TableDividend";
 
 export default function TableLiquidAverage() {
@@ -14,6 +14,7 @@ export default function TableLiquidAverage() {
   const { dataListStocksByLiquidAverage } = useListStocksByLiquidAverage();
 
   const sortedStocks = useMemo(() => {
+    if (dataListStocksByLiquidAverage.content) return [];
     if (!sortConfig.key) return dataListStocksByLiquidAverage.content;
 
     const sortedData = [...dataListStocksByLiquidAverage.content];
@@ -116,7 +117,7 @@ export default function TableLiquidAverage() {
                 ))}
               </>
             ) : (
-              <SkeletonCategories quantity={6} />
+              <SkeletonReusable classNameBody="h-6" hasTBody tableBodyJust sizeBody={8} sizeBodyChild={8} />
             )}
           </tbody>
         </Table>

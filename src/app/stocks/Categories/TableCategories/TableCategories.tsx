@@ -1,10 +1,9 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
+import SkeletonReusable from "@/components/SkeletonReusable/SkeletonReusable";
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ListStockModel } from "@/models/Lists/ListStockModel";
-
-import SkeletonCategories from "../SkeletonCategories";
 
 interface TableCategoriesProps {
   title: string;
@@ -47,12 +46,12 @@ export default function TableCategories({ data, title, link }: TableCategoriesPr
                 ))}
             </>
           ) : (
-            <SkeletonCategories quantity={5} />
+            <SkeletonReusable classNameBody="h-6" hasTBody tableBodyJust sizeBody={3} sizeBodyChild={5} />
           )}
         </tbody>
       </Table>
       <div className="mt-6 flex justify-center">
-        <Link href={data.content.length > 0 ? `/stocks/lists/${link}` : "#"}>
+        <Link href={`/stocks/lists/${link}`}>
           <button className="flex w-full items-center justify-center rounded-full border border-input bg-tertiary px-6 py-3 font-semibold text-background transition-colors hover:border-tertiary hover:bg-transparent hover:text-tertiary">
             Ver mais
             <ArrowRight className="ml-2 h-4 w-4" />

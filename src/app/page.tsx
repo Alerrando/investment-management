@@ -42,7 +42,7 @@ export default function Home() {
             <input
               type="text"
               placeholder="Buscar Ativo"
-              className="w-full border-none bg-transparent text-base outline-none"
+              className="w-full border-none bg-transparent text-base text-primary-t outline-none"
             />
 
             <Search size={16} className="text-primary-t" />

@@ -2,10 +2,9 @@
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, ChartCandlestick } from "lucide-react";
 import { useState } from "react";
 
+import SkeletonReusable from "@/components/SkeletonReusable/SkeletonReusable";
 import { TableCell } from "@/components/ui/table";
 import { useListStocks } from "@/provider/Lists/ListStockProvider";
-
-import SkeletonListStock from "./SkeletonListStock";
 
 export default function ListStocks() {
   const { dataListStocks } = useListStocks();
@@ -112,7 +111,7 @@ export default function ListStocks() {
                 </tr>
               ))
             ) : (
-              <SkeletonListStock />
+              <SkeletonReusable classNameBody="h-6" hasTBody tableBodyJust sizeBody={10} sizeBodyChild={8} />
             )}
           </tbody>
         </table>

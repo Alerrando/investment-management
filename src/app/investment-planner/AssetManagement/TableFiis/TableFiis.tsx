@@ -111,7 +111,7 @@ export default function TableFiis({ filteredAssets, handleAddToBag, dataRecommen
             </TableCell>
 
             <TableCell className="pl-4">
-              <div className="flex w-fit flex-col items-end text-primary">
+              <div className="flex w-fit flex-col items-end text-primary-t">
                 <span>
                   {asset.marketValue.toLocaleString("pt-BR", {
                     style: "currency",

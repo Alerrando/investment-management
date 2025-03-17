@@ -81,8 +81,8 @@ export function StockTabs() {
               <Table>
                 <TableHeader>
                   <TableRow className="!border-b-0 bg-tertiary hover:bg-tertiary/80">
-                    <TableHead className="text-primary">Acionista</TableHead>
-                    <TableHead className="text-right text-primary">Participação</TableHead>
+                    <TableHead className="text-primary-t">Acionista</TableHead>
+                    <TableHead className="text-right text-primary-t">Participação</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
