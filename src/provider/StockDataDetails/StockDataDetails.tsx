@@ -8,6 +8,7 @@ import { StockDetailsModel } from "@/models/StockDetailsModel";
 interface StockDataDetailsState {
   stockDetails: StockDetailsModel;
   setStockDetails: (data: StockDetailsModel) => void;
+  resetStockDetails: () => void;
 }
 
 const useStockDetailsStore = create<StockDataDetailsState>()(
@@ -15,6 +16,7 @@ const useStockDetailsStore = create<StockDataDetailsState>()(
     (set) => ({
       stockDetails: initialStateStockDetails,
       setStockDetails: (data) => set({ stockDetails: data }),
+      resetStockDetails: () => set({ stockDetails: initialStateStockDetails }),
     }),
     {
       name: "stock-details-storage",
@@ -25,10 +27,10 @@ const useStockDetailsStore = create<StockDataDetailsState>()(
 );
 
 export function useStockDetails() {
-  const { setStockDetails, stockDetails } = useStockDetailsStore();
+  const { setStockDetails, stockDetails, resetStockDetails } = useStockDetailsStore();
 
   const { mutateAsync: mutateStockDetails, isLoading } = useMutation({
-    mutationKey: ["stock-details"],
+    mutationKey: (variables: string[]) => ["stock-details", variables[0]],
     mutationFn: async (stock: string) => api.get(`/api/getStockDataDetails?stock=${stock}`),
     cacheTime: 1000 * 60 * 60 * 24,
     onError: (err) => {
@@ -39,5 +41,5 @@ export function useStockDetails() {
     },
   });
 
-  return { mutateStockDetails, stockDetails, isLoadingListStocks: isLoading };
+  return { mutateStockDetails, stockDetails, isLoadingListStocks: isLoading, resetStockDetails };
 }

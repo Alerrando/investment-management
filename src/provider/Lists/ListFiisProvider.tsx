@@ -16,7 +16,10 @@ const useListFiisStore = create<ListFiisState>()(
   persist(
     (set) => ({
       dataListFiis: initialStateFiisProvider,
-      setDataListFiis: (data) => set({ dataListFiis: data }),
+      setDataListFiis: (data) =>
+        set({
+          dataListFiis: data.content ? { ...data, content: data.content } : data,
+        }),
     }),
     {
       name: "listFiis-storage",

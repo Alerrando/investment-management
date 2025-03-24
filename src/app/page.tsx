@@ -43,6 +43,7 @@ export default function Home() {
               type="text"
               placeholder="Buscar Ativo"
               className="w-full border-none bg-transparent text-base text-primary-t outline-none"
+              name="search"
             />
 
             <Search size={16} className="text-primary-t" />

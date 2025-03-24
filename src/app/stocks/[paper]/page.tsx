@@ -10,26 +10,37 @@ import { useStockShareholdersDetails } from "@/provider/StockDataDetails/StockSh
 
 export default function StockDetail() {
   const { paper } = useParams();
-  const { stockDetails, mutateStockDetails } = useStockDetails();
-  const { mutateStockShareholdersDetails, stockShareholdersDetails } = useStockShareholdersDetails();
+  const { stockDetails, mutateStockDetails, resetStockDetails } = useStockDetails();
+  const { mutateStockShareholdersDetails } = useStockShareholdersDetails();
 
   useEffect(() => {
-    (async () => {
-      await mutateStockDetails(paper as string);
-      await mutateStockShareholdersDetails(paper as string);
-    })();
-  }, [paper]);
+    const abortController = new AbortController();
 
-  console.log(stockDetails, stockShareholdersDetails);
+    (async () => {
+      try {
+        resetStockDetails(); // Reseta o estado antes de buscar novos dados
+        await mutateStockDetails(paper as string, { signal: abortController.signal });
+        await mutateStockShareholdersDetails(paper as string, { signal: abortController.signal });
+      } catch (error) {
+        if (!abortController.signal.aborted) {
+          console.error("Error fetching stock details:", error);
+        }
+      }
+    })();
+
+    return () => {
+      abortController.abort();
+    };
+  }, [paper]);
 
   return (
     <div className="container mx-auto space-y-8 py-8">
       <div className="flex items-center justify-between">
         <h1 className="text-4xl font-bold text-primary-t">{(paper as string).toUpperCase()}</h1>
-        <div className="text-sm text-muted-foreground">Last updated: {stockDetails.marketData.lastBalanceDate}</div>
+        <div className="text-sm text-muted-foreground">Last updated: {stockDetails?.marketData?.lastBalanceDate}</div>
       </div>
 
-      {stockDetails.marketData ? (
+      {stockDetails?.marketData ? (
         <StockOverview />
       ) : (
         <>

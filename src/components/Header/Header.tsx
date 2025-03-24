@@ -40,21 +40,29 @@ export default function Header() {
           <div className="flex h-full flex-col gap-6 p-6">
             <ul className="flex flex-col gap-6">
               <li className="list-none font-semibold">
-                <Link className="text-primary-t" href="/" onClick={() => setIsMenuOpen(false)}>
+                <Link className="cursor-pointer text-primary-t" href="/" onClick={() => setIsMenuOpen(false)}>
                   Home
                 </Link>
               </li>
               <li className="list-none font-semibold">
-                <Link className="text-primary-t" href="/investment-planner" onClick={() => setIsMenuOpen(false)}>
+                <Link
+                  className="cursor-pointer text-primary-t"
+                  href="/investment-planner"
+                  onClick={() => setIsMenuOpen(false)}
+                >
                   Planejador de Investimentos
                 </Link>
               </li>
               <li className="list-none font-semibold">
-                <Link className="text-primary-t" href="/stocks" onClick={() => setIsMenuOpen(false)}>
+                <Link className="cursor-pointer text-primary-t" href="/stocks" onClick={() => setIsMenuOpen(false)}>
                   Ações
                 </Link>
               </li>
-              <li className="list-none font-semibold text-primary-t">FIIs</li>
+              <li className="list-none font-semibold">
+                <Link className="cursor-pointer text-primary-t" href="/fiis" onClick={() => setIsMenuOpen(false)}>
+                  Fiis
+                </Link>
+              </li>
               <li className="list-none font-semibold text-primary-t">Cripto</li>
             </ul>
           </div>
