@@ -64,16 +64,16 @@ export default function ModalSign({ sign }: ModalSignProps) {
         </DialogHeader>
 
         <Tabs defaultValue={sign} className="w-full">
-          <TabsList className="mb-4 grid w-full grid-cols-2 gap-4">
+          <TabsList className="mb-4 grid w-full grid-cols-2 gap-4 bg-card pb-2">
             <TabsTrigger
               value="login"
-              className="py-1 text-base font-medium text-gray-600 transition-all duration-200 hover:text-[#735ca5] focus:ring-2 focus:ring-[#735ca5] dark:text-gray-300"
+              className="pb-0.5 pt-1 text-base font-medium text-primary-t transition-all duration-200 hover:text-[#735ca5] focus:ring-2 focus:ring-[#735ca5] data-[state=active]:text-primary-t"
             >
               Login
             </TabsTrigger>
             <TabsTrigger
               value="register"
-              className="py-1 text-base font-medium text-gray-600 transition-all duration-200 hover:text-[#735ca5] focus:ring-2 focus:ring-[#735ca5] dark:text-gray-300"
+              className="pb-0.5 pt-1 text-base font-medium text-primary-t transition-all duration-200 hover:text-[#735ca5] focus:ring-2 focus:ring-[#735ca5] data-[state=active]:text-primary-t"
             >
               Registrar
             </TabsTrigger>
@@ -130,7 +130,7 @@ export default function ModalSign({ sign }: ModalSignProps) {
               />
               {errorsRegister.email && <p className="text-xs text-red-500">{errorsRegister.email.message}</p>}
 
-              <Button className="w-full rounded-lg bg-[#735ca5] py-3 text-white shadow-md hover:bg-[#735ca5]/90">
+              <Button className="w-full rounded-lg border-border bg-[#735ca5] py-3 text-white shadow-md hover:bg-[#735ca5]/90">
                 {isLoadingUserSignUp ? <Spinner className="h-4 w-4" /> : "Registrar"}
               </Button>
             </form>

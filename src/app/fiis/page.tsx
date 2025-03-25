@@ -5,6 +5,7 @@ import { useState } from "react";
 
 import Title from "@/components/Title/Title";
 
+import Categories from "./Categories/Categories";
 import ListFiis from "./ListFiis/ListFiis";
 
 export default function AllFiisPage() {
@@ -30,9 +31,7 @@ export default function AllFiisPage() {
         </div>
       </div>
 
-      <div className="flex flex-col gap-2">
-        <ListFiis />
-      </div>
+      <div className="flex flex-col gap-2">{order === "categories" ? <Categories /> : <ListFiis />}</div>
     </div>
   );
 }

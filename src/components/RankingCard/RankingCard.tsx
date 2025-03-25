@@ -12,24 +12,6 @@ interface RankingCardProps {
 }
 
 export default function RankingCard({ title, data, onViewAll, styleRankingCard }: RankingCardProps) {
-  function formatMarketCap(value: string | number): string {
-    const numericValue = typeof value === "string" ? parseFloat(value.replace(/\./g, "")) : value;
-
-    if (isNaN(numericValue)) {
-      return "Invalid value";
-    }
-
-    if (numericValue >= 1e12) {
-      return `${(numericValue / 1e12).toFixed(2)}T`;
-    } else if (numericValue >= 1e9) {
-      return `${(numericValue / 1e9).toFixed(2)}B`;
-    } else if (numericValue >= 1e6) {
-      return `${(numericValue / 1e6).toFixed(2)}M`;
-    } else {
-      return numericValue.toLocaleString();
-    }
-  }
-
   return (
     <div className={twMerge("z-30 w-full rounded-lg border bg-card p-4 shadow-sm", styleRankingCard)}>
       <header className="mb-4 flex items-center justify-between">
@@ -40,19 +22,14 @@ export default function RankingCard({ title, data, onViewAll, styleRankingCard }
         <TableHeader>
           <TableRow className="border-primary/20 hover:bg-primary/10">
             <TableHead className="pl-4 text-primary-t">Nome</TableHead>
-            <TableHead className="pl-4 text-primary-t">Volume</TableHead>
-            <TableHead className="pl-4 text-primary-t">Volume</TableHead>
+            <TableHead className="pl-4 text-primary-t">Dividendo</TableHead>
+            <TableHead className="pl-4 text-primary-t">Cotação</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {data.length > 0 ? (
             data.map((item, index) => (
-              <RankingCardItemStock
-                item={item}
-                formatMarketCap={formatMarketCap}
-                index={index}
-                key={`ranking-cark-stock-${index}`}
-              />
+              <RankingCardItemStock item={item} index={index} key={`ranking-cark-stock-${index}`} />
             ))
           ) : (
             <SkeletonReusable classNameBody="h-6" sizeBody={3} sizeBodyChild={3} hasTBody tableBodyJust />

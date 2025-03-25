@@ -17,6 +17,8 @@ export default function Home() {
   const { dataListCrypto, isLoadingListCrypto } = useListCrypto();
   const { dataListFiis } = useListFiis();
 
+  console.log(dataListFiis);
+
   return (
     <div className="flex w-full flex-col gap-8 md:gap-16">
       <main className="relative flex h-[calc(46vh-_53px)] w-full flex-col items-start justify-end gap-10 px-4 md:h-[calc(65vh-_53px)] md:gap-20 md:px-16">
@@ -143,8 +145,8 @@ export default function Home() {
                 (dataListFiis.content as any)?.content?.length === 0 || dataListFiis?.content.length === 0
                   ? []
                   : !Array.isArray(dataListFiis.content)
-                    ? (dataListFiis.content as any)?.content?.filter((_: any, index: number) => index < 4)
-                    : dataListFiis?.content.filter((_: any, index: number) => index < 4)
+                    ? (dataListFiis.content as any)?.content?.filter((_: any, index: number) => index < 3)
+                    : dataListFiis?.content.filter((_: any, index: number) => index < 3)
               }
               onViewAll={() => console.log("Clicked!")}
             />
@@ -152,7 +154,7 @@ export default function Home() {
         </section>
         <section className="flex h-full w-full flex-wrap items-start justify-start gap-3 md:w-[35%]">
           <Title name="Rankings de BDRs" icon={<Globe size={20} className="text-primary-t" />} />
-          <div className="flex w-full items-center justify-between">
+          <div className="flex h-full w-full items-center justify-between">
             <RankingCardFiis
               title="BDRs Mais Visitados"
               data={

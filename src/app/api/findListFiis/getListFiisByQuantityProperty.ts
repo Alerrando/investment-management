@@ -1,7 +1,7 @@
 import { api } from "@/lib/utils";
 
 export async function getListFiisByQuantityProperty() {
-  const response = await api.get(`http://localhost:8080/fii/find/quantity-property`, {
+  const response = await api.get(`http://localhost:8080/fiis/find/quantity-property`, {
     withCredentials: false,
   });
 

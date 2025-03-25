@@ -10,11 +10,10 @@ import { getLogo } from "../../../app/api/getLogo";
 
 interface RankingCardItemStockProps {
   item: ListStockModelContent;
-  formatMarketCap: (value: any) => string;
   index: number;
 }
 
-export default function RankingCardItemStock({ item, formatMarketCap, index }: RankingCardItemStockProps) {
+export default function RankingCardItemStock({ item, index }: RankingCardItemStockProps) {
   const [img, setImage] = useState<string | undefined>("/path-to-placeholder-image");
 
   const { isLoading } = useQueryHook({
@@ -51,19 +50,9 @@ export default function RankingCardItemStock({ item, formatMarketCap, index }: R
         </div>
       </TableCell>
 
-      <TableCell>
-        <div className="flex flex-col items-end">
-          <p className="text-sm font-semibold text-green-500">R${item.quotation}</p>
+      <TableCell className="w-16 text-right text-sm text-primary-t">{item.dividend}</TableCell>
 
-          <div className="flex items-center gap-[2px]">
-            <p className="text-[10px] text-primary-t/60">{item.dividend}%</p>
-          </div>
-        </div>
-      </TableCell>
-
-      <TableCell className="w-16 text-right text-base font-semibold text-primary-t">
-        {formatMarketCap(item.marketValue)}
-      </TableCell>
+      <TableCell className="w-16 text-right text-sm text-primary-t">{item.quotation}</TableCell>
     </TableRow>
   );
 }

@@ -118,7 +118,7 @@ export function ModeToggle() {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button className="bg-primary" size="icon">
+        <Button className="border-border bg-primary" size="icon">
           <Palette className="h-[1.2rem] w-[1.2rem] text-primary-t" />
           <span className="sr-only">Toggle theme</span>
         </Button>

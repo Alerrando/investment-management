@@ -1,23 +1,21 @@
+import { Building } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { ListCryptoModel } from "@/models/Lists/ListCryptoModel";
+import { ListFiisModelContent } from "@/models/Lists/ListFiisModel";
 
 interface RankingCardFiisProps {
   title: string;
-  data?: ListCryptoModel[];
+  data?: ListFiisModelContent[];
   onViewAll: () => void;
   styleRankingCard?: string;
 }
 
 export default function RankingCardFiis({ title, data, onViewAll, styleRankingCard }: RankingCardFiisProps) {
+  console.log(data);
+
   return (
-    <div
-      className={twMerge(
-        "h-65 w-full overflow-y-auto rounded-lg border border-border bg-card p-4 shadow-sm",
-        styleRankingCard,
-      )}
-    >
+    <div className={twMerge("h-64 w-full rounded-lg border border-border bg-card p-4 shadow-sm", styleRankingCard)}>
       <header className="mb-4 flex items-center justify-between">
         <h2 className="tex-base font-semibold text-primary-t md:text-lg">{title}</h2>
         <button
@@ -28,48 +26,44 @@ export default function RankingCardFiis({ title, data, onViewAll, styleRankingCa
         </button>
       </header>
 
-      <Table className="w-full overflow-auto">
-        <TableHeader>
-          <TableRow className="border-b-primary/40 hover:bg-primary/10">
-            <TableHead className="text-primary-t">Nome</TableHead>
-            <TableHead className="text-primary-t">Volume</TableHead>
-            <TableHead className="text-primary-t">Preço</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {data &&
-            data
-              ?.filter((item, index, self) => index === self.findIndex((t) => t.name === item.name))
-              ?.sort((item1, item2) => item2.price - item1.price)
-              ?.filter((_, index) => index < 3)
-              ?.map((item: ListCryptoModel, index) => (
-                <TableRow className="border-b-primary/40" key={index}>
-                  <TableCell className="text-primary-t">
-                    <div className="flex h-full items-center justify-start gap-2">
-                      <img src={item.image} alt="" className="h-8 w-8" />
-                      <div className="flex h-full flex-col justify-between py-2">
-                        <span className="text-[9px] text-primary-t/60">Proof of Stake</span>
-                        <h2 className="text-[10px]">{item.name}</h2>
+      <div className="h-[80%] w-full overflow-auto">
+        <Table className="w-full">
+          <TableHeader>
+            <TableRow className="border-b-primary/40 hover:bg-primary/10">
+              <TableHead className="text-primary-t">Nome</TableHead>
+              <TableHead className="text-primary-t">Preço</TableHead>
+              <TableHead className="text-primary-t">Dividendo</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {data &&
+              data
+                ?.sort((item1, item2) => item2.price - item1.price)
+                ?.map((item: ListFiisModelContent, index) => (
+                  <TableRow className="border-b-primary/40" key={index}>
+                    <TableCell className="text-primary-t">
+                      <div className="flex h-full items-center justify-start gap-2">
+                        <Building className="h-8 w-8" />
+                        <div className="flex h-full flex-col justify-between py-2">
+                          <span className="text-[9px] text-primary-t/60">{item.segment}</span>
+                          <h2 className="text-[10px]">{item.paper}</h2>
+                        </div>
                       </div>
-                    </div>
-                  </TableCell>
+                    </TableCell>
 
-                  <TableCell className="text-primary-t">
-                    <div className="flex w-fit flex-col items-end">
-                      <span>{item.volume}</span>
-                      <span
-                        className={`text-[10px] ${parseFloat(item.volumePercentage.split("-")[0]) > 0 ? "text-green-500" : "text-red-500"}`}
-                      >
-                        {item.volumePercentage}
-                      </span>
-                    </div>
-                  </TableCell>
+                    <TableCell className="text-primary-t">${item?.quotation}</TableCell>
 
-                  <TableCell className="text-primary-t">${item.price.toFixed(2)}</TableCell>
-                </TableRow>
-              ))}
-        </TableBody>
-      </Table>
+                    <TableCell className="text-primary-t">
+                      <div className="flex w-fit flex-col items-end">
+                        <span>{item.volume}</span>
+                        <span className={`text-[10px]`}>{item?.dividend}</span>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 }

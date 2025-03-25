@@ -1,7 +1,7 @@
 import { api } from "@/lib/utils";
 
 export async function getListFiisByQuotation() {
-  const response = await api.get(`http://localhost:8080/fii/find/quotation`, {
+  const response = await api.get(`http://localhost:8080/fiis/find/quotation`, {
     withCredentials: false,
   });
 
