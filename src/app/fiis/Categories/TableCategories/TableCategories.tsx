@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import SkeletonReusable from "@/components/SkeletonReusable/SkeletonReusable";
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { ListFiisModel } from "@/models/Lists/ListFiiModel";
+import { ListFiisModel } from "@/models/Lists/ListFiisModel";
 
 interface TableCategoriesProps {
   title: string;

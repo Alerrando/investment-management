@@ -17,7 +17,7 @@ export default function TableRevenueGrowth() {
     if (dataListStocksByRevenueGrowth.content) return [];
     if (!sortConfig.key) return dataListStocksByRevenueGrowth.content;
 
-    const sortedData = [...dataListStocksByRevenueGrowth.content];
+    const sortedData: ListStockModelContent[] = [...dataListStocksByRevenueGrowth.content];
     sortedData.sort((a, b) => {
       const aValue = a[sortConfig.key];
       const bValue = b[sortConfig.key];

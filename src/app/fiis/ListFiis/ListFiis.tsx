@@ -1,15 +1,38 @@
 "use client";
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Building } from "lucide-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import SkeletonReusable from "@/components/SkeletonReusable/SkeletonReusable";
 import { TableCell } from "@/components/ui/table";
+import { ListFiisModelContent } from "@/models/Lists/ListFiisModel";
 import { useListFiis } from "@/provider/Lists/ListFiisProvider";
+
+export interface SortConfigProps {
+  key: keyof ListFiisModelContent;
+  direction: "asc" | "desc";
+}
 
 export default function ListFiis() {
   const { dataListFiis } = useListFiis();
   const [currentPage, setCurrentPage] = useState(1);
-  const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" });
+  const [sortConfig, setSortConfig] = useState<SortConfigProps>({ key: "paper", direction: "asc" });
+
+  const sortedStocks = useMemo(() => {
+    if (dataListFiis.content) return [];
+    if (!sortConfig.key) return dataListFiis?.content;
+
+    const sortedData: ListFiisModelContent[] = [...dataListFiis.content];
+    sortedData.sort((a, b) => {
+      const aValue = a[sortConfig.key];
+      const bValue = b[sortConfig.key];
+
+      if (aValue < bValue) return sortConfig.direction === "asc" ? -1 : 1;
+      if (aValue > bValue) return sortConfig.direction === "asc" ? 1 : -1;
+      return 0;
+    });
+
+    return sortedData;
+  }, [sortConfig, dataListFiis?.content]);
 
   return (
     <>
@@ -78,7 +101,7 @@ export default function ListFiis() {
 
           <tbody>
             {dataListFiis.content.length > 0 ? (
-              dataListFiis.content.map((fii, index) => (
+              sortedStocks.map((fii: ListFiisModelContent, index) => (
                 <tr key={index} className="border-b p-2 transition-colors hover:bg-primary/20">
                   <TableCell className="pl-4">
                     <div className="flex items-center gap-2">
@@ -90,12 +113,12 @@ export default function ListFiis() {
                   </TableCell>
 
                   <td className="whitespace-nowrap px-6 py-4 text-left text-primary-t">
-                    R$ {parseFloat(fii.quotation).toFixed(2)}
+                    R$ {fii.quotation.toFixed(2)}
                   </td>
 
                   <td className="px-6 py-4 text-left text-primary-t">{fii.ffO}</td>
 
-                  <td className="px-6 py-4 text-left text-primary-t">{parseFloat(fii.pVp).toFixed(2)}</td>
+                  <td className="px-6 py-4 text-left text-primary-t">{fii.pVp.toFixed(2)}</td>
 
                   <TableCell className="pl-4">
                     <div className="flex w-fit flex-col items-end">
@@ -103,9 +126,9 @@ export default function ListFiis() {
                     </div>
                   </TableCell>
 
-                  <td className="px-6 py-4 text-left text-primary-t">R$ {parseFloat(fii.marketValue).toFixed(2)}</td>
+                  <td className="px-6 py-4 text-left text-primary-t">R$ {fii.marketValue.toFixed(2)}</td>
 
-                  <td className="px-6 py-4 text-left text-primary-t">{parseFloat(fii.liquidity).toFixed(2)}</td>
+                  <td className="px-6 py-4 text-left text-primary-t">{fii.liquidity.toFixed(2)}</td>
 
                   <td className="px-6 py-4 text-left text-primary-t">{fii.quantityProperty}</td>
                 </tr>
@@ -141,8 +164,8 @@ export default function ListFiis() {
     </>
   );
 
-  function requestSort(key: string) {
-    let direction = "asc";
+  function requestSort(key: keyof ListFiisModelContent) {
+    let direction: "asc" | "desc" = "asc";
     if (sortConfig.key === key && sortConfig.direction === "asc") {
       direction = "desc";
     }

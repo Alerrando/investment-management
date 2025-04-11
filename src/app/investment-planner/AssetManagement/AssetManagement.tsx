@@ -167,7 +167,6 @@ export default function AssetManagement() {
             classNameHead="h-4 w-16"
             sizeBodyChild={5}
             sizeHeader={5}
-            theader
             tableComplete
           />
         )}

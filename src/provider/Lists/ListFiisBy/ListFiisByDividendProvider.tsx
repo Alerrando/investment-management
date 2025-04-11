@@ -3,7 +3,7 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 import { getListFiisByDividend } from "@/app/api/findListFiis/getListFiisByDividend";
-import { initialStateStockProvider } from "@/lib/utils";
+import { initialStateFiisProvider } from "@/lib/utils";
 import { ListFiisModel } from "@/models/Lists/ListFiisModel";
 
 interface ListFiisByDividendState {
@@ -14,7 +14,7 @@ interface ListFiisByDividendState {
 const useListFiisByDividendStore = create<ListFiisByDividendState>()(
   persist(
     (set) => ({
-      dataListFiisByDividend: initialStateStockProvider,
+      dataListFiisByDividend: initialStateFiisProvider,
       setDataListFiisByDividend: (data) => set({ dataListFiisByDividend: data }),
     }),
     {

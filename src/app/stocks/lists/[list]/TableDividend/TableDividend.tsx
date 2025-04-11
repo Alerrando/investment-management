@@ -1,9 +1,9 @@
 "use client";
-import { ArrowDown, ArrowUp } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import SkeletonReusable from "@/components/SkeletonReusable/SkeletonReusable";
-import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { TableReusable } from "@/components/TableReusable";
+import { TableHeader } from "@/components/ui/table";
 import { ListStockModelContent } from "@/models/Lists/ListStockModel";
 import { useListStocksByDividend } from "@/provider/Lists/ListStockBy/ListStockByDividendProvider";
 
@@ -14,12 +14,21 @@ export interface SortConfigProps {
 export default function TableDividend() {
   const [sortConfig, setSortConfig] = useState<SortConfigProps>({ key: "dividend", direction: "asc" });
   const { dataListStocksByDividend } = useListStocksByDividend();
+  const tableHead: { key: keyof ListStockModelContent; label: string }[] = [
+    { key: "paper", label: "Papel" },
+    { key: "dividend", label: "Dividendos" },
+    { key: "quotation", label: "Cotação" },
+    { key: "pL", label: "P/L" },
+    { key: "pVp", label: "P/VP" },
+    { key: "pActive", label: "P/Ativo" },
+    { key: "pWorkCapital", label: "P/Capital de Giro" },
+  ];
 
   const sortedStocks = useMemo(() => {
     if (dataListStocksByDividend.content) return [];
     if (!sortConfig.key) return dataListStocksByDividend?.content;
 
-    const sortedData = [...dataListStocksByDividend.content];
+    const sortedData: ListStockModelContent[] = [...dataListStocksByDividend.content];
     sortedData.sort((a, b) => {
       const aValue = a[sortConfig.key];
       const bValue = b[sortConfig.key];
@@ -38,83 +47,37 @@ export default function TableDividend() {
         <h2 className="text-xl font-bold text-gray-900 dark:text-white">Ações que mais pagam dividendos</h2>
       </header>
       <div className="h-[350px] overflow-y-auto">
-        <Table className="min-w-full table-auto">
+        <TableReusable.Root>
           <TableHeader>
-            <TableRow className="border-b-2 border-b-gray-100 dark:border-b-[#444444]">
-              <TableHead className="px-0" onClick={() => requestSort("paper")}>
-                <div className="flex cursor-pointer items-center gap-2 py-3 font-semibold">
-                  Ação
-                  {sortConfig.key === "paper" &&
-                    (sortConfig.direction === "asc" ? <ArrowDown size={12} /> : <ArrowUp size={12} />)}
-                </div>
-              </TableHead>
-              <TableHead className="cursor-pointer px-0 font-semibold" onClick={() => requestSort("dividend")}>
-                <div className="flex cursor-pointer items-center gap-2 py-3 font-semibold">
-                  Dividendo
-                  {sortConfig.key === "dividend" &&
-                    (sortConfig.direction === "asc" ? <ArrowDown size={12} /> : <ArrowUp size={12} />)}
-                </div>
-              </TableHead>
-              <TableHead className="cursor-pointer px-0 font-semibold" onClick={() => requestSort("quotation")}>
-                <div className="flex cursor-pointer items-center gap-2 py-3 font-semibold">
-                  Cotação
-                  {sortConfig.key === "quotation" &&
-                    (sortConfig.direction === "asc" ? <ArrowDown size={12} /> : <ArrowUp size={12} />)}
-                </div>
-              </TableHead>
-              <TableHead className="cursor-pointer py-3 font-semibold" onClick={() => requestSort("pL")}>
-                <div className="flex cursor-pointer items-center gap-2 py-3 font-semibold">
-                  P/L
-                  {sortConfig.key === "pL" &&
-                    (sortConfig.direction === "asc" ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
-                </div>
-              </TableHead>
-              <TableHead className="cursor-pointer py-3 font-semibold" onClick={() => requestSort("pVp")}>
-                <div className="flex cursor-pointer items-center gap-2 py-3 font-semibold">
-                  P/VP
-                  {sortConfig.key === "pVp" &&
-                    (sortConfig.direction === "asc" ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
-                </div>
-              </TableHead>
-              <TableHead className="cursor-pointer py-3 font-semibold" onClick={() => requestSort("pActive")}>
-                <div className="flex cursor-pointer items-center gap-2 py-3 font-semibold">
-                  P/Ativo
-                  {sortConfig.key === "pActive" &&
-                    (sortConfig.direction === "asc" ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
-                </div>
-              </TableHead>
-              <TableHead className="cursor-pointer py-3 font-semibold" onClick={() => requestSort("pWorkCapital")}>
-                <div className="flex cursor-pointer items-center gap-2 py-3 font-semibold">
-                  P/Capital de Giro
-                  {sortConfig.key === "pWorkCapital" &&
-                    (sortConfig.direction === "asc" ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
-                </div>
-              </TableHead>
-            </TableRow>
+            <TableReusable.HeaderRow>
+              {tableHead.map((head) => (
+                <TableReusable.Head
+                  key={head.key}
+                  label={head.label}
+                  hasSort
+                  requestSort={requestSort}
+                  sortConfig={sortConfig}
+                  sortKey={head.key}
+                />
+              ))}
+            </TableReusable.HeaderRow>
           </TableHeader>
           <tbody>
             {dataListStocksByDividend?.content?.length > 0 ? (
               <>
-                {sortedStocks.map((stock, index) => (
-                  <TableRow
-                    key={index}
-                    className="border-b-2 border-b-gray-100 transition-colors duration-300 hover:bg-gray-50 dark:border-b-[#555] dark:hover:bg-[#444444]"
-                  >
-                    <td className="py-4 text-sm font-medium text-gray-900 dark:text-white">{stock.paper}</td>
-                    <td className="py-4 text-sm text-gray-700 dark:text-gray-300">{stock.dividend}</td>
-                    <td className="py-4 text-sm text-gray-700 dark:text-gray-300">{stock.quotation}</td>
-                    <td className="py-4 text-sm text-gray-700 dark:text-gray-300">{stock.pL}</td>
-                    <td className="py-4 text-sm text-gray-700 dark:text-gray-300">{stock.pVp}</td>
-                    <td className="py-4 text-sm text-gray-700 dark:text-gray-300">{stock.pActive}</td>
-                    <td className="py-4 text-sm text-gray-700 dark:text-gray-300">{stock.pWorkCapital}</td>
-                  </TableRow>
+                {sortedStocks.map((stock: ListStockModelContent, index) => (
+                  <TableReusable.TbRow key={index}>
+                    {tableHead.map((head) => (
+                      <TableReusable.TbRowTd key={head.key} stock={stock[head.key]} />
+                    ))}
+                  </TableReusable.TbRow>
                 ))}
               </>
             ) : (
               <SkeletonReusable classNameBody="h-6" hasTBody tableBodyJust sizeBody={8} sizeBodyChild={7} />
             )}
           </tbody>
-        </Table>
+        </TableReusable.Root>
       </div>
     </div>
   );

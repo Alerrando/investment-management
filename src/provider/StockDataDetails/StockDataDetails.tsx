@@ -30,7 +30,7 @@ export function useStockDetails() {
   const { setStockDetails, stockDetails, resetStockDetails } = useStockDetailsStore();
 
   const { mutateAsync: mutateStockDetails, isLoading } = useMutation({
-    mutationKey: (variables: string[]) => ["stock-details", variables[0]],
+    mutationKey: ["stock-details"],
     mutationFn: async (stock: string) => api.get(`/api/getStockDataDetails?stock=${stock}`),
     cacheTime: 1000 * 60 * 60 * 24,
     onError: (err) => {

@@ -17,7 +17,7 @@ export default function TableROE() {
     if (dataListStocksByRoe.content) return [];
     if (!sortConfig.key) return dataListStocksByRoe.content;
 
-    const sortedData = [...dataListStocksByRoe.content];
+    const sortedData: ListStockModelContent[] = [...dataListStocksByRoe.content];
     sortedData.sort((a, b) => {
       const aValue = a[sortConfig.key];
       const bValue = b[sortConfig.key];

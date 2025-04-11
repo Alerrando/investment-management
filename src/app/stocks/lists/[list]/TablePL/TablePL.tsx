@@ -17,7 +17,7 @@ export default function TablePL() {
     if (dataListStocksByPL.content) return [];
     if (!sortConfig.key) return dataListStocksByPL.content;
 
-    const sortedData = [...dataListStocksByPL.content];
+    const sortedData: ListStockModelContent[] = [...dataListStocksByPL.content];
     sortedData.sort((a, b) => {
       const aValue = a[sortConfig.key];
       const bValue = b[sortConfig.key];

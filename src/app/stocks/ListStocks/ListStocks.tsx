@@ -1,15 +1,38 @@
 "use client";
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, ChartCandlestick } from "lucide-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import SkeletonReusable from "@/components/SkeletonReusable/SkeletonReusable";
 import { TableCell } from "@/components/ui/table";
+import { ListStockModelContent } from "@/models/Lists/ListStockModel";
 import { useListStocks } from "@/provider/Lists/ListStockProvider";
+
+interface SortConfigProps {
+  key: keyof ListStockModelContent;
+  direction: "asc" | "desc";
+}
 
 export default function ListStocks() {
   const { dataListStocks } = useListStocks();
   const [currentPage, setCurrentPage] = useState(1);
-  const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" });
+  const [sortConfig, setSortConfig] = useState<SortConfigProps>({ key: "paper", direction: "asc" });
+
+  const sortedStocks = useMemo(() => {
+    if (dataListStocks.content) return [];
+    if (!sortConfig.key) return dataListStocks?.content;
+
+    const sortedData: ListStockModelContent[] = [...dataListStocks.content];
+    sortedData.sort((a, b) => {
+      const aValue = a[sortConfig.key];
+      const bValue = b[sortConfig.key];
+
+      if (aValue < bValue) return sortConfig.direction === "asc" ? -1 : 1;
+      if (aValue > bValue) return sortConfig.direction === "asc" ? 1 : -1;
+      return 0;
+    });
+
+    return sortedData;
+  }, [sortConfig, dataListStocks?.content]);
 
   return (
     <>
@@ -78,7 +101,7 @@ export default function ListStocks() {
 
           <tbody>
             {dataListStocks.content.length > 0 ? (
-              dataListStocks.content.map((stock, index) => (
+              sortedStocks.map((stock, index) => (
                 <tr key={index} className="border-b p-2 transition-colors hover:bg-primary/20">
                   <TableCell className="pl-4">
                     <div className="flex items-center gap-2">
@@ -141,8 +164,8 @@ export default function ListStocks() {
     </>
   );
 
-  function requestSort(key: string) {
-    let direction = "asc";
+  function requestSort(key: keyof ListStockModelContent) {
+    let direction: "asc" | "desc" = "asc";
     if (sortConfig.key === key && sortConfig.direction === "asc") {
       direction = "desc";
     }

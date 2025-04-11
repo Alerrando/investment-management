@@ -3,7 +3,7 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 import { getListFiisByPVP } from "@/app/api/findListFiis/getListFiisByPvp";
-import { initialStateStockProvider } from "@/lib/utils";
+import { initialStateFiisProvider } from "@/lib/utils";
 import { ListFiisModel } from "@/models/Lists/ListFiisModel";
 
 interface ListFiisByPVPState {
@@ -14,7 +14,7 @@ interface ListFiisByPVPState {
 const useListFiisByPVPStore = create<ListFiisByPVPState>()(
   persist(
     (set) => ({
-      dataListFiisByPVP: initialStateStockProvider,
+      dataListFiisByPVP: initialStateFiisProvider,
       setDataListFiisByPVP: (data) => set({ dataListFiisByPVP: data }),
     }),
     {

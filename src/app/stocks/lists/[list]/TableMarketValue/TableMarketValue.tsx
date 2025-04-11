@@ -17,7 +17,7 @@ export default function TableMarketValue() {
     if (dataListStocksByMarketValue.content) return [];
     if (!sortConfig.key) return dataListStocksByMarketValue.content;
 
-    const sortedData = [...dataListStocksByMarketValue.content];
+    const sortedData: ListStockModelContent[] = [...dataListStocksByMarketValue.content];
     sortedData.sort((a, b) => {
       const aValue = a[sortConfig.key];
       const bValue = b[sortConfig.key];

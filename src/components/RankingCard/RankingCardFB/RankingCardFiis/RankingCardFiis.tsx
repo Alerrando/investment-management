@@ -38,7 +38,7 @@ export default function RankingCardFiis({ title, data, onViewAll, styleRankingCa
           <TableBody>
             {data &&
               data
-                ?.sort((item1, item2) => item2.price - item1.price)
+                ?.sort((item1, item2) => item2.quotation - item1.quotation)
                 ?.map((item: ListFiisModelContent, index) => (
                   <TableRow className="border-b-primary/40" key={index}>
                     <TableCell className="text-primary-t">
@@ -54,10 +54,7 @@ export default function RankingCardFiis({ title, data, onViewAll, styleRankingCa
                     <TableCell className="text-primary-t">${item?.quotation}</TableCell>
 
                     <TableCell className="text-primary-t">
-                      <div className="flex w-fit flex-col items-end">
-                        <span>{item.volume}</span>
-                        <span className={`text-[10px]`}>{item?.dividend}</span>
-                      </div>
+                      <span>{item?.dividend}</span>
                     </TableCell>
                   </TableRow>
                 ))}

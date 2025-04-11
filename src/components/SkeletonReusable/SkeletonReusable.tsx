@@ -12,9 +12,9 @@ interface SkeletonProps {
 }
 
 interface SkeletonReusableProps {
-  tableComplete: boolean;
-  tableBodyJust: boolean;
-  hasTBody: boolean;
+  tableComplete?: boolean;
+  tableBodyJust?: boolean;
+  hasTBody?: boolean;
 }
 
 export function TBody({
@@ -61,7 +61,7 @@ export function THead({
   return (
     <TableHeader className="sticky top-0 z-10 bg-primary">
       <TableRow>
-        {Array.from({ length: sizeHeader }).map((_, index) => (
+        {Array.from({ length: sizeHeader as number }).map((_, index) => (
           <TableHead className="animate-pulse px-4 py-3" key={index}>
             <Skeleton className={twMerge("bg-skeleton", classNameHead)} />
           </TableHead>
@@ -90,7 +90,7 @@ export default function SkeletonReusable({
     <>
       {tableComplete && <TableComplete {...rest} />}
 
-      {tableBodyJust && <TBody {...rest} hasTBody={hasTBody} />}
+      {tableBodyJust && <TBody {...rest} hasTBody={hasTBody || false} />}
     </>
   );
 }

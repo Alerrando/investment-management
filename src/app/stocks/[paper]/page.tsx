@@ -18,9 +18,9 @@ export default function StockDetail() {
 
     (async () => {
       try {
-        resetStockDetails(); // Reseta o estado antes de buscar novos dados
-        await mutateStockDetails(paper as string, { signal: abortController.signal });
-        await mutateStockShareholdersDetails(paper as string, { signal: abortController.signal });
+        resetStockDetails();
+        await mutateStockDetails(paper as string);
+        await mutateStockShareholdersDetails(paper as string);
       } catch (error) {
         if (!abortController.signal.aborted) {
           console.error("Error fetching stock details:", error);

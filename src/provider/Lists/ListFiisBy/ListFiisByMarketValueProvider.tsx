@@ -3,7 +3,7 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 import { getListFiisByMarketValue } from "@/app/api/findListFiis/getListFiisByMarketValue";
-import { initialStateStockProvider } from "@/lib/utils";
+import { initialStateFiisProvider } from "@/lib/utils";
 import { ListFiisModel } from "@/models/Lists/ListFiisModel";
 
 interface ListFiisByMarketValueState {
@@ -14,7 +14,7 @@ interface ListFiisByMarketValueState {
 const useListFiisByMarketValueStore = create<ListFiisByMarketValueState>()(
   persist(
     (set) => ({
-      dataListFiisByMarketValue: initialStateStockProvider,
+      dataListFiisByMarketValue: initialStateFiisProvider,
       setDataListFiisByMarketValue: (data) => set({ dataListFiisByMarketValue: data }),
     }),
     {

@@ -3,7 +3,7 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 import { getListFiisByAverageVacancy } from "@/app/api/findListFiis/getListFiisByAverageVacancy";
-import { initialStateStockProvider } from "@/lib/utils";
+import { initialStateFiisProvider } from "@/lib/utils";
 import { ListFiisModel } from "@/models/Lists/ListFiisModel";
 
 interface ListFiisByAverageVacancyState {
@@ -14,7 +14,7 @@ interface ListFiisByAverageVacancyState {
 const useListFiisByAverageVacancyStore = create<ListFiisByAverageVacancyState>()(
   persist(
     (set) => ({
-      dataListFiisByAverageVacancy: initialStateStockProvider,
+      dataListFiisByAverageVacancy: initialStateFiisProvider,
       setDataListFiisByAverageVacancy: (data) => set({ dataListFiisByAverageVacancy: data }),
     }),
     {

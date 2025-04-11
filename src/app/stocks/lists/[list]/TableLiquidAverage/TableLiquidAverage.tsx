@@ -17,7 +17,7 @@ export default function TableLiquidAverage() {
     if (dataListStocksByLiquidAverage.content) return [];
     if (!sortConfig.key) return dataListStocksByLiquidAverage.content;
 
-    const sortedData = [...dataListStocksByLiquidAverage.content];
+    const sortedData: ListStockModelContent[] = [...dataListStocksByLiquidAverage.content];
     sortedData.sort((a, b) => {
       const aValue = a[sortConfig.key];
       const bValue = b[sortConfig.key];

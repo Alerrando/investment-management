@@ -3,7 +3,7 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 import { getListFiisByQuotation } from "@/app/api/findListFiis/getListFiisByQuotation";
-import { initialStateStockProvider } from "@/lib/utils";
+import { initialStateFiisProvider } from "@/lib/utils";
 import { ListFiisModel } from "@/models/Lists/ListFiisModel";
 
 interface ListFiisByQuotationState {
@@ -14,7 +14,7 @@ interface ListFiisByQuotationState {
 const useListFiisByQuotationStore = create<ListFiisByQuotationState>()(
   persist(
     (set) => ({
-      dataListFiisByQuotation: initialStateStockProvider,
+      dataListFiisByQuotation: initialStateFiisProvider,
       setDataListFiisByQuotation: (data) => set({ dataListFiisByQuotation: data }),
     }),
     {

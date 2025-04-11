@@ -3,7 +3,7 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 import { getListFiisByQuantityProperty } from "@/app/api/findListFiis/getListFiisByQuantityProperty";
-import { initialStateStockProvider } from "@/lib/utils";
+import { initialStateFiisProvider } from "@/lib/utils";
 import { ListFiisModel } from "@/models/Lists/ListFiisModel";
 
 interface ListFiisByQuantityPropertyState {
@@ -14,7 +14,7 @@ interface ListFiisByQuantityPropertyState {
 const useListFiisByQuantityPropertyStore = create<ListFiisByQuantityPropertyState>()(
   persist(
     (set) => ({
-      dataListFiisByQuantityProperty: initialStateStockProvider,
+      dataListFiisByQuantityProperty: initialStateFiisProvider,
       setDataListFiisByQuantityProperty: (data) => set({ dataListFiisByQuantityProperty: data }),
     }),
     {
